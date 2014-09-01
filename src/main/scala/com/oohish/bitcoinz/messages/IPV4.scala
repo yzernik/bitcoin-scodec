@@ -10,10 +10,6 @@ import scodec.Codec
 import scodec.codecs._
 import shapeless._
 
-import scalaz.std.AllInstances._
-import scodec.Codec
-import scodec.codecs._
-
 case class IPV4(value: Int) {
   override def toString = ByteVector.fromInt(value).toIterable.map { b => 0xff & b.toInt }.mkString(".")
 }
