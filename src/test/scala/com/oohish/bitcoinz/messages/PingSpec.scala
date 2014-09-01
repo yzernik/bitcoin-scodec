@@ -9,6 +9,8 @@ class PingSpec extends CodecSuite {
   "Ping codec" should {
     "roundtrip" in {
       roundtrip(Ping(1234))
+      roundtrip(Ping(Long.MinValue))
+      roundtrip(Ping(Long.MaxValue))
     }
   }
 }
