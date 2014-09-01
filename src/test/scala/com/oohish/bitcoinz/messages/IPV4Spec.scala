@@ -24,11 +24,11 @@ class IPV4Spec extends CodecSuite {
 
     "encode" in {
       codec.encode(IPV4((10 << 24) + 1)) shouldBe
-        \/.right(hex"00 00 00 00 00 00 00 00 00 00 FF FF 0A 00 00 01".toBitVector)
+        \/.right(hex"0A 00 00 01".toBitVector)
     }
 
     "decode" in {
-      codec.decode(hex"00 00 00 00 00 00 00 00 00 00 FF FF 0A 00 00 01".toBitVector) shouldBe
+      codec.decode(hex"0A 00 00 01".toBitVector) shouldBe
         \/.right(BitVector.empty, IPV4((10 << 24) + 1))
     }
   }

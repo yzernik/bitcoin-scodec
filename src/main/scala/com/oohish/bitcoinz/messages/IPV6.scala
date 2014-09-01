@@ -4,7 +4,7 @@ import scodec.bits.ByteVector
 import scodec.Codec
 import scodec.codecs
 
-case class IPV6(value: ByteVector) {
+case class IPV6(value: ByteVector) extends IP {
   override def toString = value.toIterable.grouped(2)
     .map { dig =>
       digitString(dig)
