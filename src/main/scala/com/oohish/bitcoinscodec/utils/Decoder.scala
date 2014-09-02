@@ -1,4 +1,4 @@
-package com.oohish.bitcoinz.utils
+package com.oohish.bitcoinscodec.utils
 
 import scala.language.higherKinds
 

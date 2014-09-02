@@ -1,15 +1,15 @@
-package com.oohish.bitcoinz.messages
+package com.oohish.bitcoinscodec.messages
 
-import com.oohish.bitcoinz.CodecSuite
+import com.oohish.bitcoinscodec.CodecSuite
+
 import scodec.bits.ByteVector
-
 import scodec.bits._
 import scodec.codecs._
 import scalaz.\/
 
 class PortSpec extends CodecSuite {
 
-  import Port._
+import Port._
 
   "Port codec" should {
     "roundtrip" in {

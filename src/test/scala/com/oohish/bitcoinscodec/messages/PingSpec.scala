@@ -1,10 +1,11 @@
-package com.oohish.bitcoinz.messages
+package com.oohish.bitcoinscodec.messages
 
-import com.oohish.bitcoinz.CodecSuite
+import com.oohish.bitcoinscodec.CodecSuite
 
 class PingSpec extends CodecSuite {
 
-  import Ping._
+
+import Ping._
 
   "Ping codec" should {
     "roundtrip" in {

@@ -1,7 +1,7 @@
 import scoverage.ScoverageSbtPlugin.instrumentSettings
 import org.scoverage.coveralls.CoverallsPlugin.coverallsSettings
 
-name := "bitcoinz"
+name := "bitcoin-scodec"
 
 version := "0.1.0"
 

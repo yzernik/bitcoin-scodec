@@ -1,4 +1,4 @@
-package com.oohish.bitcoinz
+package com.oohish.bitcoinscodec
 
 import scala.collection.GenTraversable
 import scalaz.\/-

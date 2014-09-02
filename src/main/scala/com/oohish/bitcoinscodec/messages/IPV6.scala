@@ -1,4 +1,4 @@
-package com.oohish.bitcoinz.messages
+package com.oohish.bitcoinscodec.messages
 
 import scodec.bits.ByteVector
 import scodec.Codec
