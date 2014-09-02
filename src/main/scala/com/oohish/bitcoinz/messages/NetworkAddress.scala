@@ -20,7 +20,7 @@ object NetworkAddress {
   val ipCodec = Codec[Either[IPV4, IPV6]](
     (ip: Either[IPV4, IPV6]) => ip.fold(ipv4 => {
       for {
-        pad <- constant(ipv4Pad).encode()
+        pad <- constant(ipv4Pad).encode(())
         addr <- IPV4.codec.encode(ipv4)
       } yield pad ++ addr
     }, ipv6 => IPV6.codec.encode(ipv6)),
