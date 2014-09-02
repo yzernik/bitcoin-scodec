@@ -11,8 +11,6 @@ case class NetworkAddress(
   address: Either[IPV4, IPV6],
   port: Port)
 
-trait IP
-
 object NetworkAddress {
 
   val ipv4Pad = hex"00 00 00 00 00 00 00 00 00 00 FF FF".toBitVector

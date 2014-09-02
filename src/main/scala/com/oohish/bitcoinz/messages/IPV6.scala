@@ -5,7 +5,7 @@ import scodec.Codec
 import scodec.codecs
 import scodec.bits._
 
-case class IPV6(value: ByteVector) extends IP {
+case class IPV6(value: ByteVector) {
   require(value.length == 16)
 
   override def toString = value.toIterable.grouped(2)
