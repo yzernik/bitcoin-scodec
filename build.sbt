@@ -1,3 +1,6 @@
+import scoverage.ScoverageSbtPlugin.instrumentSettings
+import org.scoverage.coveralls.CoverallsPlugin.coverallsSettings
+
 name := "bitcoinz"
 
 version := "0.1.0"
@@ -14,3 +17,7 @@ libraryDependencies ++= Seq(
 )
 
 scalacOptions ++= Seq("-unchecked", "-deprecation")
+
+instrumentSettings
+
+coverallsSettings
