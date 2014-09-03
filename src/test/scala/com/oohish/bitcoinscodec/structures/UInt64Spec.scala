@@ -21,6 +21,7 @@ class UInt64Spec extends CodecSuite {
       shouldPrint(0)
       shouldPrint(1234)
       shouldPrint(Long.MaxValue)
+      shouldPrint(BigInt(Long.MaxValue) * 2 + 1)
     }
   }
 }
