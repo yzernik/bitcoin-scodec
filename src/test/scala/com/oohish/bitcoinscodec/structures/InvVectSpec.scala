@@ -13,11 +13,11 @@ class InvVectSpec extends CodecSuite {
     implicit val codec = invVectCodec(Codec[Ping])
 
     "roundtrip" in {
-      roundtrip(InvVect[Ping](List()))
-      roundtrip(InvVect[Ping](List(
+      roundtrip(codec, List())
+      roundtrip(List(
         Ping(0),
         Ping(1),
-        Ping(2))))
+        Ping(2)))
     }
 
   }
