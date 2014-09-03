@@ -16,7 +16,7 @@ libraryDependencies ++= Seq(
     "org.bouncycastle" % "bcpkix-jdk15on" % "1.50" % "test"
 )
 
-scalacOptions ++= Seq("-unchecked", "-deprecation")
+scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
 instrumentSettings
 
