@@ -1,17 +1,23 @@
 package com.oohish.bitcoinscodec.messages
 
 import scalaz.{ \/, \/-, -\/, Monad, Monoid }
-
 import scodec.Codec
 import scodec.codecs._
 import scodec.bits._
+import com.oohish.bitcoinscodec.structures.UInt64
 
 case class NetworkAddress(
-  services: Long,
+  services: UInt64,
   address: Either[IPV4, IPV6],
   port: Port)
 
 object NetworkAddress {
+
+  /** Creates a NetworkAddress. */
+  def apply(services: Long,
+    address: Either[IPV4, IPV6],
+    port: Port): NetworkAddress =
+    NetworkAddress(UInt64(services), address, port)
 
   val ipv4Pad = hex"00 00 00 00 00 00 00 00 00 00 FF FF".toBitVector
 
@@ -29,5 +35,5 @@ object NetworkAddress {
         IPV6.codec.decode(buf).map { case (a, b) => (a, Right(b)) }
     })
 
-  implicit val codec: Codec[NetworkAddress] = (int64L :: ipCodec :: Codec[Port]).as[NetworkAddress]
+  implicit val codec: Codec[NetworkAddress] = (Codec[UInt64] :: ipCodec :: Codec[Port]).as[NetworkAddress]
 }
