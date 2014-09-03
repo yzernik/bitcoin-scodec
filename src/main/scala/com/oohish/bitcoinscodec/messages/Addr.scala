@@ -17,7 +17,7 @@ object Addr {
 
   implicit val codec: Codec[Addr] = {
     val timeAddrCodec: Codec[(Long, NetworkAddress)] =
-      (uint32 :: Codec[NetworkAddress]).as[(Long, NetworkAddress)]
+      (uint32L :: Codec[NetworkAddress]).as[(Long, NetworkAddress)]
     InvVect.invVectCodec(timeAddrCodec).as[Addr]
   }
 }
