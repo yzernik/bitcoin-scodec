@@ -11,22 +11,22 @@ object VarInt {
 
   import scodec.codecs._
 
-  implicit val varIntCodec = Codec[VarInt](
-    (varint: VarInt) =>
-      varint match {
-        case VarInt(i) if (i < 0xfd) =>
+  implicit val varIntCodec = Codec[Long](
+    (n: Long) =>
+      n match {
+        case i if (i < 0xfd) =>
           uint8.encode(i.toInt)
-        case VarInt(i) if (i < 0xffff) =>
+        case i if (i < 0xffff) =>
           for {
             a <- uint8.encode(0xfd)
             b <- uint16.encode(i.toInt)
           } yield a ++ b
-        case VarInt(i) if (i < 0xffffffffL) =>
+        case i if (i < 0xffffffffL) =>
           for {
             a <- uint8.encode(0xfe)
             b <- uint32.encode(i)
           } yield a ++ b
-        case VarInt(i) =>
+        case i =>
           for {
             a <- uint8.encode(0xff)
             b <- Codec[UInt64].encode(UInt64(UInt64.bigIntToLong(BigInt(i))))
@@ -38,15 +38,15 @@ object VarInt {
           byte match {
             case 0xff =>
               Codec[UInt64].decode(rest)
-                .map { case (a, b) => (a, VarInt(b.value)) }
+                .map { case (a, b) => (a, b.value) }
             case 0xfe =>
               uint32.decode(rest)
-                .map { case (a, b) => (a, VarInt(b)) }
+                .map { case (a, b) => (a, b) }
             case 0xfd =>
               uint16.decode(rest)
-                .map { case (a, b) => (a, VarInt(b)) }
+                .map { case (a, b) => (a, b.toLong) }
             case _ =>
-              \/-((rest, VarInt(byte)))
+              \/-((rest, byte.toLong))
           }
         case -\/(err) =>
           -\/(err)

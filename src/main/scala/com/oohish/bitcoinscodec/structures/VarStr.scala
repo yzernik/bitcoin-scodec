@@ -10,7 +10,7 @@ object VarStr {
   import VarInt._
 
   implicit val codec: Codec[String] = {
-    val countCodec = VarInt.varIntCodec.xmap(_.value.toInt, (i: Int) => VarInt(i.toLong))
+    val countCodec = VarInt.varIntCodec.xmap(_.toInt, (i: Int) => i.toLong)
     variableSizeBytes(countCodec, ascii)
   }
 }
