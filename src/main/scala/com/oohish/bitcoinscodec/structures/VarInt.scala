@@ -21,7 +21,7 @@ object VarInt {
             a <- uint8.encode(0xfd)
             b <- uint16.encode(i.toInt)
           } yield a ++ b
-        case VarInt(i) if (i < 0xffffffff) =>
+        case VarInt(i) if (i < 0xffffffffL) =>
           for {
             a <- uint8.encode(0xfe)
             b <- uint32.encode(i)
