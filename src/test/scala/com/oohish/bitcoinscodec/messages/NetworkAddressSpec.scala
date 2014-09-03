@@ -27,5 +27,14 @@ class NetworkAddressSpec extends CodecSuite {
         \/.right(hex"01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF 0A 00 00 01 20 8D".toBitVector)
     }
 
+    "decode" in {
+      val services = 1L
+      val ip = Left(IPV4("10.0.0.1"))
+      val port = Port(8333)
+
+      codec.decode(hex"01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF 0A 00 00 01 20 8D".toBitVector) shouldBe
+        \/.right(BitVector.empty, NetworkAddress(services, ip, port))
+    }
+
   }
 }
