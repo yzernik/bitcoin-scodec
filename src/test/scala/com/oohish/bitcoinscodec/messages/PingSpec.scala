@@ -4,14 +4,14 @@ import com.oohish.bitcoinscodec.CodecSuite
 
 class PingSpec extends CodecSuite {
 
-
-import Ping._
+  import Ping._
 
   "Ping codec" should {
     "roundtrip" in {
-      roundtrip(Ping(1234))
-      roundtrip(Ping(Long.MinValue))
-      roundtrip(Ping(Long.MaxValue))
+      roundtrip(Ping(BigInt(0)))
+      roundtrip(Ping(BigInt(1234)))
+      roundtrip(Ping(BigInt(Long.MaxValue)))
+      roundtrip(Ping(BigInt(Long.MaxValue) * 2 + 1))
     }
   }
 }

@@ -14,10 +14,10 @@ case class NetworkAddress(
 object NetworkAddress {
 
   /** Creates a NetworkAddress. */
-  def apply(services: Long,
+  def apply(services: BigInt,
     address: Either[IPV4, IPV6],
     port: Port): NetworkAddress =
-    NetworkAddress(UInt64(services), address, port)
+    NetworkAddress(UInt64(UInt64.bigIntToLong(services)), address, port)
 
   val ipv4Pad = hex"00 00 00 00 00 00 00 00 00 00 FF FF".toBitVector
 

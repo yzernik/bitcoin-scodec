@@ -9,8 +9,8 @@ case class Ping(value: UInt64)
 object Ping {
 
   /** Creates a Ping. */
-  def apply(value: Long): Ping =
-    Ping(UInt64(value))
+  def apply(value: BigInt): Ping =
+    Ping(UInt64(UInt64.bigIntToLong(value)))
 
   implicit val codec: Codec[Ping] = Codec[UInt64].xmap(Ping.apply, _.value)
 }
