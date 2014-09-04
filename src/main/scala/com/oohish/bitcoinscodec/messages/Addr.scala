@@ -15,12 +15,12 @@ case class Addr(addrs: List[(Long, NetworkAddress)])
 object Addr {
   import VarList._
 
-  implicit val codec: Codec[Addr] = {
-    val timeAddr = {
-      ("time" | uint32L) ::
-        ("net_addr" | Codec[NetworkAddress])
-    }.as[(Long, NetworkAddress)]
+  val timeAddr = {
+    ("time" | uint32L) ::
+      ("net_addr" | Codec[NetworkAddress])
+  }.as[(Long, NetworkAddress)]
 
+  implicit val codec: Codec[Addr] =
     VarList.varList(timeAddr).as[Addr]
-  }
+
 }

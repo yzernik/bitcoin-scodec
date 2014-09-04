@@ -21,5 +21,6 @@ case class IPV6(value: ByteVector) {
 }
 
 object IPV6 {
-  implicit val codec: Codec[IPV6] = codecs.bytes(16).xmap[IPV6](v => IPV6(v), _.value)
+  implicit val codec: Codec[IPV6] =
+    codecs.bytes(16).xmap[IPV6](v => IPV6(v), _.value)
 }

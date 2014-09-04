@@ -12,5 +12,6 @@ object Ping {
   def apply(value: BigInt): Ping =
     Ping(UInt64(UInt64.bigIntToLong(value)))
 
-  implicit val codec: Codec[Ping] = Codec[UInt64].xmap(Ping.apply, _.value)
+  implicit val codec: Codec[Ping] =
+    Codec[UInt64].xmap(Ping.apply, _.value)
 }

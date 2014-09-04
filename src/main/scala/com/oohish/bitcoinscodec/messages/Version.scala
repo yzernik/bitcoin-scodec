@@ -40,29 +40,27 @@ object Version {
       start_height,
       relay)
 
-  implicit val codec: Codec[Version] =
-    {
-      ("version" | int32L) ::
-        ("services" | Codec[UInt64]) ::
-        ("timestamp" | int64L) ::
-        ("addr_recv" | Codec[NetworkAddress]) ::
-        ("addr_from" | Codec[NetworkAddress]) ::
-        ("nonce" | Codec[UInt64]) ::
-        ("user_agent" | VarStr.codec) ::
-        ("start_height" | int32L) ::
-        ("relay" | conditional(false, bool))
-    }.as[Version]
+  implicit val codec: Codec[Version] = {
+    ("version" | int32L) ::
+      ("services" | Codec[UInt64]) ::
+      ("timestamp" | int64L) ::
+      ("addr_recv" | Codec[NetworkAddress]) ::
+      ("addr_from" | Codec[NetworkAddress]) ::
+      ("nonce" | Codec[UInt64]) ::
+      ("user_agent" | VarStr.codec) ::
+      ("start_height" | int32L) ::
+      ("relay" | conditional(false, bool))
+  }.as[Version]
 
-  val codecWithRelay: Codec[Version] =
-    {
-      ("version" | int32L) ::
-        ("services" | Codec[UInt64]) ::
-        ("timestamp" | int64L) ::
-        ("addr_recv" | Codec[NetworkAddress]) ::
-        ("addr_from" | Codec[NetworkAddress]) ::
-        ("nonce" | Codec[UInt64]) ::
-        ("user_agent" | VarStr.codec) ::
-        ("start_height" | int32L) ::
-        ("relay" | conditional(true, bool))
-    }.as[Version]
+  val codecWithRelay: Codec[Version] = {
+    ("version" | int32L) ::
+      ("services" | Codec[UInt64]) ::
+      ("timestamp" | int64L) ::
+      ("addr_recv" | Codec[NetworkAddress]) ::
+      ("addr_from" | Codec[NetworkAddress]) ::
+      ("nonce" | Codec[UInt64]) ::
+      ("user_agent" | VarStr.codec) ::
+      ("start_height" | int32L) ::
+      ("relay" | conditional(true, bool))
+  }.as[Version]
 }

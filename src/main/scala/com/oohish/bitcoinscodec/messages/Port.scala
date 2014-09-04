@@ -11,5 +11,6 @@ object Port {
   val MinValue = 0
   val MaxValue = 65535
 
-  implicit val codec: Codec[Port] = uint16.xmap(Port.apply, _.value)
+  implicit val codec: Codec[Port] =
+    uint16.xmap(Port.apply, _.value)
 }

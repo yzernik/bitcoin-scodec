@@ -28,5 +28,6 @@ object IPV4 {
     IPV4(digs(0), digs(1), digs(2), digs(3))
   }
 
-  implicit val codec: Codec[IPV4] = codecs.int32.xmap[IPV4](v => IPV4(v), _.value)
+  implicit val codec: Codec[IPV4] =
+    codecs.int32.xmap[IPV4](v => IPV4(v), _.value)
 }
