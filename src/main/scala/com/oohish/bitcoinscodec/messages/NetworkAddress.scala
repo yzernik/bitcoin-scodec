@@ -14,7 +14,8 @@ case class NetworkAddress(
 object NetworkAddress {
 
   /** Creates a NetworkAddress. */
-  def apply(services: BigInt,
+  def apply(
+    services: BigInt,
     address: Either[IPV4, IPV6],
     port: Port): NetworkAddress =
     NetworkAddress(UInt64(UInt64.bigIntToLong(services)), address, port)

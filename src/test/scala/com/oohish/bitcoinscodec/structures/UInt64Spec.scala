@@ -9,6 +9,7 @@ class UInt64Spec extends CodecSuite {
   "UInt64 codec" should {
     "roundtrip" in {
       roundtrip(UInt64(1234))
+      roundtrip(UInt64(12345))
       roundtrip(UInt64(Long.MinValue))
       roundtrip(UInt64(Long.MaxValue))
     }
