@@ -35,6 +35,8 @@ class VersionSpec extends CodecSuite {
   "Version codec" should {
     "roundtrip" in {
       roundtrip(version)
+      roundtrip(codecWithRelay, version.copy(relay = Some(false)))
+      roundtrip(codecWithRelay, version.copy(relay = Some(true)))
     }
 
     "encode" in {
