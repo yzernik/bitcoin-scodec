@@ -35,5 +35,10 @@ object NetworkAddress {
         IPV6.codec.decode(buf).map { case (a, b) => (a, Right(b)) }
     })
 
-  implicit val codec: Codec[NetworkAddress] = (Codec[UInt64] :: ipCodec :: Codec[Port]).as[NetworkAddress]
+  implicit val codec: Codec[NetworkAddress] = {
+    ("services" | Codec[UInt64]) ::
+      ("ip" | ipCodec) ::
+      ("port" | Codec[Port])
+  }.as[NetworkAddress]
+
 }

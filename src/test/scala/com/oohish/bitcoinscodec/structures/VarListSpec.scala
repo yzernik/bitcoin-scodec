@@ -4,13 +4,13 @@ import com.oohish.bitcoinscodec.CodecSuite
 import com.oohish.bitcoinscodec.messages.Ping
 import scodec.Codec
 
-class InvVectSpec extends CodecSuite {
+class VarListSpec extends CodecSuite {
 
-  import InvVect._
+  import VarList._
 
-  "InvVect codec" should {
+  "VarList codec" should {
 
-    implicit val codec = invVectCodec(Codec[Ping])
+    implicit val codec = varList(Codec[Ping])
 
     "roundtrip" in {
       roundtrip(codec, List())

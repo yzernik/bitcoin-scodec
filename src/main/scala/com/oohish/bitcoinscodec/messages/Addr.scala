@@ -8,16 +8,19 @@ import scodec.bits.BitVector
 import scodec.Codec
 import scodec.codecs._
 import shapeless._
-import com.oohish.bitcoinscodec.structures.InvVect
+import com.oohish.bitcoinscodec.structures.VarList
 
 case class Addr(addrs: List[(Long, NetworkAddress)])
 
 object Addr {
-  import InvVect._
+  import VarList._
 
   implicit val codec: Codec[Addr] = {
-    val timeAddrCodec: Codec[(Long, NetworkAddress)] =
-      (uint32L :: Codec[NetworkAddress]).as[(Long, NetworkAddress)]
-    InvVect.invVectCodec(timeAddrCodec).as[Addr]
+    val timeAddr = {
+      ("time" | uint32L) ::
+        ("net_addr" | Codec[NetworkAddress])
+    }.as[(Long, NetworkAddress)]
+
+    VarList.varList(timeAddr).as[Addr]
   }
 }
