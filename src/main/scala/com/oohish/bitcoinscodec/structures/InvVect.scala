@@ -2,9 +2,10 @@ package com.oohish.bitcoinscodec.structures
 
 import scodec.Codec
 import scodec.codecs._
+import com.oohish.bitcoinscodec.structures.InvVect.InvType
 
 case class InvVect(
-  inv_type: InvVect,
+  inv_type: InvType,
   hash: Hash)
 
 object InvVect {
@@ -20,7 +21,7 @@ object InvVect {
     MSG_BLOCK -> 3L)
 
   implicit val codec: Codec[InvVect] = {
-    ("inv_type" | Codec[InvVect]) ::
+    ("inv_type" | Codec[InvType]) ::
       ("addr_from" | Codec[Hash])
   }.as[InvVect]
 
