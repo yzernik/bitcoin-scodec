@@ -4,6 +4,7 @@ import scodec.Codec
 import scodec.codecs._
 import com.oohish.bitcoinscodec.structures.UInt64
 import com.oohish.bitcoinscodec.structures.VarStr
+import com.oohish.bitcoinscodec.messages.Message.Message
 
 case class Version(
   version: Int,
@@ -14,7 +15,7 @@ case class Version(
   nonce: UInt64,
   user_agent: String,
   start_height: Int,
-  relay: Option[Boolean])
+  relay: Option[Boolean]) extends Message
 
 object Version {
 
