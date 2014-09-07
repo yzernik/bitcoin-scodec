@@ -9,9 +9,12 @@ import scodec.Codec
 import scodec.codecs._
 import shapeless._
 import com.oohish.bitcoinscodec.structures.VarList
-import com.oohish.bitcoinscodec.messages.Message.Message
+import com.oohish.bitcoinscodec.structures.Message.Message
 
-case class Addr(addrs: List[(Long, NetworkAddress)]) extends Message
+case class Addr(addrs: List[(Long, NetworkAddress)]) extends Message {
+  type E = Addr
+  def codec = Addr.codec
+}
 
 object Addr {
   import VarList._
