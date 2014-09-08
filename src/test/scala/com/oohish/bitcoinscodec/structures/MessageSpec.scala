@@ -15,6 +15,19 @@ class MessageSpec extends CodecSuite {
     "roundtrip" in {
       val codec = Message.codec(0xD9B4BEF9L)
       roundtrip(codec, Verack())
+      roundtrip(codec, Ping(BigInt(1234)))
+      roundtrip(codec, Pong(BigInt(1234)))
+      roundtrip(codec, Addr(List((0, NetworkAddress(1234, Left(IPV4("10.0.0.1")), Port(8080))))))
+      roundtrip(codec, Version(
+        60002,
+        1,
+        1355854353L,
+        NetworkAddress(1, Left(IPV4("0.0.0.0")), Port(0)),
+        NetworkAddress(1, Left(IPV4("0.0.0.0")), Port(0)),
+        7284544412836900411L,
+        "/Satoshi:0.7.2/",
+        212672,
+        None))
     }
 
     "encode" in {
