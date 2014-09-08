@@ -7,6 +7,8 @@ version := "0.1.0"
 
 scalaVersion := "2.11.2"
 
+licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
+
 resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
 
 libraryDependencies ++= Seq(
@@ -21,3 +23,5 @@ scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 instrumentSettings
 
 coverallsSettings
+
+seq(bintrayPublishSettings:_*)
