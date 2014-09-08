@@ -29,8 +29,8 @@ object Message {
       ByteVector.fill(12 - command.length())(0)
   }
 
-  val payloadCodec: Codec[Codec[_ <: Message]] = mappedEnum(fixedSizeBytes(12, ascii),
-    commands.map(_.swap))
+  val payloadCodec: Codec[Codec[_ <: Message]] = mappedEnum(bytes(12),
+    commands.map(_.swap).mapValues(padCommand(_)))
 
   def checksum(data: ByteVector): Long = {
     val messageDigest = MessageDigest.getInstance("SHA-256")
@@ -55,9 +55,13 @@ object Message {
         } yield magic ++ command ++ length ++ chksum ++ payload
       }
       def decode(bits: BitVector) = {
-        // TODO
-        val c = Codec[Verack]
-        c.decode(bits)
+        for {
+          magic <- uint32L.decode(bits)
+          command <- payloadCodec.decode(magic._1)
+          length <- uint32L.decode(command._1)
+          chksum <- uint32L.decode(length._1)
+          payload <- command._2.decode(chksum._1)
+        } yield payload
       }
     }
   }
