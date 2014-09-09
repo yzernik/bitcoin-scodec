@@ -3,6 +3,8 @@ import org.scoverage.coveralls.CoverallsPlugin.coverallsSettings
 
 name := "bitcoin-scodec"
 
+organization := "com.oohish"
+
 version := "0.1.0"
 
 scalaVersion := "2.11.2"
