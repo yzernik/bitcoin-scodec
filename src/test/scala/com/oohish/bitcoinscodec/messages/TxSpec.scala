@@ -1,19 +1,21 @@
 package com.oohish.bitcoinscodec.messages
 
 import com.oohish.bitcoinscodec.CodecSuite
-
 import scodec.bits.ByteVector
 import scodec.bits._
 import scodec.codecs._
 import scalaz.\/
+import com.oohish.bitcoinscodec.structures.TxIn
+import com.oohish.bitcoinscodec.structures.OutPoint
+import com.oohish.bitcoinscodec.structures.Hash
+import com.oohish.bitcoinscodec.structures.TxOut
 
 class TxSpec extends CodecSuite {
 
   import Tx._
 
   val bytes = hex"""
-F9 BE B4 D9 74 78 00 00  00 00 00 00 00 00 00 00 
-02 01 00 00 E2 93 CD BE  01 00 00 00 01 6D BD DB 
+01 00 00 00 01 6D BD DB 
 08 5B 1D 8A F7 51 84 F0  BC 01 FA D5 8D 12 66 E9 
 B6 3B 50 88 19 90 E4 B4  0D 6A EE 36 29 00 00 00 
 00 8B 48 30 45 02 21 00  F3 58 1E 19 72 AE 8A C7 
@@ -34,8 +36,36 @@ CD 1C BE A6 E7 45 8A 7A  BA D5 12 A9 D9 EA 1A FB
 
   "Tx codec" should {
 
+    "roundtrip" in {
+      val tx1 = Tx(
+        1L,
+        List(),
+        List(),
+        12345L)
+      roundtrip(tx1)
+    }
+
     "decode" in {
-      println(codec.decode(bytes.toBitVector))
+      val version = 1L
+      val txins = List(
+        TxIn(
+          OutPoint(Hash(hex"6dbddb085b1d8af75184f0bc01fad58d1266e9b63b50881990e4b40d6aee3629"),
+            0),
+          hex"483045022100f3581e1972ae8ac7c7367a7a253bc1135223adb9a468bb3a59233f45bc578380022059af01ca17d00e41837a1d58e97aa31bae584edec28d35bd96923690913bae9a0141049c02bfc97ef236ce6d8fe5d94013c721e915982acd2b12b65d9b7d59e20a842005f8fc4e02532e873d37b96f09d6d4511ada8f14042f46614a4c70c0f14beff5",
+          4294967295L))
+
+      val txouts = List(
+        TxOut(
+          4632880204564398080L,
+          hex"76a9141aa0cd1cbea6e7458a7abad512a9d9ea1afb225e88ac"),
+        TxOut(
+          -9152746251769348096L,
+          hex"76a9140eab5bea436a0484cfab12485efda0b78b4ecc5288ac"))
+      val locktime = 0L
+
+      val tx = Tx(version, txins, txouts, locktime)
+
+      shouldDecodeFullyTo(Tx.codec, bytes.toBitVector, tx)
     }
 
   }
