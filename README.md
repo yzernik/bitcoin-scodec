@@ -32,10 +32,10 @@ import com.oohish.bitcoinscodec.structures.Message
 val codec = Message.codec(0xD9B4BEF9L) // on the main network
 ```
 
-encode a verack message
+encode a ping message
 ```
 import com.oohish.bitcoinscodec.messages._
 
-codec.encode(Verack())
-// scalaz.\/[String,scodec.bits.BitVector] = \/-(BitVector(192 bits, 0xf9beb4d976657261636b000000000000000000005df6e0e2))
+codec.encode(Ping(BigInt(1234)))
+// scalaz.\/[String,scodec.bits.BitVector] = \/-(BitVector(256 bits, 0xf9beb4d970696e67000000000000000040000000433ba813d204000000000000))
 ```
