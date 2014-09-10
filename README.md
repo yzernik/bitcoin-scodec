@@ -39,3 +39,11 @@ import com.oohish.bitcoinscodec.messages._
 codec.encode(Ping(BigInt(1234)))
 // scalaz.\/[String,scodec.bits.BitVector] = \/-(BitVector(256 bits, 0xf9beb4d970696e67000000000000000040000000433ba813d204000000000000))
 ```
+
+decode a pong message
+```
+import scodec.bits._
+
+codec.decode(hex"f9beb4d9706f6e67000000000000000040000000433ba813d204000000000000".toBitVector)
+// scalaz.\/[String,(scodec.bits.BitVector, com.oohish.bitcoinscodec.structures.Message.Message)] = \/-((BitVector(empty),Pong(1234)))
+```
