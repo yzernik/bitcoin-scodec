@@ -5,6 +5,7 @@ import scodec.codecs._
 import com.oohish.bitcoinscodec.structures.UInt64
 import com.oohish.bitcoinscodec.structures.VarStr
 import com.oohish.bitcoinscodec.structures.Message.Message
+import com.oohish.bitcoinscodec.structures.NetworkAddress
 
 case class Version(
   version: Int,

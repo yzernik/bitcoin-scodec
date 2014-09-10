@@ -1,11 +1,11 @@
-package com.oohish.bitcoinscodec.messages
+package com.oohish.bitcoinscodec.structures
+
+import scalaz.\/
 
 import com.oohish.bitcoinscodec.CodecSuite
-
-import scodec.bits.ByteVector
 import scodec.bits._
 import scodec.codecs._
-import scalaz.\/
+import scala.math.BigInt.long2bigInt
 
 class IPV4Spec extends CodecSuite {
 
@@ -15,8 +15,6 @@ class IPV4Spec extends CodecSuite {
     "roundtrip" in {
       roundtrip(IPV4(1234))
       roundtrip(IPV4("10.0.0.1"))
-      roundtrip(Ping(Long.MinValue))
-      roundtrip(Ping(Long.MaxValue))
     }
 
     "print" in {

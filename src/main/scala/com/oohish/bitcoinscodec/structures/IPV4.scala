@@ -1,11 +1,8 @@
-package com.oohish.bitcoinscodec.messages
+package com.oohish.bitcoinscodec.structures
 
 import scodec.bits.ByteVector
 import scodec.Codec
 import scodec.codecs
-
-import scalaz.std.anyVal.unitInstance
-import scodec.bits.BitVector
 import scodec.Codec
 import scodec.codecs._
 import shapeless._

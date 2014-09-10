@@ -1,11 +1,16 @@
-package com.oohish.bitcoinscodec.messages
+package com.oohish.bitcoinscodec.structures
+
+import scalaz.\/
 
 import com.oohish.bitcoinscodec.CodecSuite
-
-import scodec.bits.ByteVector
 import scodec.bits._
 import scodec.codecs._
-import scalaz.\/
+import NetworkAddress.codec
+import scala.BigInt
+import scala.Left
+import scala.Right
+import scala.math.BigInt.int2bigInt
+import scala.math.BigInt.long2bigInt
 
 class NetworkAddressSpec extends CodecSuite {
 

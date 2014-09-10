@@ -1,11 +1,9 @@
-package com.oohish.bitcoinscodec.messages
+package com.oohish.bitcoinscodec.structures
 
 import com.oohish.bitcoinscodec.CodecSuite
-
-import scodec.bits.ByteVector
 import scodec.bits._
 import scodec.codecs._
-import scalaz.\/
+import IPV6.codec
 
 class IPV6Spec extends CodecSuite {
 

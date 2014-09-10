@@ -1,10 +1,15 @@
-package com.oohish.bitcoinscodec.messages
+package com.oohish.bitcoinscodec.structures
 
-import scalaz.{ \/, \/-, -\/, Monad, Monoid }
+import scalaz.-\/
+import scalaz.\/-
+
 import scodec.Codec
 import scodec.codecs._
 import scodec.bits._
-import com.oohish.bitcoinscodec.structures.UInt64
+import scala.Left
+import scala.Right
+import scodec.HListCodecEnrichedWithHListSupport
+import scodec.ValueCodecEnrichedWithHListSupport
 
 case class NetworkAddress(
   services: UInt64,

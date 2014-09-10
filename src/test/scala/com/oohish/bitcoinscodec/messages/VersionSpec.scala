@@ -1,11 +1,12 @@
 package com.oohish.bitcoinscodec.messages
 
 import com.oohish.bitcoinscodec.CodecSuite
-
 import scodec.bits.ByteVector
 import scodec.bits._
 import scodec.codecs._
 import scalaz.\/
+import com.oohish.bitcoinscodec.structures._
+import com.oohish.bitcoinscodec.structures.Port
 
 class VersionSpec extends CodecSuite {
 

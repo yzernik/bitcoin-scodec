@@ -2,7 +2,6 @@ package com.oohish.bitcoinscodec.structures
 
 import scalaz.\/
 import scodec.bits._
-
 import com.oohish.bitcoinscodec.CodecSuite
 
 class MessageSpec extends CodecSuite {
