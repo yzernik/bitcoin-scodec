@@ -1,5 +1,8 @@
 package com.oohish.bitcoinscodec.structures
 
+import scalaz.-\/
+import scalaz.\/-
+
 import scala.language.implicitConversions
 import scodec.Codec
 import scodec.codecs._
@@ -71,8 +74,19 @@ object Message {
           command <- payloadCodec.decode(magic._1)
           length <- uint32L.decode(command._1)
           chksum <- uint32L.decode(length._1)
-          payload <- command._2.decode(chksum._1)
-        } yield payload
+          payload = chksum._1.take(length._2)
+          res <- command._2.decode(payload) match {
+            case \/-((rest, p)) =>
+              if (!rest.isEmpty)
+                -\/(("payload length did not match."))
+              else if (checksum(payload.toByteVector) == chksum._2) {
+                \/-((rest, p))
+              } else {
+                -\/(("checksum did not match."))
+              }
+            case other => other
+          }
+        } yield res
       }
     }
   }
