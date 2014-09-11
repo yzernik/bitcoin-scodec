@@ -17,7 +17,8 @@ class AddrSpec extends CodecSuite {
 
   "Addr codec" should {
     "roundtrip" in {
-      roundtrip(Addr(List((0, NetworkAddress(1234, Left(IPV4("10.0.0.1")), Port(8080))))))
+      roundtrip(addr)
+      roundtrip(Message.codec(0xDAB5BFFAL), addr)
     }
 
     "encode" in {

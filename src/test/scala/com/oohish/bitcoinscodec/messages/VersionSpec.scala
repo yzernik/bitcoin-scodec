@@ -6,7 +6,6 @@ import scodec.bits._
 import scodec.codecs._
 import scalaz.\/
 import com.oohish.bitcoinscodec.structures._
-import com.oohish.bitcoinscodec.structures.Port
 
 class VersionSpec extends CodecSuite {
 
@@ -38,6 +37,7 @@ class VersionSpec extends CodecSuite {
       roundtrip(version)
       roundtrip(codecWithRelay, version.copy(relay = Some(false)))
       roundtrip(codecWithRelay, version.copy(relay = Some(true)))
+      roundtrip(Message.codec(0xDAB5BFFAL), version)
     }
 
     "encode" in {

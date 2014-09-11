@@ -5,10 +5,7 @@ import scodec.bits.ByteVector
 import scodec.bits._
 import scodec.codecs._
 import scalaz.\/
-import com.oohish.bitcoinscodec.structures.TxIn
-import com.oohish.bitcoinscodec.structures.OutPoint
-import com.oohish.bitcoinscodec.structures.Hash
-import com.oohish.bitcoinscodec.structures.TxOut
+import com.oohish.bitcoinscodec.structures._
 
 class TxSpec extends CodecSuite {
 
@@ -43,6 +40,8 @@ CD 1C BE A6 E7 45 8A 7A  BA D5 12 A9 D9 EA 1A FB
         List(),
         12345L)
       roundtrip(tx1)
+      roundtrip(Message.codec(0xDAB5BFFAL), tx1)
+
     }
 
     "decode" in {

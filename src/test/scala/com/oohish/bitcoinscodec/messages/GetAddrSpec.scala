@@ -1,6 +1,7 @@
 package com.oohish.bitcoinscodec.messages
 
 import com.oohish.bitcoinscodec.CodecSuite
+import com.oohish.bitcoinscodec.structures._
 
 class GetAddrSpec extends CodecSuite {
 
@@ -8,7 +9,9 @@ class GetAddrSpec extends CodecSuite {
 
   "GetAddr codec" should {
     "roundtrip" in {
-      roundtrip(GetAddr())
+      val getaddr = GetAddr()
+      roundtrip(getaddr)
+      roundtrip(Message.codec(0xDAB5BFFAL), getaddr)
     }
   }
 }

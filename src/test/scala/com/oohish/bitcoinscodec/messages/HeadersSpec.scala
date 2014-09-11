@@ -5,9 +5,7 @@ import scodec.bits.ByteVector
 import scodec.bits._
 import scodec.codecs._
 import scalaz.\/
-import com.oohish.bitcoinscodec.structures.InvVect
-import com.oohish.bitcoinscodec.structures.Hash
-import com.oohish.bitcoinscodec.structures.BlockHeader
+import com.oohish.bitcoinscodec.structures._
 
 class HeadersSpec extends CodecSuite {
 
@@ -26,6 +24,7 @@ class HeadersSpec extends CodecSuite {
   "Headers codec" should {
     "roundtrip" in {
       roundtrip(headers)
+      roundtrip(Message.codec(0xDAB5BFFAL), headers)
     }
 
   }

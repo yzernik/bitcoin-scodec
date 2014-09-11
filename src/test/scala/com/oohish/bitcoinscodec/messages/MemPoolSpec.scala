@@ -1,6 +1,7 @@
 package com.oohish.bitcoinscodec.messages
 
 import com.oohish.bitcoinscodec.CodecSuite
+import com.oohish.bitcoinscodec.structures._
 
 class MemPoolSpec extends CodecSuite {
 
@@ -8,7 +9,9 @@ class MemPoolSpec extends CodecSuite {
 
   "MemPool codec" should {
     "roundtrip" in {
-      roundtrip(MemPool())
+      val mempool = MemPool()
+      roundtrip(mempool)
+      roundtrip(Message.codec(0xDAB5BFFAL), mempool)
     }
   }
 }

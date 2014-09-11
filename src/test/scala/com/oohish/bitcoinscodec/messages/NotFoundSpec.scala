@@ -5,8 +5,7 @@ import scodec.bits.ByteVector
 import scodec.bits._
 import scodec.codecs._
 import scalaz.\/
-import com.oohish.bitcoinscodec.structures.InvVect
-import com.oohish.bitcoinscodec.structures.Hash
+import com.oohish.bitcoinscodec.structures._
 
 class NotFoundSpec extends CodecSuite {
 
@@ -17,6 +16,7 @@ class NotFoundSpec extends CodecSuite {
   "NotFound codec" should {
     "roundtrip" in {
       roundtrip(notfound)
+      roundtrip(Message.codec(0xDAB5BFFAL), notfound)
     }
 
   }
