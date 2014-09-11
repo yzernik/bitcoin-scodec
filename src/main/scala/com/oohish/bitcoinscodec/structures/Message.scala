@@ -18,11 +18,22 @@ object Message {
   }
 
   val commands: Map[String, Codec[_ <: Message]] = Map(
-    "version" -> Version.codec,
-    "verack" -> Verack.codec,
     "addr" -> Addr.codec,
+    "alert" -> Alert.codec,
+    "getaddr" -> GetAddr.codec,
+    "getblocks" -> GetBlocks.codec,
+    "gedata" -> GetData.codec,
+    "getheaders" -> GetHeaders.codec,
+    "headers" -> Headers.codec,
+    "inv" -> Inv.codec,
+    "mempool" -> MemPool.codec,
+    "notfound" -> NotFound.codec,
     "ping" -> Ping.codec,
-    "pong" -> Pong.codec)
+    "pong" -> Pong.codec,
+    "reject" -> Reject.codec,
+    "tx" -> Tx.codec,
+    "version" -> Version.codec,
+    "verack" -> Verack.codec)
 
   def padCommand(command: String) = {
     ByteVector(command.getBytes()) ++
