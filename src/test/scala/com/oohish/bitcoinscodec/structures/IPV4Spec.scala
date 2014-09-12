@@ -13,12 +13,11 @@ class IPV4Spec extends CodecSuite {
 
   "IPV4 codec" should {
     "roundtrip" in {
-      roundtrip(IPV4(1234))
       roundtrip(IPV4("10.0.0.1"))
+      roundtrip(IPV4("10.0.0.255"))
     }
 
     "print" in {
-      IPV4(10, 0, 0, 1).toString shouldBe "10.0.0.1"
       IPV4("10.0.0.1").toString shouldBe "10.0.0.1"
     }
 

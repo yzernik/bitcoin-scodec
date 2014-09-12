@@ -20,7 +20,6 @@ class NetworkAddressSpec extends CodecSuite {
     "roundtrip" in {
       roundtrip(NetworkAddress(1234, Left(IPV4("10.0.0.1")), Port(8080)))
       roundtrip(NetworkAddress(1234, Right(IPV6(hex"2001 0db8 85a3 0042 1000 8a2e 0370 7334")), Port(8080)))
-      roundtrip(NetworkAddress(BigInt(Long.MaxValue) * 2 + 1, Left(IPV4(Int.MaxValue)), Port(65535)))
     }
 
     "encode" in {
