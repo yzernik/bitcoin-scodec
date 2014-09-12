@@ -72,8 +72,15 @@ object Message {
       }
       def decode(bits: BitVector) = {
         for {
-          m <- uint32L.decode(bits)
-          (mrem, magic) = m
+          m <- uint32L.decode(bits) match {
+            case \/-((rem, mg)) =>
+              if (mg == magic)
+                \/-((rem, mg))
+              else
+                -\/(("magic did not match."))
+            case -\/(err) => -\/(err)
+          }
+          (mrem, _) = m
           c <- payloadCodec.decode(mrem)
           (crem, command) = c
           l <- uint32L.decode(crem)

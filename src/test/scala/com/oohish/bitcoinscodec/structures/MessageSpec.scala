@@ -1,8 +1,11 @@
 package com.oohish.bitcoinscodec.structures
 
 import scalaz.\/
+import scalaz.-\/
+import scalaz.\/-
 import scodec.bits._
 import com.oohish.bitcoinscodec.CodecSuite
+import org.scalatest.Matchers
 
 class MessageSpec extends CodecSuite {
 
@@ -31,8 +34,49 @@ class MessageSpec extends CodecSuite {
 
     "encode" in {
       val codec = Message.codec(0xD9B4BEF9L)
-      codec.encode(Verack()) shouldBe
-        \/.right(hex"F9 BE B4 D9 76 65 72 61  63 6B 00 00 00 00 00 00 00 00 00 00 5D F6 E0 E2".toBitVector)
+      val verack = Verack()
+      val bytes = hex"F9 BE B4 D9 76 65 72 61  63 6B 00 00 00 00 00 00 00 00 00 00 5D F6 E0 E2".toBitVector
+      codec.encode(verack) shouldBe
+        \/.right(bytes)
+    }
+
+    "decode" in {
+      val codec = Message.codec(0xD9B4BEF9L)
+      val verack = Verack()
+      val bytes = hex"F9 BE B4 D9 76 65 72 61  63 6B 00 00 00 00 00 00 00 00 00 00 5D F6 E0 E2".toBitVector
+      shouldDecodeFullyTo(codec, bytes, verack)
+    }
+
+    "fail to decode message with wrong magic" in {
+      val codec = Message.codec(0xD9B4BEF9L)
+      val verack = Verack()
+      val bytes = hex"F8 BE B4 D9 76 65 72 61  63 6B 00 00 00 00 00 00 00 00 00 00 5D F6 E0 E2".toBitVector
+      codec.decode(bytes) shouldBe
+        -\/("magic did not match.")
+    }
+
+    "fail to decode message with wrong checksum" in {
+      val codec = Message.codec(0xD9B4BEF9L)
+      val verack = Verack()
+      val bytes = hex"F9 BE B4 D9 76 65 72 61  63 6B 00 00 00 00 00 00 00 00 00 00 5D F6 E0 E1".toBitVector
+      codec.decode(bytes) shouldBe
+        -\/("checksum did not match.")
+    }
+
+    "fail to decode message with cut-off payload" in {
+      val codec = Message.codec(0xD9B4BEF9L)
+      val ping = Ping(BigInt(1234))
+      val bytes = hex"f9beb4d970696e67000000000000000040000000433ba813d2040000000000".toBitVector
+      codec.decode(bytes) shouldBe
+        -\/("cannot acquire 64 bits from a vector that contains 56 bits")
+    }
+
+    "fail to decode message with too-long payload" in {
+      val codec = Message.codec(0xD9B4BEF9L)
+      val ping = Ping(BigInt(1234))
+      val bytes = hex"f9beb4d970696e67000000000000000050000000433ba813d20400000000000000".toBitVector
+      codec.decode(bytes) shouldBe
+        -\/("payload length did not match.")
     }
 
   }
