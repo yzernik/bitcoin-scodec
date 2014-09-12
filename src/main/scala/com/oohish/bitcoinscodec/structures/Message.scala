@@ -1,5 +1,7 @@
 package com.oohish.bitcoinscodec.structures
 
+import scala.language.existentials
+
 import scalaz.-\/
 import scalaz.\/-
 
@@ -70,21 +72,25 @@ object Message {
       }
       def decode(bits: BitVector) = {
         for {
-          magic <- uint32L.decode(bits)
-          command <- payloadCodec.decode(magic._1)
-          length <- uint32L.decode(command._1)
-          chksum <- uint32L.decode(length._1)
-          payload = chksum._1.take(length._2)
-          res <- command._2.decode(payload) match {
-            case \/-((rest, p)) =>
-              if (!rest.isEmpty)
+          m <- uint32L.decode(bits)
+          (mrem, magic) = m
+          c <- payloadCodec.decode(mrem)
+          (crem, command) = c
+          l <- uint32L.decode(crem)
+          (lrem, length) = l
+          ch <- uint32L.decode(lrem)
+          (chrem, chksum) = ch
+          (payload, rest) = chrem.splitAt(length)
+          res <- command.decode(payload) match {
+            case \/-((rem, p)) =>
+              if (!rem.isEmpty)
                 -\/(("payload length did not match."))
-              else if (checksum(payload.toByteVector) == chksum._2) {
+              else if (checksum(payload.toByteVector) == chksum) {
                 \/-((rest, p))
               } else {
                 -\/(("checksum did not match."))
               }
-            case other => other
+            case -\/(err) => -\/(err)
           }
         } yield res
       }
