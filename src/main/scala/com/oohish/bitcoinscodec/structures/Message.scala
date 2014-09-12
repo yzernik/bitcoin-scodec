@@ -25,6 +25,7 @@ object Message {
   val commands: Map[String, Codec[_ <: Message]] = Map(
     "addr" -> Addr.codec,
     "alert" -> Alert.codec,
+    "block" -> Block.codec,
     "getaddr" -> GetAddr.codec,
     "getblocks" -> GetBlocks.codec,
     "gedata" -> GetData.codec,
