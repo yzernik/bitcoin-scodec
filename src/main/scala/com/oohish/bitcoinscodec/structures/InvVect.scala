@@ -16,9 +16,9 @@ object InvVect {
   case object MSG_BLOCK extends InvType
 
   implicit val invTypeCodec: Codec[InvType] = mappedEnum(uint32L,
-    ERROR -> 1L,
-    MSG_TX -> 2L,
-    MSG_BLOCK -> 3L)
+    ERROR -> 0L,
+    MSG_TX -> 1L,
+    MSG_BLOCK -> 2L)
 
   implicit val codec: Codec[InvVect] = {
     ("inv_type" | Codec[InvType]) ::
