@@ -32,22 +32,33 @@ class VersionSpec extends CodecSuite {
   	C0 3E 03 00  
 """
 
+  val messageBytes = hex"""
+F9 BE B4 D9
+76 65 72 73 69 6F 6E 00 00 00 00 00
+64 00 00 00
+3B 64 8D 5A
+""" ++ bytes
+
   "Version codec" should {
     "roundtrip" in {
       roundtrip(version)
       roundtrip(codecWithRelay, version.copy(relay = Some(false)))
       roundtrip(codecWithRelay, version.copy(relay = Some(true)))
       roundtrip(Message.codec(0xDAB5BFFAL), version)
+      roundtrip(Message.codec(0xD9B4BEF9L), version)
     }
 
     "encode" in {
       codec.encode(version) shouldBe
         \/.right(bytes.toBitVector)
+      Message.codec(0xD9B4BEF9L).encode(version) shouldBe
+        \/.right(messageBytes.toBitVector)
     }
 
     "decode" in {
       codec.decode(bytes.toBitVector) shouldBe
         \/.right(BitVector.empty, version)
+      shouldDecodeFullyTo(Message.codec(0xD9B4BEF9L), messageBytes.toBitVector, version)
     }
 
   }

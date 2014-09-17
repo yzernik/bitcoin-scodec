@@ -67,9 +67,10 @@ object Message {
           magic <- uint32L.encode(magic)
           command <- payloadCodec.encode(c)
           payload <- c.encode(msg)
-          length <- uint32L.encode(payload.length)
+          length <- uint32L.encode(payload.length / 8)
           chksum <- uint32L.encode(checksum(payload.toByteVector))
         } yield magic ++ command ++ length ++ chksum ++ payload
+
       }
       def decode(bits: BitVector) = {
         for {
@@ -88,7 +89,7 @@ object Message {
           (lrem, length) = l
           ch <- uint32L.decode(lrem)
           (chrem, chksum) = ch
-          (payload, rest) = chrem.splitAt(length)
+          (payload, rest) = chrem.splitAt(length * 8)
           res <- command.decode(payload) match {
             case \/-((rem, p)) =>
               if (!rem.isEmpty)
