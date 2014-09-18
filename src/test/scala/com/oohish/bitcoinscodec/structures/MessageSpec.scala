@@ -29,7 +29,7 @@ class MessageSpec extends CodecSuite {
         7284544412836900411L,
         "/Satoshi:0.7.2/",
         212672,
-        None))
+        true))
     }
 
     "encode" in {

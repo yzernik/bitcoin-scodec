@@ -16,7 +16,7 @@ case class Version(
   nonce: UInt64,
   user_agent: String,
   start_height: Int,
-  relay: Option[Boolean]) extends Message {
+  relay: Boolean) extends Message {
   type E = Version
   def codec = Version.codec
 }
@@ -33,7 +33,7 @@ object Version {
     nonce: BigInt,
     user_agent: String,
     start_height: Int,
-    relay: Option[Boolean]): Version =
+    relay: Boolean): Version =
     Version(
       version,
       UInt64(UInt64.bigIntToLong(services)),
@@ -45,7 +45,7 @@ object Version {
       start_height,
       relay)
 
-  implicit val codec: Codec[Version] = {
+  val codec: Codec[Version] = {
     ("version" | int32L) ::
       ("services" | Codec[UInt64]) ::
       ("timestamp" | int64L) ::
@@ -54,18 +54,6 @@ object Version {
       ("nonce" | Codec[UInt64]) ::
       ("user_agent" | VarStr.codec) ::
       ("start_height" | int32L) ::
-      ("relay" | conditional(false, bool))
-  }.as[Version]
-
-  val codecWithRelay: Codec[Version] = {
-    ("version" | int32L) ::
-      ("services" | Codec[UInt64]) ::
-      ("timestamp" | int64L) ::
-      ("addr_recv" | Codec[NetworkAddress]) ::
-      ("addr_from" | Codec[NetworkAddress]) ::
-      ("nonce" | Codec[UInt64]) ::
-      ("user_agent" | VarStr.codec) ::
-      ("start_height" | int32L) ::
-      ("relay" | conditional(true, bool))
+      ("relay" | mappedEnum(uint8, false -> 0, true -> 1))
   }.as[Version]
 }
