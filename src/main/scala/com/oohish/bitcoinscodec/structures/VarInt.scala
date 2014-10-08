@@ -15,35 +15,35 @@ object VarInt {
     (n: Long) =>
       n match {
         case i if (i < 0xfd) =>
-          uint8.encode(i.toInt)
+          uint8L.encode(i.toInt)
         case i if (i < 0xffff) =>
           for {
-            a <- uint8.encode(0xfd)
-            b <- uint16.encode(i.toInt)
+            a <- uint8L.encode(0xfd)
+            b <- uint16L.encode(i.toInt)
           } yield a ++ b
         case i if (i < 0xffffffffL) =>
           for {
-            a <- uint8.encode(0xfe)
-            b <- uint32.encode(i)
+            a <- uint8L.encode(0xfe)
+            b <- uint32L.encode(i)
           } yield a ++ b
         case i =>
           for {
-            a <- uint8.encode(0xff)
+            a <- uint8L.encode(0xff)
             b <- Codec[UInt64].encode(UInt64(UInt64.bigIntToLong(BigInt(i))))
           } yield a ++ b
       },
     (buf: BitVector) => {
-      uint8.decode(buf) match {
+      uint8L.decode(buf) match {
         case \/-((rest, byte)) =>
           byte match {
             case 0xff =>
               Codec[UInt64].decode(rest)
                 .map { case (a, b) => (a, b.value) }
             case 0xfe =>
-              uint32.decode(rest)
+              uint32L.decode(rest)
                 .map { case (a, b) => (a, b) }
             case 0xfd =>
-              uint16.decode(rest)
+              uint16L.decode(rest)
                 .map { case (a, b) => (a, b.toLong) }
             case _ =>
               \/-((rest, byte.toLong))
