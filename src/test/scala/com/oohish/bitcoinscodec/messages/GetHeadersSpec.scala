@@ -13,12 +13,10 @@ class GetHeadersSpec extends CodecSuite {
 
   val getheaders = GetHeaders(
     1L,
-    0L,
     List(),
     Hash(ByteVector.fill(32)(0x42)))
 
   val getheaders2 = GetHeaders(
-    1L,
     1L,
     List(Hash(ByteVector.fill(32)(0x42))),
     Hash(ByteVector.fill(32)(0x42)))

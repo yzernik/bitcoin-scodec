@@ -16,9 +16,8 @@ import com.oohish.bitcoinscodec.structures.VarInt
 
 case class GetHeaders(
   version: Long,
-  hash_count: Long,
   block_locator_hashes: List[Hash],
-  hash_stop: Hash) extends Message {
+  hash_stop: Hash = GetBlocks.zeroStop) extends Message {
   type E = GetHeaders
   def codec = GetHeaders.codec
 }
@@ -26,9 +25,10 @@ case class GetHeaders(
 object GetHeaders {
   import VarList._
 
+  val zeroStop = Hash(ByteVector.fill(32)(0))
+
   implicit val codec: Codec[GetHeaders] = {
     ("version" | uint32L) ::
-      ("hash_count" | VarInt.varIntCodec) ::
       ("block_locator_hashes" | VarList.varList(Codec[Hash])) ::
       ("hash_stop" | Codec[Hash])
   }.as[GetHeaders]
