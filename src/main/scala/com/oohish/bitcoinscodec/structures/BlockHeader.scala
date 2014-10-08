@@ -14,12 +14,12 @@ case class BlockHeader(
 object BlockHeader {
 
   implicit val codec: Codec[BlockHeader] = {
-    ("version" | uint32) ::
+    ("version" | uint32L) ::
       ("prev_block" | Codec[Hash]) ::
       ("merkle_root" | Codec[Hash]) ::
-      ("timestamp" | uint32) ::
-      ("bits" | uint32) ::
-      ("nonce" | uint32)
+      ("timestamp" | uint32L) ::
+      ("bits" | uint32L) ::
+      ("nonce" | uint32L)
   }.as[BlockHeader]
 
 }

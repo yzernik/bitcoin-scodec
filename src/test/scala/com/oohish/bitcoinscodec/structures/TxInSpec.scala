@@ -22,7 +22,7 @@ class TxInSpec extends CodecSuite {
     "decode" in {
       val txin = TxIn(
         OutPoint(
-          Hash(hex"6dbddb085b1d8af75184f0bc01fad58d1266e9b63b50881990e4b40d6aee3629"),
+          Hash(hex"6dbddb085b1d8af75184f0bc01fad58d1266e9b63b50881990e4b40d6aee3629".reverse),
           0L),
         hex"""            
         483045022100f3581e1972ae8ac7c7367a7a253bc1135223

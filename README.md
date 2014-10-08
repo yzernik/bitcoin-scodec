@@ -12,7 +12,7 @@ Add the following to your build.sbt:
 
 
 ```
-libraryDependencies += "com.oohish" %% "bitcoin-scodec" % "0.1.8"
+libraryDependencies += "com.oohish" %% "bitcoin-scodec" % "0.1.9"
 ```
 
 with the following resolver

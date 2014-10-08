@@ -11,5 +11,6 @@ case class Hash(value: ByteVector) {
 }
 
 object Hash {
-  implicit val codec: Codec[Hash] = bytes(32).xmap(Hash.apply, _.value)
+  implicit val codec: Codec[Hash] = bytes(32)
+    .xmap(b => Hash.apply(b.reverse), _.value.reverse)
 }

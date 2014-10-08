@@ -19,7 +19,7 @@ class OutPointSpec extends CodecSuite {
     "decode" in {
       val outpoint =
         OutPoint(
-          Hash(hex"6dbddb085b1d8af75184f0bc01fad58d1266e9b63b50881990e4b40d6aee3629"),
+          Hash(hex"6dbddb085b1d8af75184f0bc01fad58d1266e9b63b50881990e4b40d6aee3629".reverse),
           0L)
       val bytes = hex"""            
        6D BD DB 08 5B 1D 8A F7  51 84 F0 BC 01 FA D5 8D
