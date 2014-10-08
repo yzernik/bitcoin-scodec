@@ -11,7 +11,7 @@ import shapeless._
 import com.oohish.bitcoinscodec.structures._
 import com.oohish.bitcoinscodec.structures.Message._
 
-case class Headers(invs: List[BlockHeader]) extends Message {
+case class Headers(invs: List[Block]) extends Message {
   type E = Headers
   def codec = Headers.codec
 }
@@ -21,6 +21,6 @@ object Headers {
   import BlockHeader._
 
   implicit val codec: Codec[Headers] =
-    VarList.varList(Codec[BlockHeader]).as[Headers]
+    VarList.varList(Codec[Block]).as[Headers]
 
 }
