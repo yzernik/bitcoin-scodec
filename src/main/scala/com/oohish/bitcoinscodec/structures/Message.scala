@@ -47,7 +47,7 @@ object Message {
   }
 
   val payloadCodec: Codec[Codec[_ <: Message]] = mappedEnum(bytes(12),
-    commands.map(_.swap).mapValues(padCommand(_)))
+    commands.map(_.swap).mapValues(padCommand))
 
   def checksum(data: ByteVector): Long = {
     val messageDigest = MessageDigest.getInstance("SHA-256")
