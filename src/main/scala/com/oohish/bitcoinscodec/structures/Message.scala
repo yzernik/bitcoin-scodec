@@ -32,7 +32,43 @@ object Message {
       ByteVector.fill(12 - command.length())(0)
   }
 
-  implicit def codec(magic: Long, version: Int): Codec[Message] = {
+  def decodeHeader(bits: BitVector, magic: Long, version: Int) = {
+    for {
+      m <- uint32L.decode(bits) match {
+        case \/-((rem, mg)) =>
+          if (mg == magic)
+            \/-((rem, mg))
+          else
+            -\/(("magic did not match."))
+        case -\/(err) => -\/(err)
+      }
+      (mrem, _) = m
+      c <- bytes(12).decode(mrem)
+      (crem, command) = c
+      l <- uint32L.decode(crem)
+      (lrem, length) = l
+      ch <- uint32L.decode(lrem)
+      (chrem, chksum) = ch
+      (payload, rest) = chrem.splitAt(length * 8)
+    } yield (command, length, chksum, payload, rest)
+  }
+
+  def decodePayload(payload: BitVector, version: Int, chksum: Long, command: ByteVector) = {
+    val cmd = MessageCompanion.byCommand(command)
+    cmd.codec(version).decode(payload) match {
+      case \/-((rem, p)) =>
+        if (!rem.isEmpty)
+          -\/(("payload length did not match."))
+        else if (Util.checksum(payload.toByteVector) == chksum) {
+          \/-(p)
+        } else {
+          -\/(("checksum did not match."))
+        }
+      case -\/(err) => -\/(err)
+    }
+  }
+
+  def codec(magic: Long, version: Int): Codec[Message] = {
     new Codec[Message] {
       def encode(msg: Message) = {
         val c = msg.companion.codec(version)
@@ -43,39 +79,13 @@ object Message {
           length <- uint32L.encode(payload.length / 8)
           chksum <- uint32L.encode(Util.checksum(payload.toByteVector))
         } yield magic ++ command ++ length ++ chksum ++ payload
-
       }
       def decode(bits: BitVector) = {
         for {
-          m <- uint32L.decode(bits) match {
-            case \/-((rem, mg)) =>
-              if (mg == magic)
-                \/-((rem, mg))
-              else
-                -\/(("magic did not match."))
-            case -\/(err) => -\/(err)
-          }
-          (mrem, _) = m
-          c <- bytes(12).decode(mrem)
-          (crem, command) = c
-          cmd = MessageCompanion.byCommand(command)
-          l <- uint32L.decode(crem)
-          (lrem, length) = l
-          ch <- uint32L.decode(lrem)
-          (chrem, chksum) = ch
-          (payload, rest) = chrem.splitAt(length * 8)
-          res <- cmd.codec(version).decode(payload) match {
-            case \/-((rem, p)) =>
-              if (!rem.isEmpty)
-                -\/(("payload length did not match."))
-              else if (Util.checksum(payload.toByteVector) == chksum) {
-                \/-((rest, p))
-              } else {
-                -\/(("checksum did not match."))
-              }
-            case -\/(err) => -\/(err)
-          }
-        } yield res
+          metadata <- decodeHeader(bits, magic, version)
+          (command, length, chksum, payload, rest) = metadata
+          msg <- decodePayload(payload, version, chksum, command)
+        } yield (rest, msg)
       }
     }
   }
