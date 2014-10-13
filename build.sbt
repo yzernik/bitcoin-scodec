@@ -5,7 +5,7 @@ name := "bitcoin-scodec"
 
 organization := "com.oohish"
 
-version := "0.1.12"
+version := "0.2.0"
 
 scalaVersion := "2.11.2"
 
