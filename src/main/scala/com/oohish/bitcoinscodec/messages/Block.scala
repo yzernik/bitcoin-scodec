@@ -1,7 +1,7 @@
 package com.oohish.bitcoinscodec.messages
 
 import com.oohish.bitcoinscodec.structures._
-import com.oohish.bitcoinscodec.structures.Message._
+import com.oohish.bitcoinscodec.structures.Message
 
 import scodec.Codec
 import scodec.codecs._
@@ -11,6 +11,7 @@ case class Block(
   txs: List[Tx]) extends Message {
   type E = Block
   def codec = Block.codec
+  def command = "block"
 }
 
 object Block {

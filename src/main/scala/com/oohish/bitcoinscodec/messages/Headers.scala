@@ -9,11 +9,12 @@ import scodec.Codec
 import scodec.codecs._
 import shapeless._
 import com.oohish.bitcoinscodec.structures._
-import com.oohish.bitcoinscodec.structures.Message._
+import com.oohish.bitcoinscodec.structures.Message
 
 case class Headers(invs: List[Block]) extends Message {
   type E = Headers
   def codec = Headers.codec
+  def command = "headers"
 }
 
 object Headers {

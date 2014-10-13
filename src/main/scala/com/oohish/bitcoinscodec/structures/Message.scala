@@ -15,12 +15,13 @@ import java.security.MessageDigest
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
-object Message {
+trait Message { self =>
+  type E >: self.type <: Message
+  def codec: Codec[E]
+  def command: String
+}
 
-  trait Message { self =>
-    type E >: self.type <: Message
-    def codec: Codec[E]
-  }
+object Message {
 
   val commands: Map[String, Codec[_ <: Message]] = Map(
     "addr" -> Addr.codec,

@@ -9,7 +9,7 @@ import scodec.Codec
 import scodec.codecs._
 import shapeless._
 import com.oohish.bitcoinscodec.structures._
-import com.oohish.bitcoinscodec.structures.Message.Message
+import com.oohish.bitcoinscodec.structures.Message
 
 case class Tx(
   version: Long,
@@ -18,6 +18,7 @@ case class Tx(
   lock_time: Long) extends Message {
   type E = Tx
   def codec = Tx.codec
+  def command = "tx"
 }
 
 object Tx {

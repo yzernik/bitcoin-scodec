@@ -3,11 +3,12 @@ package com.oohish.bitcoinscodec.messages
 import scodec.Codec
 import scodec.codecs._
 import com.oohish.bitcoinscodec.structures.UInt64
-import com.oohish.bitcoinscodec.structures.Message.Message
+import com.oohish.bitcoinscodec.structures.Message
 
 case class Pong(value: UInt64) extends Message {
   type E = Pong
   def codec = Pong.codec
+  def command = "pong"
 }
 
 object Pong {

@@ -9,7 +9,7 @@ import scodec.Codec
 import scodec.codecs._
 import shapeless._
 import com.oohish.bitcoinscodec.structures.VarList
-import com.oohish.bitcoinscodec.structures.Message.Message
+import com.oohish.bitcoinscodec.structures.Message
 import com.oohish.bitcoinscodec.structures.VarStr
 
 case class Alert(
@@ -28,6 +28,7 @@ case class Alert(
   reserved: String) extends Message {
   type E = Alert
   def codec = Alert.codec
+  def command = "alert"
 }
 
 object Alert {

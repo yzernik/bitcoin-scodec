@@ -9,12 +9,13 @@ import scodec.Codec
 import scodec.codecs._
 import shapeless._
 import com.oohish.bitcoinscodec.structures.VarList
-import com.oohish.bitcoinscodec.structures.Message.Message
+import com.oohish.bitcoinscodec.structures.Message
 import com.oohish.bitcoinscodec.structures.InvVect
 
 case class GetData(invs: List[InvVect]) extends Message {
   type E = GetData
   def codec = GetData.codec
+  def command = "getdata"
 }
 
 object GetData {

@@ -9,7 +9,7 @@ import scodec.Codec
 import scodec.codecs._
 import shapeless._
 import com.oohish.bitcoinscodec.structures._
-import com.oohish.bitcoinscodec.structures.Message.Message
+import com.oohish.bitcoinscodec.structures.Message
 import com.oohish.bitcoinscodec.messages.Reject.CCode
 
 case class Reject(
@@ -18,6 +18,7 @@ case class Reject(
   reason: String) extends Message {
   type E = Reject
   def codec = Reject.codec
+  def command = "reject"
 }
 
 object Reject {

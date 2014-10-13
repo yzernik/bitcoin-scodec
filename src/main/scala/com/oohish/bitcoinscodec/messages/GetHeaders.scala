@@ -9,7 +9,7 @@ import scodec.Codec
 import scodec.codecs._
 import shapeless._
 import com.oohish.bitcoinscodec.structures.VarList
-import com.oohish.bitcoinscodec.structures.Message.Message
+import com.oohish.bitcoinscodec.structures.Message
 import com.oohish.bitcoinscodec.structures.InvVect
 import com.oohish.bitcoinscodec.structures.Hash
 import com.oohish.bitcoinscodec.structures.VarInt
@@ -20,6 +20,7 @@ case class GetHeaders(
   hash_stop: Hash = GetBlocks.zeroStop) extends Message {
   type E = GetHeaders
   def codec = GetHeaders.codec
+  def command = "getheaders"
 }
 
 object GetHeaders {

@@ -4,7 +4,7 @@ import scodec.Codec
 import scodec.codecs._
 import com.oohish.bitcoinscodec.structures.UInt64
 import com.oohish.bitcoinscodec.structures.VarStr
-import com.oohish.bitcoinscodec.structures.Message.Message
+import com.oohish.bitcoinscodec.structures.Message
 import com.oohish.bitcoinscodec.structures.NetworkAddress
 
 case class Version(
@@ -19,6 +19,7 @@ case class Version(
   relay: Boolean) extends Message {
   type E = Version
   def codec = Version.codec
+  def command = "version"
 }
 
 object Version {
