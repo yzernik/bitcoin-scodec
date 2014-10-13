@@ -10,8 +10,8 @@ class GetAddrSpec extends CodecSuite {
   "GetAddr codec" should {
     "roundtrip" in {
       val getaddr = GetAddr()
-      roundtrip(getaddr)
-      roundtrip(Message.codec(0xDAB5BFFAL), getaddr)
+      roundtrip(GetAddr.codec(1), getaddr)
+      roundtrip(Message.codec(0xDAB5BFFAL, 1), getaddr)
     }
   }
 }

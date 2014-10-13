@@ -48,19 +48,19 @@ F9 BE B4 D9
 
   "Version codec" should {
     "roundtrip" in {
-      roundtrip(codec, version)
-      roundtrip(codec, version.copy(relay = false))
-      roundtrip(Message.codec(0xDAB5BFFAL), version)
-      roundtrip(Message.codec(0xD9B4BEF9L), version)
+      roundtrip(Version.codec(1), version)
+      roundtrip(Version.codec(1), version.copy(relay = false))
+      roundtrip(Message.codec(0xDAB5BFFAL, 1), version)
+      roundtrip(Message.codec(0xD9B4BEF9L, 1), version)
     }
 
     "encode" in {
-      codec.encode(version) shouldBe
+      Version.codec(1).encode(version) shouldBe
         \/.right(bytes.toBitVector)
     }
 
     "decode" in {
-      codec.decode(bytes.toBitVector) shouldBe
+      Version.codec(1).decode(bytes.toBitVector) shouldBe
         \/.right(BitVector.empty, version)
     }
 

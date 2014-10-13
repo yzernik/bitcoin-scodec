@@ -16,8 +16,8 @@ class InvSpec extends CodecSuite {
 
   "Inv codec" should {
     "roundtrip" in {
-      roundtrip(inv)
-      roundtrip(Message.codec(0xDAB5BFFAL), inv)
+      roundtrip(Inv.codec(1), inv)
+      roundtrip(Message.codec(0xDAB5BFFAL, 1), inv)
     }
 
   }

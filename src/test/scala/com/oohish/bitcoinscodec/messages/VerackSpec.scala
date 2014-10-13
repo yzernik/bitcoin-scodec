@@ -10,8 +10,8 @@ class VerackSpec extends CodecSuite {
   "Verack codec" should {
     "roundtrip" in {
       val verack = Verack()
-      roundtrip(verack)
-      roundtrip(Message.codec(0xDAB5BFFAL), verack)
+      roundtrip(Verack.codec(1), verack)
+      roundtrip(Message.codec(0xDAB5BFFAL, 1), verack)
     }
   }
 }

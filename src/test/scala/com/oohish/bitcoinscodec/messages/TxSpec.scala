@@ -39,8 +39,8 @@ CD 1C BE A6 E7 45 8A 7A  BA D5 12 A9 D9 EA 1A FB
         List(),
         List(),
         12345L)
-      roundtrip(tx1)
-      roundtrip(Message.codec(0xDAB5BFFAL), tx1)
+      roundtrip(Tx.codec(1), tx1)
+      roundtrip(Message.codec(0xDAB5BFFAL, 1), tx1)
 
     }
 
@@ -64,7 +64,7 @@ CD 1C BE A6 E7 45 8A 7A  BA D5 12 A9 D9 EA 1A FB
 
       val tx = Tx(version, txins, txouts, locktime)
 
-      shouldDecodeFullyTo(Tx.codec, bytes.toBitVector, tx)
+      shouldDecodeFullyTo(Tx.codec(1), bytes.toBitVector, tx)
     }
 
   }

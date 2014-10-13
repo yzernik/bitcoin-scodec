@@ -11,6 +11,7 @@ import shapeless._
 import com.oohish.bitcoinscodec.structures.VarList
 import com.oohish.bitcoinscodec.structures.Message
 import com.oohish.bitcoinscodec.structures.VarStr
+import com.oohish.bitcoinscodec.structures.MessageCompanion
 
 case class Alert(
   version: Int,
@@ -27,14 +28,11 @@ case class Alert(
   status_bar: String,
   reserved: String) extends Message {
   type E = Alert
-  def codec = Alert.codec
-  def command = "alert"
+  def companion = Alert
 }
 
-object Alert {
-  import VarList._
-
-  implicit val codec = {
+object Alert extends MessageCompanion[Alert] {
+  def codec(version: Int) = {
     ("version" | int32) ::
       ("relay_until" | int64) ::
       ("expiration" | int64) ::
@@ -49,5 +47,5 @@ object Alert {
       ("status_bar" | VarStr.codec) ::
       ("reserved" | VarStr.codec)
   }.as[Alert]
-
+  val command = "alert"
 }

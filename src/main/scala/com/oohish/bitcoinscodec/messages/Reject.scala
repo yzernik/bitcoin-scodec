@@ -17,11 +17,10 @@ case class Reject(
   ccode: CCode,
   reason: String) extends Message {
   type E = Reject
-  def codec = Reject.codec
-  def command = "reject"
+  def companion = Reject
 }
 
-object Reject {
+object Reject extends MessageCompanion[Reject] {
   import VarList._
 
   sealed trait CCode
@@ -44,10 +43,11 @@ object Reject {
     REJECT_INSUFFICIENTFEE -> 0x42,
     REJECT_CHECKPOINT -> 0x43)
 
-  implicit val codec: Codec[Reject] = {
+  def codec(version: Int): Codec[Reject] = {
     ("message" | VarStr.codec) ::
       ("ccode" | ccodeCodec) ::
       ("reason" | VarStr.codec)
   }.as[Reject]
 
+  def command = "reject"
 }

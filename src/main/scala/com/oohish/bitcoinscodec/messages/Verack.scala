@@ -4,13 +4,14 @@ import scodec.Codec
 import scodec.codecs._
 import scodec.bits.ByteVector
 import com.oohish.bitcoinscodec.structures.Message
+import com.oohish.bitcoinscodec.structures.MessageCompanion
 
 case class Verack() extends Message {
   type E = Verack
-  def codec = Verack.codec
-  def command = "verack"
+  def companion = Verack
 }
 
-object Verack {
-  implicit val codec: Codec[Verack] = provide(Verack())
+object Verack extends MessageCompanion[Verack] {
+  def codec(version: Int): Codec[Verack] = provide(Verack())
+  def command = "verack"
 }

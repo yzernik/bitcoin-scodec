@@ -10,16 +10,13 @@ case class Block(
   block_header: BlockHeader,
   txs: List[Tx]) extends Message {
   type E = Block
-  def codec = Block.codec
-  def command = "block"
+  def companion = Block
 }
 
-object Block {
-  import VarList._
-
-  implicit val codec = {
+object Block extends MessageCompanion[Block] {
+  def codec(version: Int) = {
     ("block_header" | Codec[BlockHeader]) ::
-      ("txs" | VarList.varList(Codec[Tx]))
+      ("txs" | VarList.varList(Tx.codec(version)))
   }.as[Block]
-
+  def command = "block"
 }

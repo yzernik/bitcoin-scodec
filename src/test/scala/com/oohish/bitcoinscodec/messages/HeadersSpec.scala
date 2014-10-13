@@ -19,7 +19,7 @@ class HeadersSpec extends CodecSuite {
     "decode" in {
       val buf = scalax.io.Resource.fromURL(getClass.getResource("/headerspayload.data"))
       val bytes = BitVector(buf.bytes)
-      Headers.codec.decode(bytes).isRight shouldBe true
+      Headers.codec(1).decode(bytes).isRight shouldBe true
     }
 
   }

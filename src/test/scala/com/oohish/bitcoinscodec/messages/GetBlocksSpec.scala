@@ -18,8 +18,8 @@ class GetBlocksSpec extends CodecSuite {
 
   "GetBlocks codec" should {
     "roundtrip" in {
-      roundtrip(getblocks)
-      roundtrip(Message.codec(0xDAB5BFFAL), getblocks)
+      roundtrip(GetBlocks.codec(1), getblocks)
+      roundtrip(Message.codec(0xDAB5BFFAL, 1), getblocks)
     }
 
   }

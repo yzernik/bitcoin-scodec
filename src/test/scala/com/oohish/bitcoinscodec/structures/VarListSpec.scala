@@ -10,7 +10,7 @@ class VarListSpec extends CodecSuite {
 
   "VarList codec" should {
 
-    implicit val codec = varList(Codec[Ping])
+    implicit val codec = varList(Ping.codec(1))
 
     "roundtrip" in {
       roundtrip(codec, List())

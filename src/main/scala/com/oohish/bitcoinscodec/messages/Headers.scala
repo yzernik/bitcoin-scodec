@@ -13,15 +13,11 @@ import com.oohish.bitcoinscodec.structures.Message
 
 case class Headers(invs: List[Block]) extends Message {
   type E = Headers
-  def codec = Headers.codec
-  def command = "headers"
+  def companion = Headers
 }
 
-object Headers {
-  import VarList._
-  import BlockHeader._
-
-  implicit val codec: Codec[Headers] =
-    VarList.varList(Codec[Block]).as[Headers]
-
+object Headers extends MessageCompanion[Headers] {
+  def codec(version: Int): Codec[Headers] =
+    VarList.varList(Block.codec(version)).as[Headers]
+  def command = "headers"
 }

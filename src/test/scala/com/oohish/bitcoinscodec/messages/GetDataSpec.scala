@@ -15,8 +15,8 @@ class GetDataSpec extends CodecSuite {
     "roundtrip" in {
       val getdata = GetData(List(InvVect(InvVect.MSG_TX,
         Hash(ByteVector.fill(32)(0x42)))))
-      roundtrip(getdata)
-      roundtrip(Message.codec(0xDAB5BFFAL), getdata)
+      roundtrip(GetData.codec(1), getdata)
+      roundtrip(Message.codec(0xDAB5BFFAL, 1), getdata)
     }
 
   }

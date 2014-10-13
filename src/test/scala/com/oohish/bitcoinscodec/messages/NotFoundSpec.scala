@@ -15,8 +15,8 @@ class NotFoundSpec extends CodecSuite {
     Hash(ByteVector.fill(32)(0x42)))))
   "NotFound codec" should {
     "roundtrip" in {
-      roundtrip(notfound)
-      roundtrip(Message.codec(0xDAB5BFFAL), notfound)
+      roundtrip(NotFound.codec(1), notfound)
+      roundtrip(Message.codec(0xDAB5BFFAL, 1), notfound)
     }
 
   }

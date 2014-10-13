@@ -11,17 +11,15 @@ import shapeless._
 import com.oohish.bitcoinscodec.structures.VarList
 import com.oohish.bitcoinscodec.structures.Message
 import com.oohish.bitcoinscodec.structures.InvVect
+import com.oohish.bitcoinscodec.structures.MessageCompanion
 
 case class GetData(invs: List[InvVect]) extends Message {
   type E = GetData
-  def codec = GetData.codec
-  def command = "getdata"
+  def companion = GetData
 }
 
-object GetData {
-  import VarList._
-
-  implicit val codec: Codec[GetData] =
+object GetData extends MessageCompanion[GetData] {
+  def codec(version: Int): Codec[GetData] =
     VarList.varList(Codec[InvVect]).as[GetData]
-
+  def command = "getdata"
 }

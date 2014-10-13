@@ -27,18 +27,18 @@ ED 52 39 9B
 
   "Addr codec" should {
     "roundtrip" in {
-      roundtrip(addr)
-      roundtrip(Message.codec(0xDAB5BFFAL), addr)
-      roundtrip(Message.codec(0xD9B4BEF9L), addr)
+      roundtrip(Addr.codec(1), addr)
+      roundtrip(Message.codec(0xDAB5BFFAL, 1), addr)
+      roundtrip(Message.codec(0xD9B4BEF9L, 1), addr)
     }
 
     "encode" in {
-      codec.encode(addr) shouldBe
+      codec(1).encode(addr) shouldBe
         \/.right(bytes.toBitVector)
     }
 
     "decode" in {
-      codec.decode(bytes.toBitVector) shouldBe
+      codec(1).decode(bytes.toBitVector) shouldBe
         \/.right(BitVector.empty, addr)
     }
 

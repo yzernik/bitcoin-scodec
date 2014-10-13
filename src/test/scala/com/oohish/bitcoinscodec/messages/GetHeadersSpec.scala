@@ -18,8 +18,8 @@ class GetHeadersSpec extends CodecSuite {
 
   "GetHeaders codec" should {
     "roundtrip" in {
-      roundtrip(getheaders)
-      roundtrip(Message.codec(0xDAB5BFFAL), getheaders)
+      roundtrip(GetHeaders.codec(1), getheaders)
+      roundtrip(Message.codec(0xDAB5BFFAL, 1), getheaders)
     }
 
     "decode" in {
@@ -30,7 +30,7 @@ class GetHeadersSpec extends CodecSuite {
       0000000000000000000000000000000000000000000000000000000000000000
         """.toBitVector
 
-      shouldDecodeFullyTo(GetHeaders.codec, bytes, getheaders)
+      shouldDecodeFullyTo(GetHeaders.codec(1), bytes, getheaders)
     }
 
   }

@@ -14,15 +14,15 @@ class RejectSpec extends CodecSuite {
         "Your message was rejected.",
         REJECT_MALFORMED,
         "Your message was malformed.")
-      roundtrip(Reject(
+      roundtrip(Reject.codec(1), Reject(
         "Your message was rejected.",
         REJECT_MALFORMED,
         "Your message was malformed."))
-      roundtrip(Reject(
+      roundtrip(Reject.codec(1), Reject(
         "Your message was rejected again.",
         REJECT_INVALID,
         "Your message was invalid."))
-      roundtrip(Message.codec(0xDAB5BFFAL), reject)
+      roundtrip(Message.codec(0xDAB5BFFAL, 1), reject)
     }
   }
 }

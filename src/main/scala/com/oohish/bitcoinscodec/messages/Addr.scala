@@ -11,22 +11,19 @@ import shapeless._
 import com.oohish.bitcoinscodec.structures.VarList
 import com.oohish.bitcoinscodec.structures.Message
 import com.oohish.bitcoinscodec.structures.NetworkAddress
+import com.oohish.bitcoinscodec.structures.MessageCompanion
 
 case class Addr(addrs: List[(Long, NetworkAddress)]) extends Message {
   type E = Addr
-  def codec = Addr.codec
-  def command = "addr"
+  def companion = Addr
 }
 
-object Addr {
-  import VarList._
-
+case object Addr extends MessageCompanion[Addr] {
   val timeAddr = {
     ("time" | uint32L) ::
       ("net_addr" | Codec[NetworkAddress])
   }.as[(Long, NetworkAddress)]
-
-  implicit val codec: Codec[Addr] =
+  def codec(version: Int): Codec[Addr] =
     VarList.varList(timeAddr).as[Addr]
-
+  val command = "addr"
 }

@@ -11,17 +11,15 @@ import shapeless._
 import com.oohish.bitcoinscodec.structures.VarList
 import com.oohish.bitcoinscodec.structures.Message
 import com.oohish.bitcoinscodec.structures.InvVect
+import com.oohish.bitcoinscodec.structures.MessageCompanion
 
 case class NotFound(invs: List[InvVect]) extends Message {
   type E = NotFound
-  def codec = NotFound.codec
-  def command = "notfound"
+  def companion = NotFound
 }
 
-object NotFound {
-  import VarList._
-
-  implicit val codec: Codec[NotFound] =
+object NotFound extends MessageCompanion[NotFound] {
+  def codec(version: Int): Codec[NotFound] =
     VarList.varList(Codec[InvVect]).as[NotFound]
-
+  def command = "notfound"
 }

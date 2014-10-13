@@ -6,6 +6,7 @@ import com.oohish.bitcoinscodec.structures.UInt64
 import com.oohish.bitcoinscodec.structures.VarStr
 import com.oohish.bitcoinscodec.structures.Message
 import com.oohish.bitcoinscodec.structures.NetworkAddress
+import com.oohish.bitcoinscodec.structures.MessageCompanion
 
 case class Version(
   version: Int,
@@ -18,11 +19,10 @@ case class Version(
   start_height: Int,
   relay: Boolean) extends Message {
   type E = Version
-  def codec = Version.codec
-  def command = "version"
+  def companion = Version
 }
 
-object Version {
+object Version extends MessageCompanion[Version] {
 
   /** Creates a Version. */
   def apply(
@@ -46,7 +46,7 @@ object Version {
       start_height,
       relay)
 
-  val codec: Codec[Version] = {
+  def codec(version: Int): Codec[Version] = {
     ("version" | int32L) ::
       ("services" | Codec[UInt64]) ::
       ("timestamp" | int64L) ::
@@ -57,4 +57,5 @@ object Version {
       ("start_height" | int32L) ::
       ("relay" | mappedEnum(uint8, false -> 0, true -> 1))
   }.as[Version]
+  def command = "version"
 }
