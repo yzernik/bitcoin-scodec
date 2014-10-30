@@ -21,4 +21,8 @@ object UInt64 {
   }
 
   implicit val codec: Codec[UInt64] = int64L.xmap(UInt64.apply, _.value)
+
+  implicit val bigIntCodec: Codec[BigInt] = Codec[UInt64].xmap(
+    n => (UInt64.longToBigInt(n.value)),
+    b => UInt64(UInt64.bigIntToLong(b)))
 }

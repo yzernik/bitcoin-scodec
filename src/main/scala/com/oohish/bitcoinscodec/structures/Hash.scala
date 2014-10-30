@@ -7,7 +7,7 @@ import scodec.bits.ByteVector
 case class Hash(value: ByteVector) {
   require(value.size == 32)
 
-  override def toString = s"0x${value.toHex}"
+  override def toString = s"${value.toHex}"
 }
 
 object Hash {

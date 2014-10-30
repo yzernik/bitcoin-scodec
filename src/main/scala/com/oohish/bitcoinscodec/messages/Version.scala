@@ -1,20 +1,27 @@
 package com.oohish.bitcoinscodec.messages
 
-import scodec.Codec
-import scodec.codecs._
-import com.oohish.bitcoinscodec.structures.UInt64
-import com.oohish.bitcoinscodec.structures.VarStr
 import com.oohish.bitcoinscodec.structures.Message
-import com.oohish.bitcoinscodec.structures.NetworkAddress
 import com.oohish.bitcoinscodec.structures.MessageCompanion
+import com.oohish.bitcoinscodec.structures.NetworkAddress
+import com.oohish.bitcoinscodec.structures.UInt64.bigIntCodec
+import com.oohish.bitcoinscodec.structures.VarStr
+
+import scodec.Codec
+import scodec.HListCodecEnrichedWithHListSupport
+import scodec.ValueCodecEnrichedWithHListSupport
+import scodec.codecs.StringEnrichedWithCodecNamingSupport
+import scodec.codecs.int32L
+import scodec.codecs.int64L
+import scodec.codecs.mappedEnum
+import scodec.codecs.uint8
 
 case class Version(
   version: Int,
-  services: UInt64,
+  services: BigInt,
   timestamp: Long,
   addr_recv: NetworkAddress,
   addr_from: NetworkAddress,
-  nonce: UInt64,
+  nonce: BigInt,
   user_agent: String,
   start_height: Int,
   relay: Boolean) extends Message {
@@ -23,36 +30,13 @@ case class Version(
 }
 
 object Version extends MessageCompanion[Version] {
-
-  /** Creates a Version. */
-  def apply(
-    version: Int,
-    services: BigInt,
-    timestamp: Long,
-    addr_recv: NetworkAddress,
-    addr_from: NetworkAddress,
-    nonce: BigInt,
-    user_agent: String,
-    start_height: Int,
-    relay: Boolean): Version =
-    Version(
-      version,
-      UInt64(UInt64.bigIntToLong(services)),
-      timestamp,
-      addr_recv,
-      addr_from,
-      UInt64(UInt64.bigIntToLong(nonce)),
-      user_agent,
-      start_height,
-      relay)
-
   def codec(version: Int): Codec[Version] = {
     ("version" | int32L) ::
-      ("services" | Codec[UInt64]) ::
+      ("services" | Codec[BigInt]) ::
       ("timestamp" | int64L) ::
       ("addr_recv" | Codec[NetworkAddress]) ::
       ("addr_from" | Codec[NetworkAddress]) ::
-      ("nonce" | Codec[UInt64]) ::
+      ("nonce" | Codec[BigInt]) ::
       ("user_agent" | VarStr.codec) ::
       ("start_height" | int32L) ::
       ("relay" | mappedEnum(uint8, false -> 0, true -> 1))
