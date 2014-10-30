@@ -1,9 +1,16 @@
 package com.oohish.bitcoinscodec.structures
 
-import scalaz.{ \/, \/-, -\/, Monad, Monoid }
+import scala.BigInt
 
+import com.oohish.bitcoinscodec.structures.UInt64.bigIntCodec
+
+import scalaz.{-\/ => -\/}
+import scalaz.{\/- => \/-}
 import scodec.Codec
 import scodec.bits.BitVector
+import scodec.codecs.uint16L
+import scodec.codecs.uint32L
+import scodec.codecs.uint8L
 
 case class VarInt(value: Long)
 
@@ -29,7 +36,7 @@ object VarInt {
         case i =>
           for {
             a <- uint8L.encode(0xff)
-            b <- Codec[UInt64].encode(UInt64(UInt64.bigIntToLong(BigInt(i))))
+            b <- Codec[BigInt].encode(BigInt(i))
           } yield a ++ b
       },
     (buf: BitVector) => {
@@ -37,8 +44,8 @@ object VarInt {
         case \/-((rest, byte)) =>
           byte match {
             case 0xff =>
-              Codec[UInt64].decode(rest)
-                .map { case (a, b) => (a, b.value) }
+              Codec[BigInt].decode(rest)
+                .map { case (a, b) => (a, b.toLong) }
             case 0xfe =>
               uint32L.decode(rest)
                 .map { case (a, b) => (a, b) }

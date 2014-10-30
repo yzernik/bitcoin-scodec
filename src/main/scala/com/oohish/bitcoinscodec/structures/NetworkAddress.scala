@@ -1,29 +1,24 @@
 package com.oohish.bitcoinscodec.structures
 
-import scalaz.-\/
-import scalaz.\/-
-import scodec.Codec
-import scodec.codecs._
-import scodec.bits._
-import scala.Left
-import scala.Right
-import scodec.HListCodecEnrichedWithHListSupport
-import scodec.ValueCodecEnrichedWithHListSupport
 import java.net.InetAddress
 import java.net.InetSocketAddress
 
+import com.oohish.bitcoinscodec.structures.UInt64.bigIntCodec
+
+import scodec.Codec
+import scodec.ValueCodecEnrichedWithHListSupport
+import scodec.bits.BitVector
+import scodec.bits.ByteVector
+import scodec.bits.HexStringSyntax
+import scodec.codecs.StringEnrichedWithCodecNamingSupport
+import scodec.codecs.bytes
+import scodec.codecs.uint16
+
 case class NetworkAddress(
-  services: UInt64,
+  services: BigInt,
   address: InetSocketAddress)
 
 object NetworkAddress {
-
-  /** Creates a NetworkAddress. */
-  def apply(
-    services: BigInt,
-    address: InetSocketAddress): NetworkAddress =
-    NetworkAddress(UInt64(UInt64.bigIntToLong(services)), address)
-
   val ipv4Pad = hex"00 00 00 00 00 00 00 00 00 00 FF FF"
 
   implicit val inetAddress = Codec[InetAddress](
@@ -52,7 +47,7 @@ object NetworkAddress {
     .xmap(a => new InetSocketAddress(a._1, a._2), isa => (isa.getAddress(), isa.getPort()))
 
   implicit val codec: Codec[NetworkAddress] = {
-    ("services" | Codec[UInt64]) ::
+    ("services" | Codec[BigInt]) ::
       ("address" | Codec[InetSocketAddress])
   }.as[NetworkAddress]
 
