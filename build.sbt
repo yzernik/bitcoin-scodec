@@ -1,13 +1,10 @@
-import scoverage.ScoverageSbtPlugin.instrumentSettings
-import org.scoverage.coveralls.CoverallsPlugin.coverallsSettings
-
 name := "bitcoin-scodec"
 
 organization := "com.oohish"
 
 version := "0.2.3"
 
-scalaVersion := "2.11.2"
+scalaVersion := "2.11.4"
 
 licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
@@ -23,8 +20,8 @@ libraryDependencies ++= Seq(
 
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
-instrumentSettings
+scoverage.ScoverageSbtPlugin.instrumentSettings
 
-coverallsSettings
+org.scoverage.coveralls.CoverallsPlugin.coverallsSettings
 
 seq(bintrayPublishSettings:_*)
