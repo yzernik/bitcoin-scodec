@@ -12,7 +12,7 @@ Add the following to your build.sbt:
 
 
 ```
-libraryDependencies += "com.oohish" %% "bitcoin-scodec" % "0.2.3"
+libraryDependencies += "com.github.yzernik" %% "bitcoin-scodec" % "0.2.4"
 ```
 
 with the following resolver
@@ -27,14 +27,14 @@ resolvers += "yzernik repo" at "http://dl.bintray.com/yzernik/maven/"
 create a message codec
 
 ```
-import com.oohish.bitcoinscodec.structures.Message
+import com.github.yzernik.bitcoinscodec.structures.Message
 
 val codec = Message.codec(0xD9B4BEF9L) // on the main network
 ```
 
 encode a ping message
 ```
-import com.oohish.bitcoinscodec.messages._
+import com.github.yzernik.bitcoinscodec.messages._
 
 codec.encode(Ping(BigInt(1234)))
 // scalaz.\/[String,scodec.bits.BitVector] = \/-(BitVector(256 bits, 0xf9beb4d970696e67000000000000000040000000433ba813d204000000000000))
@@ -45,5 +45,5 @@ decode a pong message
 import scodec.bits._
 
 codec.decode(hex"f9beb4d9706f6e67000000000000000040000000433ba813d204000000000000".toBitVector)
-// scalaz.\/[String,(scodec.bits.BitVector, com.oohish.bitcoinscodec.structures.Message.Message)] = \/-((BitVector(empty),Pong(1234)))
+// scalaz.\/[String,(scodec.bits.BitVector, com.github.yzernik.bitcoinscodec.structures.Message.Message)] = \/-((BitVector(empty),Pong(1234)))
 ```
