@@ -29,7 +29,7 @@ create a message codec
 ```
 import com.github.yzernik.bitcoinscodec.structures.Message
 
-val codec = Message.codec(0xD9B4BEF9L) // on the main network
+val codec = Message.codec(0xD9B4BEF9L, 60002) // on the main network, using version 60002.
 ```
 
 encode a ping message
