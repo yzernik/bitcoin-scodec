@@ -1,11 +1,13 @@
 package com.github.yzernik.bitcoinscodec.structures
 
 import scodec.Codec
-import scodec.codecs._
-import com.github.yzernik.bitcoinscodec.structures.InvVect.InvType
+import scodec.ValueCodecEnrichedWithHListSupport
+import scodec.codecs.StringEnrichedWithCodecNamingSupport
+import scodec.codecs.mappedEnum
+import scodec.codecs.uint32L
 
 case class InvVect(
-  inv_type: InvType,
+  inv_type: InvVect.InvType,
   hash: Hash)
 
 object InvVect {
@@ -22,7 +24,7 @@ object InvVect {
 
   implicit val codec: Codec[InvVect] = {
     ("inv_type" | Codec[InvType]) ::
-    ("addr_from" | Codec[Hash])
+      ("addr_from" | Codec[Hash])
   }.as[InvVect]
 
 }

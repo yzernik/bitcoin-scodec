@@ -1,10 +1,10 @@
 package com.github.yzernik.bitcoinscodec.structures
 
 import scala.language.implicitConversions
-import scalaz.{ \/, \/-, -\/, Monad, Monoid }
+
 import scodec.Codec
-import scodec.codecs._
-import scodec.bits.BitVector
+import scodec.codecs.ascii
+import scodec.codecs.variableSizeBytes
 
 object VarStr {
   import VarInt._

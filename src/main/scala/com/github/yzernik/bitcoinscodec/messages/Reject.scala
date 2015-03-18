@@ -1,27 +1,25 @@
 package com.github.yzernik.bitcoinscodec.messages
 
-import scodec.bits.ByteVector
-import scodec.Codec
-import scodec.codecs
-import scalaz.std.anyVal.unitInstance
-import scodec.bits.BitVector
-import scodec.Codec
-import scodec.codecs._
-import shapeless._
-import com.github.yzernik.bitcoinscodec.structures._
 import com.github.yzernik.bitcoinscodec.structures.Message
-import com.github.yzernik.bitcoinscodec.messages.Reject.CCode
+import com.github.yzernik.bitcoinscodec.structures.MessageCompanion
+import com.github.yzernik.bitcoinscodec.structures.VarStr
+
+import scodec.Codec
+import scodec.HListCodecEnrichedWithHListSupport
+import scodec.ValueCodecEnrichedWithHListSupport
+import scodec.codecs.StringEnrichedWithCodecNamingSupport
+import scodec.codecs.mappedEnum
+import scodec.codecs.uint8
 
 case class Reject(
   message: String,
-  ccode: CCode,
+  ccode: Reject.CCode,
   reason: String) extends Message {
   type E = Reject
   def companion = Reject
 }
 
 object Reject extends MessageCompanion[Reject] {
-  import VarList._
 
   sealed trait CCode
   case object REJECT_MALFORMED extends CCode
@@ -45,8 +43,8 @@ object Reject extends MessageCompanion[Reject] {
 
   def codec(version: Int): Codec[Reject] = {
     ("message" | VarStr.codec) ::
-    ("ccode" | ccodeCodec) ::
-    ("reason" | VarStr.codec)
+      ("ccode" | ccodeCodec) ::
+      ("reason" | VarStr.codec)
   }.as[Reject]
 
   def command = "reject"

@@ -1,10 +1,10 @@
 package com.github.yzernik.bitcoinscodec.messages
 
-import scodec.Codec
-import scodec.codecs._
-import scodec.bits.ByteVector
 import com.github.yzernik.bitcoinscodec.structures.Message
 import com.github.yzernik.bitcoinscodec.structures.MessageCompanion
+
+import scodec.Codec
+import scodec.codecs.provide
 
 case class MemPool() extends Message {
   type E = MemPool

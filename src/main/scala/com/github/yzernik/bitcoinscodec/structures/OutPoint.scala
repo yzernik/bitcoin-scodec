@@ -1,7 +1,9 @@
 package com.github.yzernik.bitcoinscodec.structures
 
 import scodec.Codec
-import scodec.codecs._
+import scodec.ValueCodecEnrichedWithHListSupport
+import scodec.codecs.StringEnrichedWithCodecNamingSupport
+import scodec.codecs.uint32
 
 case class OutPoint(
   hash: Hash,
@@ -11,7 +13,7 @@ object OutPoint {
 
   implicit val codec: Codec[OutPoint] = {
     ("hash" | Codec[Hash]) ::
-    ("index" | uint32)
+      ("index" | uint32)
   }.as[OutPoint]
 
 }

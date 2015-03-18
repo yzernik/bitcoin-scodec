@@ -1,7 +1,11 @@
 package com.github.yzernik.bitcoinscodec.structures
 
+import scala.BigInt
+import scala.math.BigInt.int2bigInt
+import scala.math.BigInt.long2bigInt
+
 import scodec.Codec
-import scodec.codecs._
+import scodec.codecs.int64L
 
 case class UInt64(value: Long) {
 

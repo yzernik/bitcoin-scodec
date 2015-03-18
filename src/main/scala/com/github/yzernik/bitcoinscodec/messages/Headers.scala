@@ -1,15 +1,10 @@
 package com.github.yzernik.bitcoinscodec.messages
 
-import scodec.bits.ByteVector
-import scodec.Codec
-import scodec.codecs
-import scalaz.std.anyVal.unitInstance
-import scodec.bits.BitVector
-import scodec.Codec
-import scodec.codecs._
-import shapeless._
-import com.github.yzernik.bitcoinscodec.structures._
 import com.github.yzernik.bitcoinscodec.structures.Message
+import com.github.yzernik.bitcoinscodec.structures.MessageCompanion
+import com.github.yzernik.bitcoinscodec.structures.VarList
+
+import scodec.Codec
 
 case class Headers(invs: List[Block]) extends Message {
   type E = Headers

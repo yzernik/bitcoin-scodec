@@ -1,18 +1,18 @@
 package com.github.yzernik.bitcoinscodec.structures
 
 import scala.language.existentials
-import scalaz.-\/
-import scalaz.\/-
 import scala.language.implicitConversions
-import scodec.Codec
-import scodec.codecs._
-import scodec.bits._
-import com.github.yzernik.bitcoinscodec.structures._
+
 import com.github.yzernik.bitcoinscodec.messages._
-import java.security.MessageDigest
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
 import com.github.yzernik.bitcoinscodec.util.Util
+
+import scalaz.{ -\/ => -\/ }
+import scalaz.{ \/- => \/- }
+import scodec.Codec
+import scodec.bits.BitVector
+import scodec.bits.ByteVector
+import scodec.codecs.bytes
+import scodec.codecs.uint32L
 
 trait Message { self =>
   type E >: self.type <: Message
@@ -29,7 +29,7 @@ object Message {
 
   def padCommand(command: String) = {
     ByteVector(command.getBytes()) ++
-    ByteVector.fill(12 - command.length())(0)
+      ByteVector.fill(12 - command.length())(0)
   }
 
   def decodeHeader(bits: BitVector, magic: Long, version: Int) = {

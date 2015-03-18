@@ -1,8 +1,13 @@
 package com.github.yzernik.bitcoinscodec.structures
 
 import scodec.Codec
-import scodec.codecs._
+import scodec.HListCodecEnrichedWithHListSupport
+import scodec.ValueCodecEnrichedWithHListSupport
 import scodec.bits.ByteVector
+import scodec.codecs.StringEnrichedWithCodecNamingSupport
+import scodec.codecs.bytes
+import scodec.codecs.uint32
+import scodec.codecs.variableSizeBytes
 
 case class TxIn(
   previous_output: OutPoint,
@@ -18,8 +23,8 @@ object TxIn {
 
   implicit val codec: Codec[TxIn] = {
     ("previous_output" | Codec[OutPoint]) ::
-    ("sig_script" | scriptCodec) ::
-    ("sequence" | uint32)
+      ("sig_script" | scriptCodec) ::
+      ("sequence" | uint32)
   }.as[TxIn]
 
 }

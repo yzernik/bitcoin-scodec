@@ -1,17 +1,15 @@
 package com.github.yzernik.bitcoinscodec.messages
 
-import scodec.bits.ByteVector
-import scodec.Codec
-import scodec.codecs
-import scalaz.std.anyVal.unitInstance
-import scodec.bits.BitVector
-import scodec.Codec
-import scodec.codecs._
-import shapeless._
-import com.github.yzernik.bitcoinscodec.structures.VarList
 import com.github.yzernik.bitcoinscodec.structures.Message
-import com.github.yzernik.bitcoinscodec.structures.VarStr
 import com.github.yzernik.bitcoinscodec.structures.MessageCompanion
+import com.github.yzernik.bitcoinscodec.structures.VarList
+import com.github.yzernik.bitcoinscodec.structures.VarStr
+
+import scodec.HListCodecEnrichedWithHListSupport
+import scodec.ValueCodecEnrichedWithHListSupport
+import scodec.codecs.StringEnrichedWithCodecNamingSupport
+import scodec.codecs.int32
+import scodec.codecs.int64
 
 case class Alert(
   version: Int,
@@ -34,18 +32,18 @@ case class Alert(
 object Alert extends MessageCompanion[Alert] {
   def codec(version: Int) = {
     ("version" | int32) ::
-    ("relay_until" | int64) ::
-    ("expiration" | int64) ::
-    ("id" | int32) ::
-    ("cancel" | int32) ::
-    ("set_cancel" | VarList.varList(int32)) ::
-    ("min_ver" | int32) ::
-    ("max_ver" | int32) ::
-    ("set_sub_ver" | VarList.varList(VarStr.codec)) ::
-    ("priority" | int32) ::
-    ("comment" | VarStr.codec) ::
-    ("status_bar" | VarStr.codec) ::
-    ("reserved" | VarStr.codec)
+      ("relay_until" | int64) ::
+      ("expiration" | int64) ::
+      ("id" | int32) ::
+      ("cancel" | int32) ::
+      ("set_cancel" | VarList.varList(int32)) ::
+      ("min_ver" | int32) ::
+      ("max_ver" | int32) ::
+      ("set_sub_ver" | VarList.varList(VarStr.codec)) ::
+      ("priority" | int32) ::
+      ("comment" | VarStr.codec) ::
+      ("status_bar" | VarStr.codec) ::
+      ("reserved" | VarStr.codec)
   }.as[Alert]
   val command = "alert"
 }

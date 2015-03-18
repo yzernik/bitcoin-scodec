@@ -1,8 +1,8 @@
 package com.github.yzernik.bitcoinscodec.structures
 
 import scodec.Codec
-import scodec.codecs._
 import scodec.bits.ByteVector
+import scodec.codecs.bytes
 
 case class Hash(value: ByteVector) {
   require(value.size == 32)

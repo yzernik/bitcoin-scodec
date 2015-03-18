@@ -1,9 +1,10 @@
 package com.github.yzernik.bitcoinscodec.util
 
-import java.security.MessageDigest
-import java.nio.ByteOrder
-import scodec.bits.ByteVector
 import java.nio.ByteBuffer
+import java.nio.ByteOrder
+import java.security.MessageDigest
+
+import scodec.bits.ByteVector
 
 object Util {
 

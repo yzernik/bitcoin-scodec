@@ -1,15 +1,16 @@
 package com.github.yzernik.bitcoinscodec.messages
 
-import scodec.bits.ByteVector
-import scodec.Codec
-import scodec.codecs
-import scalaz.std.anyVal.unitInstance
-import scodec.bits.BitVector
-import scodec.Codec
-import scodec.codecs._
-import shapeless._
-import com.github.yzernik.bitcoinscodec.structures._
 import com.github.yzernik.bitcoinscodec.structures.Message
+import com.github.yzernik.bitcoinscodec.structures.MessageCompanion
+import com.github.yzernik.bitcoinscodec.structures.TxIn
+import com.github.yzernik.bitcoinscodec.structures.TxOut
+import com.github.yzernik.bitcoinscodec.structures.VarList
+
+import scodec.Codec
+import scodec.HListCodecEnrichedWithHListSupport
+import scodec.ValueCodecEnrichedWithHListSupport
+import scodec.codecs.StringEnrichedWithCodecNamingSupport
+import scodec.codecs.uint32L
 
 case class Tx(
   version: Long,
@@ -23,9 +24,9 @@ case class Tx(
 object Tx extends MessageCompanion[Tx] {
   def codec(version: Int) = {
     ("version" | uint32L) ::
-    ("tx_in" | VarList.varList(Codec[TxIn])) ::
-    ("tx_out" | VarList.varList(Codec[TxOut])) ::
-    ("lock_time" | uint32L)
+      ("tx_in" | VarList.varList(Codec[TxIn])) ::
+      ("tx_out" | VarList.varList(Codec[TxOut])) ::
+      ("lock_time" | uint32L)
   }.as[Tx]
   def command = "tx"
 }
