@@ -27,8 +27,8 @@ object GetBlocks extends MessageCompanion[GetBlocks] {
   val zeroStop = Hash(ByteVector.fill(32)(0))
   def codec(version: Int): Codec[GetBlocks] = {
     ("version" | uint32L) ::
-      ("block_locator_hashes" | VarList.varList(Codec[Hash])) ::
-      ("hash_stop" | Codec[Hash])
+    ("block_locator_hashes" | VarList.varList(Codec[Hash])) ::
+    ("hash_stop" | Codec[Hash])
   }.as[GetBlocks]
   def command = "getblocks"
 }

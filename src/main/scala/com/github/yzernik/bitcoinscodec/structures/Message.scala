@@ -29,7 +29,7 @@ object Message {
 
   def padCommand(command: String) = {
     ByteVector(command.getBytes()) ++
-      ByteVector.fill(12 - command.length())(0)
+    ByteVector.fill(12 - command.length())(0)
   }
 
   def decodeHeader(bits: BitVector, magic: Long, version: Int) = {

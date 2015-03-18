@@ -21,7 +21,7 @@ case class Addr(addrs: List[(Long, NetworkAddress)]) extends Message {
 case object Addr extends MessageCompanion[Addr] {
   val timeAddr = {
     ("time" | uint32L) ::
-      ("net_addr" | Codec[NetworkAddress])
+    ("net_addr" | Codec[NetworkAddress])
   }.as[(Long, NetworkAddress)]
   def codec(version: Int): Codec[Addr] =
     VarList.varList(timeAddr).as[Addr]

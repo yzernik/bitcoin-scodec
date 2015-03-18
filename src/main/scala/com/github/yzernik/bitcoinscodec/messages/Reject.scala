@@ -45,8 +45,8 @@ object Reject extends MessageCompanion[Reject] {
 
   def codec(version: Int): Codec[Reject] = {
     ("message" | VarStr.codec) ::
-      ("ccode" | ccodeCodec) ::
-      ("reason" | VarStr.codec)
+    ("ccode" | ccodeCodec) ::
+    ("reason" | VarStr.codec)
   }.as[Reject]
 
   def command = "reject"

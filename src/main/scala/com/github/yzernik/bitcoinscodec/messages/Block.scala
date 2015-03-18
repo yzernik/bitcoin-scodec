@@ -16,7 +16,7 @@ case class Block(
 object Block extends MessageCompanion[Block] {
   def codec(version: Int) = {
     ("block_header" | Codec[BlockHeader]) ::
-      ("txs" | VarList.varList(Tx.codec(version)))
+    ("txs" | VarList.varList(Tx.codec(version)))
   }.as[Block]
   def command = "block"
 }

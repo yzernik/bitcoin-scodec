@@ -14,6 +14,5 @@ case class Pong(value: BigInt) extends Message {
 object Pong extends MessageCompanion[Pong] {
   def codec(version: Int): Codec[Pong] =
     Codec[BigInt].xmap(Pong.apply, _.value)
-
   def command = "pong"
 }

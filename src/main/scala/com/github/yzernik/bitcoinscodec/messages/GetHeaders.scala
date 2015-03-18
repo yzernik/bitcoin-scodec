@@ -27,8 +27,8 @@ object GetHeaders extends MessageCompanion[GetHeaders] {
   val zeroStop = Hash(ByteVector.fill(32)(0))
   def codec(version: Int): Codec[GetHeaders] = {
     ("version" | uint32L) ::
-      ("block_locator_hashes" | VarList.varList(Codec[Hash])) ::
-      ("hash_stop" | Codec[Hash])
+    ("block_locator_hashes" | VarList.varList(Codec[Hash])) ::
+    ("hash_stop" | Codec[Hash])
   }.as[GetHeaders]
 
   def command = "getheaders"

@@ -32,14 +32,14 @@ case class Version(
 object Version extends MessageCompanion[Version] {
   def codec(version: Int): Codec[Version] = {
     ("version" | int32L) ::
-      ("services" | Codec[BigInt]) ::
-      ("timestamp" | int64L) ::
-      ("addr_recv" | Codec[NetworkAddress]) ::
-      ("addr_from" | Codec[NetworkAddress]) ::
-      ("nonce" | Codec[BigInt]) ::
-      ("user_agent" | VarStr.codec) ::
-      ("start_height" | int32L) ::
-      ("relay" | mappedEnum(uint8, false -> 0, true -> 1))
+    ("services" | Codec[BigInt]) ::
+    ("timestamp" | int64L) ::
+    ("addr_recv" | Codec[NetworkAddress]) ::
+    ("addr_from" | Codec[NetworkAddress]) ::
+    ("nonce" | Codec[BigInt]) ::
+    ("user_agent" | VarStr.codec) ::
+    ("start_height" | int32L) ::
+    ("relay" | mappedEnum(uint8, false -> 0, true -> 1))
   }.as[Version]
   def command = "version"
 }

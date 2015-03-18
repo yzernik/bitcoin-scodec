@@ -17,7 +17,7 @@ object TxOut {
 
   implicit val codec: Codec[TxOut] = {
     ("value" | int64) ::
-      ("pk_script" | scriptCodec)
+    ("pk_script" | scriptCodec)
   }.as[TxOut]
 
 }

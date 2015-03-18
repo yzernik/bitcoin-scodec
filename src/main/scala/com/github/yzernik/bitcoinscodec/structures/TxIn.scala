@@ -18,8 +18,8 @@ object TxIn {
 
   implicit val codec: Codec[TxIn] = {
     ("previous_output" | Codec[OutPoint]) ::
-      ("sig_script" | scriptCodec) ::
-      ("sequence" | uint32)
+    ("sig_script" | scriptCodec) ::
+    ("sequence" | uint32)
   }.as[TxIn]
 
 }
