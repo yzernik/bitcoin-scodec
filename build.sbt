@@ -1,6 +1,6 @@
 name := "bitcoin-scodec"
 
-organization := "com.github.yzernik"
+organization := "io.github.yzernik"
 
 version := "0.2.5"
 
