@@ -2,9 +2,9 @@ name := "bitcoin-scodec"
 
 organization := "io.github.yzernik"
 
-version := "0.2.5"
+version := "0.2.6"
 
-scalaVersion := "2.11.4"
+scalaVersion := "2.11.6"
 
 licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
