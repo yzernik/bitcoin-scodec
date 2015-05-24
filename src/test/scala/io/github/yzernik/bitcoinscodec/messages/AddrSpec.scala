@@ -1,13 +1,15 @@
 package io.github.yzernik.bitcoinscodec.messages
 
-import io.github.yzernik.bitcoinscodec.CodecSuite
-import scodec.bits.ByteVector
-import scodec.bits._
-import scodec.codecs._
-import scalaz.\/
-import io.github.yzernik.bitcoinscodec.structures._
-import java.net.InetSocketAddress
 import java.net.InetAddress
+import java.net.InetSocketAddress
+
+import scala.math.BigInt.int2bigInt
+
+import Addr.codec
+import io.github.yzernik.bitcoinscodec.CodecSuite
+import io.github.yzernik.bitcoinscodec.structures.Message
+import io.github.yzernik.bitcoinscodec.structures.NetworkAddress
+import scodec.bits.HexStringSyntax
 
 class AddrSpec extends CodecSuite {
 
@@ -32,14 +34,8 @@ ED 52 39 9B
       roundtrip(Message.codec(0xD9B4BEF9L, 1), addr)
     }
 
-    "encode" in {
-      codec(1).encode(addr) shouldBe
-        \/.right(bytes.toBitVector)
-    }
-
     "decode" in {
-      codec(1).decode(bytes.toBitVector) shouldBe
-        \/.right(BitVector.empty, addr)
+      shouldDecodeFullyTo(codec(1), bytes.toBitVector, addr)
     }
 
   }

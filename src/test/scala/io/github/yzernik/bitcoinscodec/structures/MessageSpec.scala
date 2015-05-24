@@ -1,13 +1,14 @@
 package io.github.yzernik.bitcoinscodec.structures
 
-import scalaz.\/
-import scalaz.-\/
-import scalaz.\/-
-import scodec.bits._
-import io.github.yzernik.bitcoinscodec.CodecSuite
-import org.scalatest.Matchers
-import java.net.InetSocketAddress
 import java.net.InetAddress
+import java.net.InetSocketAddress
+
+import scala.BigInt
+import scala.math.BigInt.int2bigInt
+import scala.math.BigInt.long2bigInt
+
+import io.github.yzernik.bitcoinscodec.CodecSuite
+import io.github.yzernik.bitcoinscodec.messages._
 
 class MessageSpec extends CodecSuite {
 
@@ -40,6 +41,7 @@ class MessageSpec extends CodecSuite {
         true))
     }
 
+    /*
     "encode" in {
       val codec = Message.codec(0xD9B4BEF9L, 1)
       val verack = Verack()
@@ -86,6 +88,8 @@ class MessageSpec extends CodecSuite {
       codec.decode(bytes) shouldBe
         -\/("payload length did not match.")
     }
+    * 
+    */
 
   }
 }
