@@ -8,10 +8,10 @@ scalaVersion := "2.11.6"
 
 licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
-resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
+resolvers += "Sonatype Public" at "https://oss.sonatype.org/content/groups/public/"
 
 libraryDependencies ++= Seq(
-  "org.typelevel"                 %% "scodec-core"    % "1.3.0",
+  "org.scodec"                    %% "scodec-core"    % "1.7.0",
   "org.scalatest"                 %% "scalatest"      % "2.2.0"  % "test",
   "org.scalacheck"                %% "scalacheck"     % "1.11.3" % "test",
   "com.github.scala-incubator.io" %% "scala-io-core"  % "0.4.3"  % "test"

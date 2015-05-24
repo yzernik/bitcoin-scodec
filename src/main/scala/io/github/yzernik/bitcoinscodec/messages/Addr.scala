@@ -6,9 +6,8 @@ import io.github.yzernik.bitcoinscodec.structures.NetworkAddress
 import io.github.yzernik.bitcoinscodec.structures.VarList
 
 import scodec.Codec
-import scodec.ValueCodecEnrichedWithHListSupport
-import scodec.codecs.StringEnrichedWithCodecNamingSupport
 import scodec.codecs.uint32L
+import scodec.codecs._
 
 case class Addr(addrs: List[(Long, NetworkAddress)]) extends Message {
   type E = Addr

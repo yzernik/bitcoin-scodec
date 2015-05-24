@@ -6,13 +6,14 @@ import java.net.InetSocketAddress
 import io.github.yzernik.bitcoinscodec.structures.UInt64.bigIntCodec
 
 import scodec.Codec
+import scodec.DecodeResult
 import scodec.ValueCodecEnrichedWithHListSupport
 import scodec.bits.BitVector
 import scodec.bits.ByteVector
 import scodec.bits.HexStringSyntax
-import scodec.codecs.StringEnrichedWithCodecNamingSupport
 import scodec.codecs.bytes
 import scodec.codecs.uint16
+import scodec.codecs._
 
 case class NetworkAddress(
   services: BigInt,
@@ -31,13 +32,13 @@ object NetworkAddress {
       }
     },
     (buf: BitVector) => bytes(16).decode(buf).map {
-      case (a, b) =>
-        val bts = if (b.take(12) == ipv4Pad) {
-          b.drop(12)
+      case b =>
+        val bts = if (b.value.take(12) == ipv4Pad) {
+          b.value.drop(12)
         } else {
-          b
+          b.value
         }
-        (a, InetAddress.getByAddress(bts.toArray))
+        DecodeResult(InetAddress.getByAddress(bts.toArray), b.remainder)
     })
 
   implicit val inetSocketAddress: Codec[InetSocketAddress] = {

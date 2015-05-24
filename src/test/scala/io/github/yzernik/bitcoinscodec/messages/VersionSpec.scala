@@ -4,7 +4,6 @@ import io.github.yzernik.bitcoinscodec.CodecSuite
 import scodec.bits.ByteVector
 import scodec.bits._
 import scodec.codecs._
-import scalaz.\/
 import io.github.yzernik.bitcoinscodec.structures._
 import java.net.InetSocketAddress
 import java.net.InetAddress
@@ -54,14 +53,8 @@ F9 BE B4 D9
       roundtrip(Message.codec(0xD9B4BEF9L, 1), version)
     }
 
-    "encode" in {
-      Version.codec(1).encode(version) shouldBe
-        \/.right(bytes.toBitVector)
-    }
-
     "decode" in {
-      Version.codec(1).decode(bytes.toBitVector) shouldBe
-        \/.right(BitVector.empty, version)
+      shouldDecodeFullyTo(Version.codec(1), bytes.toBitVector, version)
     }
 
   }

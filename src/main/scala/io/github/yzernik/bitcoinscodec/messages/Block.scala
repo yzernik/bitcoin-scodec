@@ -6,8 +6,7 @@ import io.github.yzernik.bitcoinscodec.structures.MessageCompanion
 import io.github.yzernik.bitcoinscodec.structures.VarList
 
 import scodec.Codec
-import scodec.ValueCodecEnrichedWithHListSupport
-import scodec.codecs.StringEnrichedWithCodecNamingSupport
+import scodec.codecs._
 
 case class Block(
   block_header: BlockHeader,

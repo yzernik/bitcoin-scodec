@@ -1,12 +1,8 @@
 package io.github.yzernik.bitcoinscodec.structures
 
 import scodec.Codec
-import scodec.ValueCodecEnrichedWithHListSupport
 import scodec.bits.ByteVector
-import scodec.codecs.StringEnrichedWithCodecNamingSupport
-import scodec.codecs.bytes
-import scodec.codecs.int64
-import scodec.codecs.variableSizeBytes
+import scodec.codecs._
 
 case class TxOut(
   value: Long,

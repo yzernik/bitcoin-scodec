@@ -4,7 +4,6 @@ import io.github.yzernik.bitcoinscodec.CodecSuite
 import scodec.bits.ByteVector
 import scodec.bits._
 import scodec.codecs._
-import scalaz.\/
 import io.github.yzernik.bitcoinscodec.structures._
 
 class InvSpec extends CodecSuite {

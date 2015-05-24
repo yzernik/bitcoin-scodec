@@ -7,10 +7,7 @@ import io.github.yzernik.bitcoinscodec.structures.TxOut
 import io.github.yzernik.bitcoinscodec.structures.VarList
 
 import scodec.Codec
-import scodec.HListCodecEnrichedWithHListSupport
-import scodec.ValueCodecEnrichedWithHListSupport
-import scodec.codecs.StringEnrichedWithCodecNamingSupport
-import scodec.codecs.uint32L
+import scodec.codecs._
 
 case class Tx(
   version: Long,

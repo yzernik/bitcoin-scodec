@@ -1,9 +1,7 @@
 package io.github.yzernik.bitcoinscodec.structures
 
 import scodec.Codec
-import scodec.ValueCodecEnrichedWithHListSupport
-import scodec.codecs.StringEnrichedWithCodecNamingSupport
-import scodec.codecs.uint32
+import scodec.codecs._
 
 case class OutPoint(
   hash: Hash,
