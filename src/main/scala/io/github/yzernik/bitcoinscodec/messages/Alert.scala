@@ -7,9 +7,9 @@ import io.github.yzernik.bitcoinscodec.structures.VarStr
 
 import scodec.HListCodecEnrichedWithHListSupport
 import scodec.ValueCodecEnrichedWithHListSupport
-import scodec.codecs.StringEnrichedWithCodecNamingSupport
 import scodec.codecs.int32
 import scodec.codecs.int64
+import scodec.codecs._
 
 case class Alert(
   version: Int,

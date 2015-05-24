@@ -6,11 +6,8 @@ import io.github.yzernik.bitcoinscodec.structures.MessageCompanion
 import io.github.yzernik.bitcoinscodec.structures.VarList
 
 import scodec.Codec
-import scodec.HListCodecEnrichedWithHListSupport
-import scodec.ValueCodecEnrichedWithHListSupport
 import scodec.bits.ByteVector
-import scodec.codecs.StringEnrichedWithCodecNamingSupport
-import scodec.codecs.uint32L
+import scodec.codecs._
 
 case class GetHeaders(
   version: Long,

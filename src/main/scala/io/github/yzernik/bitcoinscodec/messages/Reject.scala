@@ -5,11 +5,7 @@ import io.github.yzernik.bitcoinscodec.structures.MessageCompanion
 import io.github.yzernik.bitcoinscodec.structures.VarStr
 
 import scodec.Codec
-import scodec.HListCodecEnrichedWithHListSupport
-import scodec.ValueCodecEnrichedWithHListSupport
-import scodec.codecs.StringEnrichedWithCodecNamingSupport
-import scodec.codecs.mappedEnum
-import scodec.codecs.uint8
+import scodec.codecs._
 
 case class Reject(
   message: String,

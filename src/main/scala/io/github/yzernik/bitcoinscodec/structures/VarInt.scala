@@ -4,8 +4,7 @@ import scala.BigInt
 
 import io.github.yzernik.bitcoinscodec.structures.UInt64.bigIntCodec
 
-import scalaz.{ -\/ => -\/ }
-import scalaz.{ \/- => \/- }
+import scodec.Attempt.{ Failure, Successful }
 import scodec.Codec
 import scodec.bits.BitVector
 import scodec.codecs.uint16L
@@ -41,22 +40,21 @@ object VarInt {
       },
     (buf: BitVector) => {
       uint8L.decode(buf) match {
-        case \/-((rest, byte)) =>
-          byte match {
+        case Successful(byte) =>
+          byte.value match {
             case 0xff =>
-              Codec[BigInt].decode(rest)
-                .map { case (a, b) => (a, b.toLong) }
+              Codec[BigInt].decode(byte.remainder)
+                .map { case b => b.map(_.toLong) }
             case 0xfe =>
-              uint32L.decode(rest)
-                .map { case (a, b) => (a, b) }
+              uint32L.decode(byte.remainder)
             case 0xfd =>
-              uint16L.decode(rest)
-                .map { case (a, b) => (a, b.toLong) }
+              uint16L.decode(byte.remainder)
+                .map { case b => b.map(_.toLong) }
             case _ =>
-              \/-((rest, byte.toLong))
+              Successful(scodec.DecodeResult(byte.value.toLong, byte.remainder))
           }
-        case -\/(err) =>
-          -\/(err)
+        case Failure(err) =>
+          Failure(err)
       }
     })
 

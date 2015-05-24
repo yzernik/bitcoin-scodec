@@ -1,10 +1,7 @@
 package io.github.yzernik.bitcoinscodec.structures
 
 import scodec.Codec
-import scodec.ValueCodecEnrichedWithHListSupport
-import scodec.codecs.StringEnrichedWithCodecNamingSupport
-import scodec.codecs.mappedEnum
-import scodec.codecs.uint32L
+import scodec.codecs._
 
 case class InvVect(
   inv_type: InvVect.InvType,

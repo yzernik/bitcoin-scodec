@@ -10,9 +10,9 @@ import scodec.ValueCodecEnrichedWithHListSupport
 import scodec.bits.BitVector
 import scodec.bits.ByteVector
 import scodec.bits.HexStringSyntax
-import scodec.codecs.StringEnrichedWithCodecNamingSupport
 import scodec.codecs.bytes
 import scodec.codecs.uint16
+import scodec.codecs._
 
 case class NetworkAddress(
   services: BigInt,
@@ -21,24 +21,10 @@ case class NetworkAddress(
 object NetworkAddress {
   val ipv4Pad = hex"00 00 00 00 00 00 00 00 00 00 FF FF"
 
-  implicit val inetAddress = Codec[InetAddress](
-    (ia: InetAddress) => {
-      val bts = ByteVector(ia.getAddress())
-      if (bts.length == 4) {
-        bytes(16).encode(ipv4Pad ++ bts)
-      } else {
-        bytes(16).encode(bts)
-      }
-    },
-    (buf: BitVector) => bytes(16).decode(buf).map {
-      case (a, b) =>
-        val bts = if (b.take(12) == ipv4Pad) {
-          b.drop(12)
-        } else {
-          b
-        }
-        (a, InetAddress.getByAddress(bts.toArray))
-    })
+  implicit val inetAddress: Codec[InetAddress] = {
+    bytes(4).xmap(bits => InetAddress.getByAddress(bits.toArray),
+      f => ByteVector(f.getAddress))
+  }
 
   implicit val inetSocketAddress: Codec[InetSocketAddress] = {
     ("services" | Codec[InetAddress]) ::

@@ -6,8 +6,7 @@ import scala.language.implicitConversions
 import io.github.yzernik.bitcoinscodec.messages._
 import io.github.yzernik.bitcoinscodec.util.Util
 
-import scalaz.{ -\/ => -\/ }
-import scalaz.{ \/- => \/- }
+import scodec.Attempt.{ Failure, Successful }
 import scodec.Codec
 import scodec.bits.BitVector
 import scodec.bits.ByteVector
@@ -35,59 +34,60 @@ object Message {
   def decodeHeader(bits: BitVector, magic: Long, version: Int) = {
     for {
       m <- uint32L.decode(bits) match {
-        case \/-((rem, mg)) =>
-          if (mg == magic)
-            \/-((rem, mg))
+        case Successful(mg) =>
+          if (mg.value == magic)
+            Successful(mg)
           else
-            -\/(("magic did not match."))
-        case -\/(err) => -\/(err)
+            Failure(scodec.Err("magic did not match."))
+        case Failure(err) => Failure(err)
       }
-      (mrem, _) = m
-      c <- bytes(12).decode(mrem)
-      (crem, command) = c
-      l <- uint32L.decode(crem)
-      (lrem, length) = l
-      ch <- uint32L.decode(lrem)
-      (chrem, chksum) = ch
-      (payload, rest) = chrem.splitAt(length * 8)
+      c <- bytes(12).decode(m.remainder)
+      command = c.value
+      l <- uint32L.decode(c.remainder)
+      length = l.value
+      ch <- uint32L.decode(l.remainder)
+      chksum = ch.value
+      (payload, rest) = ch.remainder.splitAt(length * 8)
     } yield (command, length, chksum, payload, rest)
   }
 
   def decodePayload(payload: BitVector, version: Int, chksum: Long, command: ByteVector) = {
     val cmd = MessageCompanion.byCommand(command)
     cmd.codec(version).decode(payload) match {
-      case \/-((rem, p)) =>
-        if (!rem.isEmpty)
-          -\/(("payload length did not match."))
+      case Successful(p) =>
+        if (!p.remainder.isEmpty)
+          Failure(scodec.Err("payload length did not match."))
         else if (Util.checksum(payload.toByteVector) == chksum) {
-          \/-(p)
+          Successful(p)
         } else {
-          -\/(("checksum did not match."))
+          Failure(scodec.Err("checksum did not match."))
         }
-      case -\/(err) => -\/(err)
+      case Failure(err) => Failure(err)
     }
   }
 
   def codec(magic: Long, version: Int): Codec[Message] = {
-    new Codec[Message] {
-      def encode(msg: Message) = {
-        val c = msg.companion.codec(version)
-        for {
-          magic <- uint32L.encode(magic)
-          command <- bytes(12).encode(padCommand(msg.companion.command))
-          payload <- c.encode(msg)
-          length <- uint32L.encode(payload.length / 8)
-          chksum <- uint32L.encode(Util.checksum(payload.toByteVector))
-        } yield magic ++ command ++ length ++ chksum ++ payload
-      }
-      def decode(bits: BitVector) = {
-        for {
-          metadata <- decodeHeader(bits, magic, version)
-          (command, length, chksum, payload, rest) = metadata
-          msg <- decodePayload(payload, version, chksum, command)
-        } yield (rest, msg)
-      }
+
+    def encode(msg: Message) = {
+      val c = msg.companion.codec(version)
+      for {
+        magic <- uint32L.encode(magic)
+        command <- bytes(12).encode(padCommand(msg.companion.command))
+        payload <- c.encode(msg)
+        length <- uint32L.encode(payload.length / 8)
+        chksum <- uint32L.encode(Util.checksum(payload.toByteVector))
+      } yield magic ++ command ++ length ++ chksum ++ payload
     }
+
+    def decode(bits: BitVector) = {
+      for {
+        metadata <- decodeHeader(bits, magic, version)
+        (command, length, chksum, payload, rest) = metadata
+        msg <- decodePayload(payload, version, chksum, command)
+      } yield msg
+    }
+
+    Codec[Message](encode _, decode _)
   }
 
 }
