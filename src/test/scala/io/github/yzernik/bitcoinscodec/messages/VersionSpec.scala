@@ -26,7 +26,8 @@ class VersionSpec extends CodecSuite {
     "/Satoshi:0.7.2/",
     212672,
     true)
-  val bytes = hex"""
+
+  val bytesV60002 = hex"""
   	62 EA 00 00
   	01 00 00 00 00 00 00 00
   	11 B2 D0 50 00 00 00 00
@@ -34,27 +35,33 @@ class VersionSpec extends CodecSuite {
   	01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00
   	3B 2E B3 5D 8C E6 17 65
   	0F 2F 53 61 74 6F 73 68 69 3A 30 2E 37 2E 32 2F
-  	C0 3E 03 00  
-    01
+  	C0 3E 03 00
 """
 
-  val messageBytes = hex"""
-F9 BE B4 D9
-76 65 72 73 69 6F 6E 00 00 00 00 00
-65 00 00 00
-3B 64 8D 5A
-""" ++ bytes
+  val bytesV70001 = hex"""
+    71 11 01 00
+    01 00 00 00 00 00 00 00
+    11 B2 D0 50 00 00 00 00
+    01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00
+    01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00
+    3B 2E B3 5D 8C E6 17 65
+    0F 2F 53 61 74 6F 73 68 69 3A 30 2E 37 2E 32 2F
+    C0 3E 03 00
+    01
+"""
 
   "Version codec" should {
     "roundtrip" in {
       roundtrip(Version.codec(1), version)
-      roundtrip(Version.codec(1), version.copy(relay = false))
+      roundtrip(Version.codec(1), version.copy(version = 70001, relay = false))
+      roundtrip(Version.codec(1), version.copy(version = 70001, relay = true))
       roundtrip(Message.codec(0xDAB5BFFAL, 1), version)
       roundtrip(Message.codec(0xD9B4BEF9L, 1), version)
     }
 
     "decode" in {
-      shouldDecodeFullyTo(Version.codec(1), bytes.toBitVector, version)
+      shouldDecodeFullyTo(Version.codec(1), bytesV60002.toBitVector, version)
+      shouldDecodeFullyTo(Version.codec(1), bytesV70001.toBitVector, version.copy(version = 70001))
     }
 
   }

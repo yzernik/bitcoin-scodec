@@ -42,10 +42,11 @@ object NetworkAddress {
     })
 
   implicit val inetSocketAddress: Codec[InetSocketAddress] = {
-    ("services" | Codec[InetAddress]) ::
+    ("host" | Codec[InetAddress]) ::
       ("port" | uint16)
   }.as[(InetAddress, Int)]
-    .xmap(a => new InetSocketAddress(a._1, a._2), isa => (isa.getAddress(), isa.getPort()))
+    .xmap({ case (host, port) => new InetSocketAddress(host, port) },
+      isa => (isa.getAddress(), isa.getPort()))
 
   implicit val codec: Codec[NetworkAddress] = {
     ("services" | Codec[BigInt]) ::

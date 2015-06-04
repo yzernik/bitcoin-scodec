@@ -25,15 +25,21 @@ case class Version(
 
 object Version extends MessageCompanion[Version] {
   def codec(version: Int): Codec[Version] = {
-    ("version" | int32L) ::
+    ("version" | int32L) >>:~ { verNum =>
       ("services" | Codec[BigInt]) ::
-      ("timestamp" | int64L) ::
-      ("addr_recv" | Codec[NetworkAddress]) ::
-      ("addr_from" | Codec[NetworkAddress]) ::
-      ("nonce" | Codec[BigInt]) ::
-      ("user_agent" | VarStr.codec) ::
-      ("start_height" | int32L) ::
-      ("relay" | mappedEnum(uint8, false -> 0, true -> 1))
+        ("timestamp" | int64L) ::
+        ("addr_recv" | Codec[NetworkAddress]) ::
+        ("addr_from" | Codec[NetworkAddress]) ::
+        ("nonce" | Codec[BigInt]) ::
+        ("user_agent" | VarStr.codec) ::
+        ("start_height" | int32L) ::
+        ("relay" | withDefault(conditional(verNum >= 70001, relayCodec), provide(true)))
+    }
   }.as[Version]
+
+  val relayCodec: Codec[Boolean] = {
+    ("relay" | mappedEnum(uint8, false -> 0, true -> 1))
+  }.as[Boolean]
+
   def command = "version"
 }
