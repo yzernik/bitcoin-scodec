@@ -26,12 +26,11 @@ trait MessageCompanion[E <: Message] {
 
 object Message {
 
-  def padCommand(command: String) = {
+  def padCommand(command: String) =
     ByteVector(command.getBytes()) ++
       ByteVector.fill(12 - command.length())(0)
-  }
 
-  def decodeHeader(bits: BitVector, magic: Long, version: Int) = {
+  def decodeHeader(bits: BitVector, magic: Long, version: Int) =
     for {
       m <- uint32L.decode(bits).flatMap { mg =>
         if (mg.value == magic)
@@ -47,7 +46,6 @@ object Message {
       chksum = ch.value
       (payload, rest) = ch.remainder.splitAt(length * 8)
     } yield (command, length, chksum, payload, rest)
-  }
 
   def decodePayload(payload: BitVector, version: Int, chksum: Long, command: ByteVector) = {
     val cmd = MessageCompanion.byCommand(command)
@@ -75,13 +73,12 @@ object Message {
       } yield magic ++ command ++ length ++ chksum ++ payload
     }
 
-    def decode(bits: BitVector) = {
+    def decode(bits: BitVector) =
       for {
         metadata <- decodeHeader(bits, magic, version)
         (command, length, chksum, payload, rest) = metadata
         msg <- decodePayload(payload, version, chksum, command)
       } yield msg
-    }
 
     Codec[Message](encode _, decode _)
   }
