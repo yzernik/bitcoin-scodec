@@ -5,9 +5,9 @@ import io.github.yzernik.bitcoinscodec.structures.MessageCompanion
 import io.github.yzernik.bitcoinscodec.structures.NetworkAddress
 import io.github.yzernik.bitcoinscodec.structures.UInt64.bigIntCodec
 import io.github.yzernik.bitcoinscodec.structures.VarStr
-
 import scodec.Codec
 import scodec.codecs._
+import scala.util.Random
 
 case class Version(
   version: Int,
@@ -42,4 +42,6 @@ object Version extends MessageCompanion[Version] {
   }.as[Boolean]
 
   def command = "version"
+
+  def genNonce: BigInt = BigInt(Random.nextLong()) + Long.MaxValue + 1
 }
