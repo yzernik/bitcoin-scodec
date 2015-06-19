@@ -2,6 +2,7 @@ package io.github.yzernik.bitcoinscodec.structures
 
 import scodec.Codec
 import scodec.codecs._
+import io.github.yzernik.bitcoinscodec.util.Util
 
 case class BlockHeader(
   version: Long,
@@ -9,7 +10,14 @@ case class BlockHeader(
   merkle_root: Hash,
   timestamp: Long,
   bits: Long,
-  nonce: Long)
+  nonce: Long) {
+
+  def hash: Hash = {
+    val bytes = BlockHeader.codec.encode(this).toOption.get
+    Util.hash(bytes.toByteArray)
+  }
+
+}
 
 object BlockHeader {
 
