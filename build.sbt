@@ -2,7 +2,7 @@ name := "bitcoin-scodec"
 
 organization := "io.github.yzernik"
 
-version := "0.2.8"
+version := "0.2.9"
 
 scalaVersion := "2.11.6"
 
@@ -24,5 +24,3 @@ scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 scoverage.ScoverageSbtPlugin.instrumentSettings
 
 org.scoverage.coveralls.CoverallsPlugin.coverallsSettings
-
-seq(bintrayPublishSettings:_*)
