@@ -6,7 +6,7 @@ import scala.concurrent.duration._
 import shapeless.Lazy
 
 import org.scalacheck.{ Gen, Arbitrary }
-import Arbitrary.arbitrary
+import org.scalacheck.Arbitrary.arbitrary
 import org.scalatest.{ Matchers, WordSpec }
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 

@@ -1,17 +1,17 @@
 package lktk.bchmsg.structures
 
+import lktk.bchmsg.CodecSuite
+import lktk.bchmsg.structures._
+import lktk.bchmsg.messages._
+
 import java.net.InetAddress
 import java.net.InetSocketAddress
 
-import lktk.bchmsg.CodecSuite
-import lktk.bchmsg.messages._
-import lktk.bchmsg.messages._
-import lktk.bchmsg.structures.{Message, NetworkAddress}
+import scala.BigInt
+import scala.math.BigInt.int2bigInt
+import scala.math.BigInt.long2bigInt
 
 class MessageSpec extends CodecSuite {
-
-  import lktk.bchmsg.structures.Message._
-  import lktk.bchmsg.messages._
 
   "Message codec" should {
 
@@ -20,7 +20,7 @@ class MessageSpec extends CodecSuite {
       roundtrip(codec, Verack())
       roundtrip(codec, Ping(BigInt(1234)))
       roundtrip(codec, Pong(BigInt(1234)))
-      roundtrip(codec, Addr(List((0, NetworkAddress(1234, new InetSocketAddress(
+      roundtrip(codec, Addr(List((0.toLong, NetworkAddress(1234, new InetSocketAddress(
         InetAddress.getByAddress(Array(10, 0, 0, 1).map(_.toByte)),
         8080))))))
       roundtrip(codec, Version(

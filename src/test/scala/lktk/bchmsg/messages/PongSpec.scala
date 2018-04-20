@@ -1,13 +1,12 @@
-package lktk.bchmsg.messages
+package lktk.bp2p.messages
 
 import lktk.bchmsg.CodecSuite
-import lktk.bchmsg.structures._
 import lktk.bchmsg.messages.Pong
 import lktk.bchmsg.structures.Message
 
-class PongSpec extends CodecSuite {
+import lktk.bchmsg.messages._
 
-  import Pong._
+class PongSpec extends CodecSuite {
 
   "Pong codec" should {
     "roundtrip" in {

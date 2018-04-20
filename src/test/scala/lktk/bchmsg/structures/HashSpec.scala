@@ -1,11 +1,11 @@
 package lktk.bchmsg.structures
 
 import lktk.bchmsg.CodecSuite
-import lktk.bchmsg.structures.Hash
+import lktk.bchmsg.structures._
+
+import scodec.bits.ByteVector
 
 class HashSpec extends CodecSuite {
-
-  import Hash._
 
   "Hash codec" should {
     "roundtrip" in {

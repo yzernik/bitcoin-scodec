@@ -1,11 +1,16 @@
 package lktk.bchmsg.structures
 
 import lktk.bchmsg.CodecSuite
-import lktk.bchmsg.structures.{BlockHeader, Hash}
+import lktk.bchmsg.structures.BlockHeader._
+import lktk.bchmsg.structures._
+import org.scalatest._
+import scodec.bits.ByteVector
+import scodec.bits._
+import scodec.codecs._
 
 class BlockHeaderSpec extends CodecSuite {
 
-  import BlockHeader._
+
 
   val blockheader = BlockHeader(
     1L,

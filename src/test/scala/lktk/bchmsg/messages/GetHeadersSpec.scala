@@ -1,13 +1,17 @@
 package lktk.bchmsg.messages
 
 import lktk.bchmsg.CodecSuite
-import lktk.bchmsg.structures._
 import lktk.bchmsg.messages.GetHeaders
 import lktk.bchmsg.structures.{Hash, Message}
+import lktk.bchmsg.CodecSuite
+
+import lktk.bchmsg.messages._
+import scodec.bits.ByteVector
+import scodec.bits._
+import scodec.codecs._
 
 class GetHeadersSpec extends CodecSuite {
 
-  import GetHeaders._
 
   val getheaders = GetHeaders(
     70001L,

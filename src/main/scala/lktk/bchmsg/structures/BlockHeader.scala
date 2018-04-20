@@ -1,7 +1,8 @@
 package lktk.bchmsg.structures
 
 import lktk.bchmsg.util.Util
-import lktk.bchmsg.util.Util
+import scodec.Codec
+import scodec.codecs._
 
 case class BlockHeader(
   version: Long,

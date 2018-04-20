@@ -1,14 +1,12 @@
-package lktk.bchmsg.messages
+package lktk.bp2p.messages
 
 import lktk.bchmsg.CodecSuite
-import lktk.bchmsg.structures._
 import lktk.bchmsg.messages.GetAddr
 import lktk.bchmsg.structures.Message
 
+import lktk.bchmsg.messages._
+
 class GetAddrSpec extends CodecSuite {
-
-  import GetAddr._
-
   "GetAddr codec" should {
     "roundtrip" in {
       val getaddr = GetAddr()

@@ -1,11 +1,9 @@
 package lktk.bchmsg.messages
 
-import lktk.bchmsg.structures.Message
-import lktk.bchmsg.structures.MessageCompanion
-import lktk.bchmsg.structures.TxIn
-import lktk.bchmsg.structures.TxOut
-import lktk.bchmsg.structures.VarList
 import lktk.bchmsg.structures._
+
+import scodec.Codec
+import scodec.codecs._
 
 case class Tx(
   version: Long,

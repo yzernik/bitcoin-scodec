@@ -1,13 +1,14 @@
-package lktk.bchmsg.messages
+package lktk.bp2p.messages
 
 import lktk.bchmsg.CodecSuite
-import lktk.bchmsg.structures._
 import lktk.bchmsg.messages.Tx
 import lktk.bchmsg.structures._
 
-class TxSpec extends CodecSuite {
+import scodec.bits.ByteVector
+import scodec.bits._
+import scodec.codecs._
 
-  import Tx._
+class TxSpec extends CodecSuite {
 
   val bytes = hex"""
 01 00 00 00 01 6D BD DB 

@@ -1,10 +1,10 @@
 package lktk.bchmsg.messages
 
-import lktk.bchmsg.structures.Hash
-import lktk.bchmsg.structures.Message
-import lktk.bchmsg.structures.MessageCompanion
-import lktk.bchmsg.structures.VarList
 import lktk.bchmsg.structures.{Hash, Message, MessageCompanion, VarList}
+
+import scodec.Codec
+import scodec.bits.ByteVector
+import scodec.codecs._
 
 case class GetBlocks(
   version: Long,

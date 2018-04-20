@@ -1,8 +1,9 @@
 package lktk.bchmsg.messages
 
-import lktk.bchmsg.structures.Message
-import lktk.bchmsg.structures.MessageCompanion
 import lktk.bchmsg.structures.{Message, MessageCompanion}
+
+import scodec.Codec
+import scodec.codecs.provide
 
 case class MemPool() extends Message {
   type E = MemPool

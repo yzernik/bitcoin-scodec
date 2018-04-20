@@ -1,8 +1,9 @@
 package lktk.bchmsg.messages
 
-import lktk.bchmsg.structures.MessageCompanion
-import lktk.bchmsg.structures.UInt64.bigIntCodec
 import lktk.bchmsg.structures.{Message, MessageCompanion}
+
+import lktk.bchmsg.structures.UInt64.bigIntCodec
+import scodec.Codec
 
 case class Pong(nonce: BigInt) extends Message {
   type E = Pong

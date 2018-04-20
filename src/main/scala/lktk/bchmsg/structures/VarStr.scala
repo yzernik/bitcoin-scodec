@@ -7,6 +7,7 @@ import scodec.codecs.ascii
 import scodec.codecs.variableSizeBytes
 
 object VarStr {
+
   import VarInt._
 
   implicit val codec: Codec[String] = {

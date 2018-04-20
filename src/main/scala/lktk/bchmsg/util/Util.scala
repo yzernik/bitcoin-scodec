@@ -5,6 +5,8 @@ import java.nio.ByteOrder
 import java.security.MessageDigest
 
 import lktk.bchmsg.structures.Hash
+import scodec.bits.ByteVector
+
 
 object Util {
 

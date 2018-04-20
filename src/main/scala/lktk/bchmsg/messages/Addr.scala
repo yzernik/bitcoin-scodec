@@ -1,9 +1,10 @@
 package lktk.bchmsg.messages
 
-import lktk.bchmsg.structures.Message
-import lktk.bchmsg.structures.MessageCompanion
-import lktk.bchmsg.structures.NetworkAddress
-import lktk.bchmsg.structures.{Message, MessageCompanion, NetworkAddress, VarList}
+import lktk.bchmsg.structures._
+
+import scodec.Codec
+import scodec.codecs.uint32L
+import scodec.codecs._
 
 case class Addr(addrs: List[(Long, NetworkAddress)]) extends Message {
   type E = Addr

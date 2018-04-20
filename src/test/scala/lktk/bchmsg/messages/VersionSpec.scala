@@ -1,16 +1,18 @@
-package lktk.bchmsg.messages
+package lktk.bp2p.messages
 
-import lktk.bchmsg.CodecSuite
-import lktk.bchmsg.structures._
+
+import lktk.bchmsg.messages._
+import scodec.bits.ByteVector
+import scodec.bits._
+import scodec.codecs._
 import java.net.InetSocketAddress
 import java.net.InetAddress
 
+import lktk.bchmsg.CodecSuite
 import lktk.bchmsg.messages.Version
 import lktk.bchmsg.structures.{Message, NetworkAddress}
 
 class VersionSpec extends CodecSuite {
-
-  import Version._
 
   val version = Version(
     60002,

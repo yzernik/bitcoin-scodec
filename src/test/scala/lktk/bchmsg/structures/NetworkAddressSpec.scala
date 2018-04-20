@@ -1,14 +1,15 @@
 package lktk.bchmsg.structures
 
+import lktk.bchmsg.CodecSuite
+import lktk.bchmsg.structures._
+
 import java.net.InetAddress
 import java.net.InetSocketAddress
 
-import lktk.bchmsg.CodecSuite
-import lktk.bchmsg.structures.NetworkAddress
+import scala.math.BigInt.int2bigInt
+import scodec.bits.HexStringSyntax
 
 class NetworkAddressSpec extends CodecSuite {
-
-  import NetworkAddress._
 
   "NetworkAddress codec" should {
     "roundtrip" in {

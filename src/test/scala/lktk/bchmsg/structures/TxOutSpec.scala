@@ -1,11 +1,11 @@
 package lktk.bchmsg.structures
 
 import lktk.bchmsg.CodecSuite
-import lktk.bchmsg.structures.TxOut
+import lktk.bchmsg.structures._
+
+import scodec.bits._
 
 class TxOutSpec extends CodecSuite {
-
-  import TxOut._
 
   "TxOut codec" should {
 

@@ -9,7 +9,7 @@ case class InvVect(
 
 object InvVect {
 
-  sealed trait InvType
+  trait InvType
   case object ERROR extends InvType
   case object MSG_TX extends InvType
   case object MSG_BLOCK extends InvType

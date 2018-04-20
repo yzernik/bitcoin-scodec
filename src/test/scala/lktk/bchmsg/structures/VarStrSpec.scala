@@ -2,9 +2,9 @@ package lktk.bchmsg.structures
 
 import lktk.bchmsg.CodecSuite
 
-class VarStrSpec extends CodecSuite {
+import scodec.codecs.implicits._
 
-  import lktk.bchmsg.structures.VarStr._
+class VarStrSpec extends CodecSuite {
 
   "VarStr codec" should {
 

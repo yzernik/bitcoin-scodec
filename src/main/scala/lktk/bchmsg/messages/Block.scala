@@ -1,10 +1,9 @@
 package lktk.bchmsg.messages
 
-import lktk.bchmsg.structures.BlockHeader
-import lktk.bchmsg.structures.Message
-import lktk.bchmsg.structures.MessageCompanion
-import lktk.bchmsg.structures.VarList
-import lktk.bchmsg.structures.{BlockHeader, Message, MessageCompanion, VarList}
+import lktk.bchmsg.structures._
+
+import scodec.Codec
+import scodec.codecs._
 
 case class Block(
   block_header: BlockHeader,

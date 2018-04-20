@@ -1,11 +1,12 @@
 package lktk.bchmsg.structures
 
 import lktk.bchmsg.CodecSuite
-import lktk.bchmsg.structures.{Hash, OutPoint}
+import lktk.bchmsg.structures._
+
+import scodec.bits.ByteVector
+import scodec.bits._
 
 class OutPointSpec extends CodecSuite {
-
-  import OutPoint._
 
   "OutPoint codec" should {
 

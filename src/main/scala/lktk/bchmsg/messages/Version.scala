@@ -1,11 +1,12 @@
 package lktk.bchmsg.messages
 
-import lktk.bchmsg.structures.Message
-import lktk.bchmsg.structures.MessageCompanion
-import lktk.bchmsg.structures.NetworkAddress
-import lktk.bchmsg.structures.UInt64.bigIntCodec
-import lktk.bchmsg.structures.VarStr
 import lktk.bchmsg.structures.{Message, MessageCompanion, NetworkAddress, VarStr}
+
+import lktk.bchmsg.structures.UInt64.bigIntCodec
+import scodec.Codec
+import scodec.codecs._
+
+import scala.util.Random
 
 case class Version(
   version: Int,

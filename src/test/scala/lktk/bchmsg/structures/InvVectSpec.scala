@@ -1,7 +1,9 @@
 package lktk.bchmsg.structures
 
 import lktk.bchmsg.CodecSuite
-import lktk.bchmsg.structures.{Hash, InvVect}
+import lktk.bchmsg.structures._
+
+import scodec.bits.ByteVector
 
 class InvVectSpec extends CodecSuite {
 

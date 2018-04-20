@@ -1,9 +1,9 @@
 package lktk.bchmsg.messages
 
-import lktk.bchmsg.structures.Message
-import lktk.bchmsg.structures.MessageCompanion
-import lktk.bchmsg.structures.VarStr
 import lktk.bchmsg.structures.{Message, MessageCompanion, VarStr}
+
+import scodec.Codec
+import scodec.codecs._
 
 case class Reject(
   message: String,

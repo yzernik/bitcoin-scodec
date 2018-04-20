@@ -1,14 +1,15 @@
-package lktk.bchmsg.messages
+package lktk.bp2p.messages
 
 import lktk.bchmsg.CodecSuite
-import lktk.bchmsg.structures._
 import lktk.bchmsg.messages.GetBlocks
 import lktk.bchmsg.structures.{Hash, Message}
 
+import lktk.bchmsg.messages._
+import scodec.bits.ByteVector
+import scodec.bits._
+import scodec.codecs._
+
 class GetBlocksSpec extends CodecSuite {
-
-  import GetBlocks._
-
   val getblocks = GetBlocks(
     1L,
     List(Hash(ByteVector.fill(32)(0x42))),

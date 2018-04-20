@@ -1,10 +1,11 @@
 package lktk.bchmsg.messages
 
-import lktk.bchmsg.structures.Message
-import lktk.bchmsg.structures.MessageCompanion
-import lktk.bchmsg.structures.VarList
-import lktk.bchmsg.structures.VarStr
-import lktk.bchmsg.structures.{Message, MessageCompanion, VarList, VarStr}
+import lktk.bchmsg.structures._
+
+import scodec.HListCodecEnrichedWithHListSupport
+import scodec.codecs.int32
+import scodec.codecs.int64
+import scodec.codecs._
 
 case class Alert(
   version: Int,

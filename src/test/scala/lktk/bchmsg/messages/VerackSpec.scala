@@ -1,13 +1,13 @@
 package lktk.bchmsg.messages
 
 import lktk.bchmsg.CodecSuite
-import lktk.bchmsg.structures._
 import lktk.bchmsg.messages.Verack
 import lktk.bchmsg.structures.Message
+import lktk.bchmsg.CodecSuite
+
+import lktk.bchmsg.messages._
 
 class VerackSpec extends CodecSuite {
-
-  import Verack._
 
   "Verack codec" should {
     "roundtrip" in {

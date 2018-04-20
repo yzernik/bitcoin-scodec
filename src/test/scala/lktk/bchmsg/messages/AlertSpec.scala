@@ -1,7 +1,7 @@
 package lktk.bchmsg.messages
 
 import lktk.bchmsg.CodecSuite
-
+import lktk.bchmsg.messages._
 import scodec.bits.ByteVector
 import scodec.bits._
 import scodec.codecs._

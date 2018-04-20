@@ -1,11 +1,12 @@
 package lktk.bchmsg.structures
 
 import lktk.bchmsg.CodecSuite
-import lktk.bchmsg.structures.{Hash, OutPoint, TxIn}
+import lktk.bchmsg.structures._
+
+import scodec.bits.ByteVector
+import scodec.bits._
 
 class TxInSpec extends CodecSuite {
-
-  import TxIn._
 
   "TxIn codec" should {
 

@@ -4,15 +4,21 @@ import java.net.InetAddress
 import java.net.InetSocketAddress
 
 import lktk.bchmsg.CodecSuite
-import lktk.bchmsg.structures.NetworkAddress
+import lktk.bchmsg.messages
 import lktk.bchmsg.messages.Addr
 import lktk.bchmsg.structures.{Message, NetworkAddress}
+import lktk.bchmsg.CodecSuite
+
+import lktk.bchmsg.messages._
+
+import scala.math.BigInt.int2bigInt
+import scodec.bits.HexStringSyntax
 
 class AddrSpec extends CodecSuite {
 
-  import Addr._
+  import lktk.bchmsg.messages.Addr._
 
-  val addr = Addr(List((1292899810L,
+  val addr = messages.Addr(List((1292899810L,
     NetworkAddress(1, new InetSocketAddress(
       InetAddress.getByAddress(Array(10, 0, 0, 1).map(_.toByte)),
       8333)))))

@@ -1,13 +1,15 @@
-package lktk.bchmsg.messages
+package lktk.bp2p.messages
 
 import lktk.bchmsg.CodecSuite
-import lktk.bchmsg.structures._
 import lktk.bchmsg.messages.NotFound
 import lktk.bchmsg.structures.{Hash, InvVect, Message}
 
-class NotFoundSpec extends CodecSuite {
+import lktk.bchmsg.messages._
+import scodec.bits.ByteVector
+import scodec.bits._
+import scodec.codecs._
 
-  import NotFound._
+class NotFoundSpec extends CodecSuite {
 
   val notfound = NotFound(List(InvVect(InvVect.MSG_TX,
     Hash(ByteVector.fill(32)(0x42)))))

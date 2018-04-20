@@ -2,8 +2,16 @@ package lktk.bchmsg.structures
 
 import lktk.bchmsg.messages._
 import lktk.bchmsg.util.Util
-import lktk.bchmsg.messages._
-import lktk.bchmsg.util.Util
+
+import scala.language.existentials
+import scala.language.implicitConversions
+
+import scodec.Attempt.{Failure, Successful}
+import scodec.Codec
+import scodec.bits.BitVector
+import scodec.bits.ByteVector
+import scodec.codecs.bytes
+import scodec.codecs.uint32L
 
 trait Message { self =>
   type E >: self.type <: Message
@@ -81,6 +89,7 @@ object MessageCompanion {
   val all: Set[MessageCompanion[_ <: Message]] = Set(Addr, Alert, Block, GetAddr, GetBlocks,
     GetData, GetHeaders, Headers, Inv, MemPool, NotFound, Ping, Pong, Reject,
     Tx, Verack, Version)
+
   val byCommand: Map[ByteVector, MessageCompanion[_ <: Message]] = {
     require(all.map(_.command).size == all.size, "Type headers must be unique.")
     all.map { companion => Message.padCommand(companion.command) -> companion }.toMap

@@ -1,13 +1,14 @@
-package lktk.bchmsg.messages
+package lktk.bp2p.messages
 
 import lktk.bchmsg.CodecSuite
-import lktk.bchmsg.structures._
 import lktk.bchmsg.messages.Reject
+
+import lktk.bchmsg.messages._
+import lktk.bchmsg.messages.Reject._
 import lktk.bchmsg.structures.Message
+import scodec.bits.ByteVector
 
 class RejectSpec extends CodecSuite {
-
-  import Reject._
 
   "Reject codec" should {
     "roundtrip" in {

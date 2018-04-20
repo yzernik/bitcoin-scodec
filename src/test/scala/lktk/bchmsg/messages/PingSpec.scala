@@ -1,13 +1,12 @@
-package lktk.bchmsg.messages
+package lktk.bp2p.messages
 
 import lktk.bchmsg.CodecSuite
-import lktk.bchmsg.structures._
 import lktk.bchmsg.messages.Ping
 import lktk.bchmsg.structures.Message
 
-class PingSpec extends CodecSuite {
+import lktk.bchmsg.messages._
 
-  import Ping._
+class PingSpec extends CodecSuite {
 
   "Ping codec" should {
     "roundtrip" in {

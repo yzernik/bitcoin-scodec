@@ -1,6 +1,7 @@
 package lktk.bchmsg.structures
 
 import scala.BigInt
+
 import scala.math.BigInt.int2bigInt
 import scala.math.BigInt.long2bigInt
 

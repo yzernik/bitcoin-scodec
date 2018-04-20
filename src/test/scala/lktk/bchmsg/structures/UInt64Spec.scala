@@ -1,11 +1,9 @@
 package lktk.bchmsg.structures
 
 import lktk.bchmsg.CodecSuite
-import lktk.bchmsg.structures.UInt64
+import lktk.bchmsg.structures._
 
 class UInt64Spec extends CodecSuite {
-
-  import UInt64._
 
   "UInt64 codec" should {
     "roundtrip" in {

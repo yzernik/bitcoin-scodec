@@ -1,9 +1,8 @@
 package lktk.bchmsg.messages
 
-import lktk.bchmsg.structures.Message
-import lktk.bchmsg.structures.MessageCompanion
-import lktk.bchmsg.structures.VarList
 import lktk.bchmsg.structures.{Message, MessageCompanion, VarList}
+
+import scodec.Codec
 
 case class Headers(invs: List[Block]) extends Message {
   type E = Headers
