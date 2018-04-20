@@ -11,16 +11,8 @@ Library for encoding Bitcoin Cash [network protocol](https://en.bitcoin.it/wiki/
 Add the following to your build.sbt:
 
 
-```
-libraryDependencies += "io.github.yzernik" %% "bitcoin-scodec" % "0.2.7"
-```
-
 with the following resolver
 
-
-``` scala
-resolvers += "yzernik repo" at "http://dl.bintray.com/yzernik/maven/"
-```
 
 ### Encode a Bitcoin message
 
