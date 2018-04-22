@@ -1,9 +1,10 @@
-# bchmsg
+# bmsg
+
 
 [![Build Status](https://travis-ci.org/floreslorca/bchmsg.svg?branch=master)](https://travis-ci.org/floreslorca/bchmsg) [![Coverage Status](https://img.shields.io/coveralls/floreslorca/bchmsg.svg)](https://coveralls.io/r/floreslorca/bchmsg?branch=master)
 
 
-Library for encoding Bitcoin Cash [network protocol](https://en.bitcoin.it/wiki/Protocol_Specification) in Scala using [scodec](https://github.com/scodec/scodec).
+Library for encoding Bitcoin messages. Particularly for Bitcoin Core and Bitcoin Cash implementations [network protocol](https://en.bitcoin.it/wiki/Protocol_Specification) in Scala using [scodec](https://github.com/scodec/scodec).
 
 
 ### How to use
