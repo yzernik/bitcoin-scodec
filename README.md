@@ -12,13 +12,13 @@ Library for encoding Bitcoin messages. Particularly for Bitcoin Core and Bitcoin
 Add the following to your build.sbt:
 
 ```
-libraryDependencies += "io.lktk" %% "bmsg" % "0.3"
+libraryDependencies += "lktk" %% "bmsg" % "0.3"
 ```
 
 with the following resolver
 
 ```
-resolvers += "lktk" at "http://dl.bintray.com/floreslorca/"
+resolvers += Resolver.bintrayRepo("floreslorca", "io")
 ```
 
 ### Encode a Bitcoin message
