@@ -26,7 +26,7 @@ case class Alert(
 }
 
 object Alert extends MessageCompanion[Alert] {
-  def codec(version: Int) = {
+  def codec(version: Int): Codec[Alert] = {
     ("version" | int32) ::
       ("relay_until" | int64) ::
       ("expiration" | int64) ::
