@@ -4,16 +4,22 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/floreslorca/bmsg/master/LICENSE) [![Build Status](https://travis-ci.org/floreslorca/bmsg.svg?branch=master)](https://travis-ci.org/floreslorca/bmsg) [![Coverage Status](https://coveralls.io/repos/github/floreslorca/bmsg/badge.svg?branch=master)](https://coveralls.io/github/floreslorca/bmsg?branch=master)
 
 
-Library for encoding Bitcoin messages. Particularly for Bitcoin Core and Bitcoin Cash implementations [network protocol](https://en.bitcoin.it/wiki/Protocol_Specification) in Scala using [scodec](https://github.com/scodec/scodec).
+Library for encoding Bitcoin messages. Particularly for Bitcoin Core and Bitcoin Cash implementations. [network protocol](https://bitcoin.org/en/developer-reference#p2p-network) in Scala using [scodec](https://github.com/scodec/scodec).
 
 
 ### How to use
 
 Add the following to your build.sbt:
 
+```
+libraryDependencies += "io.lktk" %% "bmsg" % "0.3"
+```
 
 with the following resolver
 
+```
+resolvers += "lktk" at "http://dl.bintray.com/floreslorca/"
+```
 
 ### Encode a Bitcoin message
 
