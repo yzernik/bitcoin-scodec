@@ -1,5 +1,5 @@
 language: scala
 scala:
   - 2.12.4
-script: "sbt coveralls"
+script: "sbt test"
 sudo: false

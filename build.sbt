@@ -1,4 +1,4 @@
-name := "bchmsg"
+name := "bmsg"
 
 organization := "lktk"
 
