@@ -26,14 +26,14 @@ resolvers += "lktk" at "http://dl.bintray.com/floreslorca/"
 create a message codec
 
 ```
-scala> import lktk.bchmsg.structures.Message
+scala> import lktk.bmsg.structures.Message
 
 scala> val codec = Message.codec(0xD9B4BEF9L, 60002) // on the main network, using version 60002.
 ```
 
 encode a ping message
 ```
-scala> import lktk.bchmsg.messages._
+scala> import lktk.bmsg.messages._
 
 scala> codec.encode(Ping(BigInt(1234)))
 res0: scodec.Attempt[scodec.bits.BitVector] = Successful(BitVector(256 bits, 0xf9beb4d970696e67000000000000000008000000433ba813d204000000000000))
@@ -44,5 +44,5 @@ decode a pong message
 scala> import scodec.bits._
 
 scala> codec.decode(hex"f9beb4d9706f6e67000000000000000040000000433ba813d204000000000000".toBitVector)
-res1: scodec.Attempt[scodec.DecodeResult[scala> import lktk.bchmsg.structures.Message]] = Successful(DecodeResult(Pong(1234),BitVector(empty)))
+res1: scodec.Attempt[scodec.DecodeResult[scala> import lktk.bmsg.structures.Message]] = Successful(DecodeResult(Pong(1234),BitVector(empty)))
 ```
