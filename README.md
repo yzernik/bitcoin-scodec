@@ -1,7 +1,7 @@
 # bmsg
 
 
-[![Build Status](https://travis-ci.org/floreslorca/bchmsg.svg?branch=master)](https://travis-ci.org/floreslorca/bchmsg) [![Coverage Status](https://img.shields.io/coveralls/floreslorca/bchmsg.svg)](https://coveralls.io/r/floreslorca/bchmsg?branch=master)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/floreslorca/bmsg/master/LICENSE) [![Build Status](https://travis-ci.org/floreslorca/bchmsg.svg?branch=master)](https://travis-ci.org/floreslorca/bchmsg) [![Coverage Status](https://img.shields.io/coveralls/floreslorca/bchmsg.svg)](https://coveralls.io/r/floreslorca/bchmsg?branch=master)
 
 
 Library for encoding Bitcoin messages. Particularly for Bitcoin Core and Bitcoin Cash implementations [network protocol](https://en.bitcoin.it/wiki/Protocol_Specification) in Scala using [scodec](https://github.com/scodec/scodec).
