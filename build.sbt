@@ -10,11 +10,10 @@ scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature", "-Ypartial-unifi
 
 licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
-resolvers += Resolver.bintrayRepo("floreslorca", "maven")
-
 coverageEnabled := true
 
 bintrayPackageLabels := Seq("bitcoin")
+bintrayRepository := "lktk"
 
 libraryDependencies ++= Seq(
   "org.scodec"                    %% "scodec-core"    % "1.10.3",
