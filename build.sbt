@@ -10,7 +10,9 @@ scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature", "-Ypartial-unifi
 
 licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
-resolvers += "Sonatype Public" at "https://oss.sonatype.org/content/groups/public/"
+resolvers += Resolver.bintrayRepo("floreslorca", "maven")
+
+bintrayPackageLabels := Seq("bitcoin")
 
 libraryDependencies ++= Seq(
   "org.scodec"                    %% "scodec-core"    % "1.10.3",
