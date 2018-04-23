@@ -12,6 +12,8 @@ licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
 resolvers += Resolver.bintrayRepo("floreslorca", "maven")
 
+coverageEnabled := true
+
 bintrayPackageLabels := Seq("bitcoin")
 
 libraryDependencies ++= Seq(
