@@ -13,7 +13,10 @@ licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 coverageEnabled := true
 
 bintrayPackageLabels := Seq("bitcoin")
-bintrayRepository := "lktk"
+
+bintrayRepository := "io"
+
+skip in publish := true
 
 libraryDependencies ++= Seq(
   "org.scodec"                    %% "scodec-core"    % "1.10.3",
