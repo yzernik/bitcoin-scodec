@@ -7,11 +7,10 @@ import scala.language.existentials
 import scala.language.implicitConversions
 
 import scodec.Attempt.{Failure, Successful}
-import scodec.Codec
+import scodec.{Attempt, Codec, DecodeResult}
 import scodec.bits.BitVector
-import scodec.bits.ByteVector
-import scodec.codecs.bytes
 import scodec.codecs.uint32L
+import scodec.codecs._
 
 trait Message { self =>
   type E >: self.type <: Message
@@ -25,68 +24,56 @@ trait MessageCompanion[E <: Message] {
 }
 
 object Message {
+  def commandCodec = fixedSizeBytes(12, ascii)
 
-  def padCommand(command: String) =
-    ByteVector(command.getBytes()) ++
-      ByteVector.fill(12 - command.length())(0)
+  def magicCodec(magic: Long): Codec[Long] =
+    ("magic" | uint32L).exmap[Long](
+      s => if (s == magic) Successful(s) else Failure(scodec.Err("magic did not match.")),
+      m => if(m == magic) Successful(m) else Failure(scodec.Err("magic did not match."))
+    )
 
-  def toString(command: ByteVector) = command.decodeAscii.toOption
-  def decodeHeader(bits: BitVector, magic: Long, version: Int) =
-    for {
-      m <- uint32L.decode(bits).flatMap { mg =>
-        if (mg.value == magic)
-          Successful(mg)
-        else
-          Failure(scodec.Err("magic did not match."))
-      }
-      c <- bytes(12).decode(m.remainder)
-      command = c.value
-      _ = println(toString(command))
-      l <- uint32L.decode(c.remainder)
-      length = l.value
-      ch <- uint32L.decode(l.remainder)
-      chksum = ch.value
-      (payload, rest) = ch.remainder.splitAt(length * 8)
-    } yield (command, length, chksum, payload, rest)
-
-  def decodePayload(payload: BitVector, version: Int, chksum: Long, command: ByteVector) = {
-    MessageCompanion.byCommand.get(command).map(cmd =>
-      cmd.codec(version).decode(payload).flatMap { p =>
-        if (!p.remainder.isEmpty)
+  def payLoadCodec(cmd: String, length: Long, chk: Long, version: Int) = {
+    val cdc = MessageCompanion.byCommand.get(cmd.trim).map(_.codec(version))
+    bits.exmap[Message](
+      { b =>
+        val (payload, rest) = b.splitAt(length * 8)
+        if (!rest.isEmpty) {
           Failure(scodec.Err("payload length did not match."))
-        else if (Util.checksum(payload.toByteVector) == chksum) {
-          Successful(p)
+        } else if (Util.checksum(payload.toByteVector) == chk) {
+          cdc.fold[Attempt[Message]](Failure(scodec.Err(s"message: $cmd not recognized")))(_.decode(payload).map(_.value))
         } else {
-          Failure(scodec.Err("checksum did not match."))
+          Failure(scodec.Err("checksum didnt match."))
         }
-      }
-    ).getOrElse(Failure(scodec.Err("Message not valid")))
+      },
+      codecMsg(version, _)
+    )
   }
+  def codecMsg(version: Int, msg: Message) = msg.companion.codec(version).encode(msg)
 
   def codec(magic: Long, version: Int): Codec[Message] = {
-
-    def encode(msg: Message) = {
-      val c = msg.companion.codec(version)
+    def encode(msg: Message): Attempt[BitVector] = {
       for {
-        magic <- uint32L.encode(magic)
-        command <- bytes(12).encode(padCommand(msg.companion.command))
-        payload <- c.encode(msg)
+        magic <- magicCodec(magic).encode(magic)
+        cmd <- commandCodec.encode(msg.companion.command) //How can i get the discriminator value out?
+        payload <- codecMsg(version, msg)
         length <- uint32L.encode(payload.length / 8)
         chksum <- uint32L.encode(Util.checksum(payload.toByteVector))
-      } yield magic ++ command ++ length ++ chksum ++ payload
+      } yield magic ++ cmd ++ length ++ chksum ++ payload
     }
 
-    def decode(bits: BitVector) =
-      for {
-        metadata <- decodeHeader(bits, magic, version)
-        (command, length, chksum, payload, rest) = metadata
-        _ = println(s"decoded header: $version command: ${command.toHex}")
-        msg <- decodePayload(payload, version, chksum, command)
-      } yield msg
+    def decode(bits: BitVector): Attempt[DecodeResult[Message]] = {
+      (for {
+        magic <- magicCodec(magic)
+        cmd <- fixedSizeBytes(12, ascii) //this is the label for finding the payload in Msg
+        length <- uint32L
+        chk <- uint32L
+        payload <- payLoadCodec(cmd.trim, length, chk, version)
+      } yield payload)
+        .decode(bits)
+    }
 
     Codec[Message](encode _, decode _)
   }
-
 }
 
 object MessageCompanion {
@@ -98,8 +85,9 @@ object MessageCompanion {
       SendHeaders, Tx, Verack, Version
     )
 
-  val byCommand: Map[ByteVector, MessageCompanion[_ <: Message]] = {
+  val byCommand: Map[String, MessageCompanion[_ <: Message]] = {
+    println(all.map(_.command))
     require(all.map(_.command).size == all.size, "Type headers must be unique.")
-    all.map { companion => Message.padCommand(companion.command) -> companion }.toMap
+    all.map { companion => companion.command -> companion }.toMap
   }
 }

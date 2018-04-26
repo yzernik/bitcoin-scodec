@@ -23,6 +23,7 @@ class AddrSpec extends CodecSuite {
       InetAddress.getByAddress(Array(10, 0, 0, 1).map(_.toByte)),
       8333)))))
   val bytes = hex"01 E2 15 10 4D 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF 0A 00 00 01 20 8D"
+
   val messageBytes = hex"""
 F9 BE B4 D9
 61 64 64 72  00 00 00 00 00 00 00 00
