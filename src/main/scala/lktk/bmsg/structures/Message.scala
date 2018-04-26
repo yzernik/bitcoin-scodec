@@ -79,10 +79,10 @@ object Message {
 object MessageCompanion {
   val all: Set[MessageCompanion[_ <: Message]] =
     Set(
-      Addr, Alert, Block, CmptcBlock, GetAddr, GetBlocks,
-      GetData, GetHeaders, Headers, Inv, MemPool,
-      NotFound, Ping, Pong, Reject, SendCmpct,
-      SendHeaders, Tx, Verack, Version
+      Addr, Alert, Block, BlockTxn, CmpctBlock,
+      GetAddr, GetBlocks, GetData, GetHeaders, GetBlockTxn,
+      Headers, Inv, MemPool, NotFound, Ping, Pong, Reject,
+      SendCmpct, SendHeaders, Tx, Verack, Version
     )
 
   val byCommand: Map[String, MessageCompanion[_ <: Message]] = {

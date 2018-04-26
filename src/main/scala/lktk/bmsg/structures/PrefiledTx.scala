@@ -1,6 +1,19 @@
 package lktk.bmsg.structures
 
-//Added in BIP152
+//BIP152
+import lktk.bmsg.messages.Tx
+
+import scodec.Codec
+import scodec.codecs._
 
 case class PrefiledTx(
-                       index: Long)
+  index: Long,
+  tx: Tx
+)
+
+object PrefiledTx {
+  def codec(version: Int): Codec[PrefiledTx] = (
+    ("index" | uint32) ::
+    ("tx" | Tx.codec(version))
+  ).as[PrefiledTx]
+}
