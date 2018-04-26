@@ -12,7 +12,7 @@ Library for encoding Bitcoin messages. Particularly for Bitcoin Core and Bitcoin
 Add the following to your build.sbt:
 
 ```
-libraryDependencies += "lktk" %% "bmsg" % "0.3.0"
+libraryDependencies += "lktk" %% "bmsg" % "0.3.1"
 ```
 
 with the following resolver
