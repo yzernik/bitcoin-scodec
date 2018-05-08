@@ -6,7 +6,7 @@ import lktk.bmsg.structures.UInt64.bigIntCodec
 import scodec.Codec
 import scodec.codecs._
 
-//Added in BIP152
+//BIP152
 case class SendCmpct(
   announce: Boolean,
   version: BigInt) extends Message {
