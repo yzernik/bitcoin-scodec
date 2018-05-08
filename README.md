@@ -6,6 +6,7 @@
 
 Library for encoding Bitcoin messages. Particularly for Bitcoin Core and Bitcoin Cash implementations. [network protocol](https://bitcoin.org/en/developer-reference#p2p-network) in Scala using [scodec](https://github.com/scodec/scodec).
 
+Supports BIP152, BIP37
 
 ### How to use
 
