@@ -86,7 +86,6 @@ object MessageCompanion {
     )
 
   val byCommand: Map[String, MessageCompanion[_ <: Message]] = {
-    println(all.map(_.command))
     require(all.map(_.command).size == all.size, "Type headers must be unique.")
     all.map { companion => companion.command -> companion }.toMap
   }

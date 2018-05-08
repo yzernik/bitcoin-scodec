@@ -7,6 +7,7 @@ import scodec.Codec
 import scodec.codecs._
 
 //BIP152
+//HeaderAndShortIDs
 case class CmpctBlock(
   header: BlockHeader,
   nonce: BigInt,

@@ -5,6 +5,8 @@ import lktk.bmsg.structures._
 import scodec.codecs._
 
 //BIP152
+//BlockTransactionsRequest
+
 case class GetBlockTxn(
   hash: Hash,
   indexes: List[Long]

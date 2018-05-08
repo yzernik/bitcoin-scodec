@@ -1,13 +1,6 @@
 package lktk.bmsg.messages
 
-/*
 import lktk.bmsg.CodecSuite
-import lktk.bmsg.messages.Headers
-import lktk.bmsg.CodecSuite
-
-import lktk.bmsg.messages._
-import scodec._
-import scodec.bits._
 
 class HeadersSpec extends CodecSuite {
   //TODO
@@ -28,5 +21,3 @@ class HeadersSpec extends CodecSuite {
   }
   */
 }
-
-*/
