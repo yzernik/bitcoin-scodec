@@ -1,16 +1,13 @@
 package lktk.bmsg.messages
 
 import lktk.bmsg.structures._
+import lktk.bmsg.util.ProtocolVersion
+import scodec.Attempt.{Failure, Successful}
 import scodec.Codec
-import scodec.bits.ByteVector
-import scodec.codecs._
 
 //BIP37
 case class FilterLoad(
-  filter: ByteVector,
-  nHashFuncs: Long,
-  nTweak: Long,
-  nFlags: UInt8
+  bloomFilter: BloomFilter
 ) extends Message {
   type E = FilterLoad
   def companion = FilterLoad
@@ -18,17 +15,12 @@ case class FilterLoad(
 
 object FilterLoad extends MessageCompanion[FilterLoad] {
 
-  val filterCodec = {
-    val countCodec = VarInt.varIntCodec.xmap(_.toInt, (i: Int) => i.toLong).>>~(bytes).flatPrepend(s => VarInt.varIntCodec :: bytes(s._1))
-    countCodec
-  }
+  def codecError(v: Int)= Failure(scodec.Err(s"unable to encode version $v not supported for $command"))
 
-  def codec(version: Int) =  (
-    ("filter" | filterCodec) ::
-      ("nHashFuncs" | uint32L) ::
-      ("nTweak" | uint32L) ::
-      ("nFlags" | UInt8.codec)
-    ).as[FilterLoad]
+  def codec(version: Int): Codec[FilterLoad] = BloomFilter.codec(version).exmap[FilterLoad](
+      f => if(version >= ProtocolVersion.v70001) Successful(FilterLoad(f)) else codecError(version),
+      g => if(version >= ProtocolVersion.v70001) Successful(g.bloomFilter) else codecError(version)
+    )
 
   def command = "filterload"
 }
