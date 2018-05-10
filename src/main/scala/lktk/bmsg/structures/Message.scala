@@ -76,10 +76,11 @@ object Message {
   }
 }
 
+//List all Message types
 object MessageCompanion {
   val all: Set[MessageCompanion[_ <: Message]] =
     Set(
-      Addr, Alert, Block, BlockTxn, CmpctBlock,
+      Addr, Alert, Block, BlockTxn, CmpctBlock, FilterLoad,
       GetAddr, GetBlocks, GetData, GetHeaders, GetBlockTxn,
       Headers, Inv, MemPool, NotFound, Ping, Pong, Reject,
       SendCmpct, SendHeaders, Tx, Verack, Version

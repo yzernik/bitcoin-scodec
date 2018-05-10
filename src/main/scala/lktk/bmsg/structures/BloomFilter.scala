@@ -3,7 +3,6 @@ package lktk.bmsg.structures
 import scodec.Attempt.{Failure, Successful}
 import scodec.Codec
 import scodec.bits.ByteVector
-import scodec.codecs.bytes
 import scodec.codecs._
 
 case class BloomFilter(

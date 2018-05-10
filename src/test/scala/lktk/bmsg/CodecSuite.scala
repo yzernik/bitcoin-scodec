@@ -1,19 +1,27 @@
 package lktk.bmsg
 
+import lktk.bmsg.structures.BloomFilter
+import lktk.bmsg.structures.BloomFilter.{BLOOM_UPDATE_ALL, BLOOM_UPDATE_NONE, BLOOM_UPDATE_P2PUBKEY_ONLY}
+
 import scala.collection.GenTraversable
 import scala.concurrent.duration._
-
 import shapeless.Lazy
-
-import org.scalacheck.{ Gen, Arbitrary }
+import org.scalacheck.{Arbitrary, Gen}
 import org.scalacheck.Arbitrary.arbitrary
-import org.scalatest.{ Matchers, WordSpec }
+import org.scalatest.{Matchers, WordSpec}
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
-
 import scodec._
-import scodec.bits.BitVector
+import scodec.bits.{BitVector, ByteVector}
 
 abstract class CodecSuite extends WordSpec with Matchers with GeneratorDrivenPropertyChecks {
+
+  def bloomfilterGen: Gen[BloomFilter] = for {
+    size <- Gen.choose(1, 36000)
+    filter <- Gen.containerOfN[Seq, Byte](size, Gen.choose(0, 100).map(_.toByte))
+    nHashFuncs <- Gen.choose[Long](1, 50)
+    tweak <- Gen.choose[Long](1, 4294967295L)
+    nFlags <- Gen.oneOf(BLOOM_UPDATE_NONE, BLOOM_UPDATE_ALL, BLOOM_UPDATE_P2PUBKEY_ONLY)
+  } yield BloomFilter(ByteVector(filter), nHashFuncs, tweak, nFlags)
 
   protected def roundtrip[A](a: A)(implicit c: Lazy[Codec[A]]): Unit = {
     roundtrip(c.value, a)
