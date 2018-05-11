@@ -31,7 +31,7 @@ class PrefilexTxSpec extends CodecSuite {
     val prefiledTx = PrefiledTx(1L, tx)
 
     "roundtrip" in {
-      roundtrip(PrefiledTx.codec(ProtocolVersion.v70014), prefiledTx)
+      roundtrip(PrefiledTx.codec(ProtocolVersion.SHORT_IDS_BLOCKS_VERSION), prefiledTx)
     }
   }
 }
