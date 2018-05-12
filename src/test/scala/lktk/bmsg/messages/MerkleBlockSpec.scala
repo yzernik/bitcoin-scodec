@@ -24,7 +24,7 @@ class MerkleBlockSpec extends CodecSuite {
     flags = List(true,false)
   )
 
-  "MerkleBlock codec" should {
+  "PartialMerkleTree codec" should {
     "roundtrip" in {
       val merkleBlock = MerkleBlock(blockHeader, partialMerkleTree)
 
