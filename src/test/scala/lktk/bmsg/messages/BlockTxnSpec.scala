@@ -11,8 +11,8 @@ class BlockTxnSpec extends CodecSuite {
       val txns = List.fill(4)(tx1)
       val blocktxn = BlockTxn(Hash.NULL, txns)
 
-      roundtrip(BlockTxn.codec(ProtocolVersion.SHORT_IDS_BLOCKS_VERSION), blocktxn)
-      roundtrip(Message.codec(BitcoinCashParams.testnet, ProtocolVersion.SHORT_IDS_BLOCKS_VERSION), blocktxn)
+      roundtrip(BlockTxn.codec(ProtocolVersion.shortIdsBlocksVersion), blocktxn)
+      roundtrip(Message.codec(BitcoinCashParams.testnet, ProtocolVersion.shortIdsBlocksVersion), blocktxn)
     }
   }
 }

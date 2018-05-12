@@ -17,8 +17,8 @@ class FilterAddSpec extends CodecSuite {
   "FilterAdd codec" should {
     "roundtrip" in {
       filterLoadGen.map { fl =>
-        roundtrip(FilterAdd.codec(ProtocolVersion.BLOOM_VERSION), fl)
-        roundtrip(Message.codec(BitcoinCashParams.testnet, ProtocolVersion.BLOOM_VERSION), fl)
+        roundtrip(FilterAdd.codec(ProtocolVersion.bloomVersion), fl)
+        roundtrip(Message.codec(BitcoinCashParams.testnet, ProtocolVersion.bloomVersion), fl)
       }.sample
     }
   }

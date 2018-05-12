@@ -9,8 +9,8 @@ class FilterClearSpec extends CodecSuite {
   "FilterClear codec" should {
     "roundtrip" in {
       val filterclear = FilterClear()
-      roundtrip(FilterClear.codec(ProtocolVersion.BLOOM_VERSION), filterclear)
-      roundtrip(Message.codec(BitcoinCashParams.testnet, ProtocolVersion.BLOOM_VERSION), filterclear)
+      roundtrip(FilterClear.codec(ProtocolVersion.bloomVersion), filterclear)
+      roundtrip(Message.codec(BitcoinCashParams.testnet, ProtocolVersion.bloomVersion), filterclear)
     }
   }
 }

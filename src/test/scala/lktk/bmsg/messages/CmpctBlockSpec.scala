@@ -20,8 +20,8 @@ class CmpctBlockSpec extends CodecSuite {
 
       val cmpctBlock = CmpctBlock(blkHeader, 0, Nil, Nil)
 
-      roundtrip(CmpctBlock.codec(ProtocolVersion.SHORT_IDS_BLOCKS_VERSION), cmpctBlock)
-      roundtrip(Message.codec(BitcoinCashParams.testnet, ProtocolVersion.SHORT_IDS_BLOCKS_VERSION), cmpctBlock)
+      roundtrip(CmpctBlock.codec(ProtocolVersion.shortIdsBlocksVersion), cmpctBlock)
+      roundtrip(Message.codec(BitcoinCashParams.testnet, ProtocolVersion.shortIdsBlocksVersion), cmpctBlock)
     }
   }
 }

@@ -25,8 +25,8 @@ class MerkleBlockSpec extends CodecSuite {
     "roundtrip" in {
       val merkleBlock = MerkleBlock(blockHeader, 2, hashes, List(true,false))
 
-      roundtrip(MerkleBlock.codec(ProtocolVersion.BLOOM_VERSION), merkleBlock)
-      roundtrip(Message.codec(BitcoinCashParams.testnet, ProtocolVersion.BLOOM_VERSION), merkleBlock)
+      roundtrip(MerkleBlock.codec(ProtocolVersion.bloomVersion), merkleBlock)
+      roundtrip(Message.codec(BitcoinCashParams.testnet, ProtocolVersion.bloomVersion), merkleBlock)
     }
   }
 }
