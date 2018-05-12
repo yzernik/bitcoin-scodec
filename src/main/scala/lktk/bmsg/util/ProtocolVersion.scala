@@ -4,7 +4,7 @@ object ProtocolVersion {
   /**
     * network protocol versioning
     */
-  val PROTOCOL_VERSION = 70015
+  val protocolVersion = 70015
 
   //! initial proto version, to be increased after version/verack negotiation
   val initProtoVersion = 209

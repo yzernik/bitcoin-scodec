@@ -7,9 +7,7 @@ import scodec.codecs._
 
 case class MerkleBlock(
   blockHeader: BlockHeader,
-  totalTransactions: Long,
-  hashes: List[Hash],
-  flags: List[Boolean]
+  partialMerkleTree: PartialMerkleTree
 ) extends Message {
   type E = MerkleBlock
   def companion = MerkleBlock
@@ -23,9 +21,7 @@ object MerkleBlock extends MessageCompanion[MerkleBlock] {
 
   def codec(version: Int): Codec[MerkleBlock] = (
     ("blockHeader" | BlockHeader.codec) ::
-      ("totalTransactions" | uint32L) ::
-      ("hashes" | VarList.varList(Hash.codec)) ::
-      ("bits" | VarList.varList(flag))
+      ("partialMerkleTree" | PartialMerkleTree.codec)
     ).as[MerkleBlock]
 
   def command = "merkleblock"
