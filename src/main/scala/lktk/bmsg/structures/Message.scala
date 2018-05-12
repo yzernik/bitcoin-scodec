@@ -40,7 +40,7 @@ object Message {
         if (!rest.isEmpty) {
           Failure(scodec.Err("payload length did not match."))
         } else if (Util.checksum(payload.toByteVector) == chk) {
-          cdc.fold[Attempt[Message]](Failure(scodec.Err(s"message: $cmd not recognized")))(_.decode(payload).map(_.value))
+          cdc.fold[Attempt[Message]](Failure(scodec.Err(s"message: $cmd not recognized")))(s => s.decode(payload).map(_.value))
         } else {
           Failure(scodec.Err("checksum didnt match."))
         }
@@ -76,10 +76,12 @@ object Message {
   }
 }
 
+//List all Message types
 object MessageCompanion {
   val all: Set[MessageCompanion[_ <: Message]] =
     Set(
       Addr, Alert, Block, BlockTxn, CmpctBlock,
+      FilterAdd, FilterLoad, FilterClear, MerkleBlock,
       GetAddr, GetBlocks, GetData, GetHeaders, GetBlockTxn,
       Headers, Inv, MemPool, NotFound, Ping, Pong, Reject,
       SendCmpct, SendHeaders, Tx, Verack, Version

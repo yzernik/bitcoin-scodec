@@ -10,8 +10,6 @@ import scodec.codecs._
 
 class BlockHeaderSpec extends CodecSuite {
 
-
-
   val blockheader = BlockHeader(
     1L,
     Hash(hex"0000000000000000000000000000000000000000000000000000000000000000"),

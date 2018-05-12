@@ -5,7 +5,6 @@ import lktk.bmsg.structures.{BlockHeader, Hash, Message}
 import lktk.bmsg.util._
 import scodec.bits._
 
-
 class CmpctBlockSpec extends CodecSuite {
   "CmpctBlock codec" should {
     "roundtrip" in {
@@ -21,8 +20,8 @@ class CmpctBlockSpec extends CodecSuite {
 
       val cmpctBlock = CmpctBlock(blkHeader, 0, Nil, Nil)
 
-      roundtrip(CmpctBlock.codec(ProtocolVersion.v70014), cmpctBlock)
-      roundtrip(Message.codec(BitcoinCashParams.testnet, ProtocolVersion.v70014), cmpctBlock)
+      roundtrip(CmpctBlock.codec(ProtocolVersion.shortIdsBlocksVersion), cmpctBlock)
+      roundtrip(Message.codec(BitcoinCashParams.testnet, ProtocolVersion.shortIdsBlocksVersion), cmpctBlock)
     }
   }
 }

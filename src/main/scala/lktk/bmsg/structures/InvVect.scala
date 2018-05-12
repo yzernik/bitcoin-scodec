@@ -13,7 +13,7 @@ object InvVect {
   case object ERROR extends InvType
   case object MSG_TX extends InvType
   case object MSG_BLOCK extends InvType
-  case object MSG_FILTERED_BLOCK extends InvType //TODO place holder for bip37
+  case object MSG_FILTERED_BLOCK extends InvType //BIP37
   case object MSG_CMPTC_BLOCK extends InvType //BIP152
 
   implicit val invTypeCodec: Codec[InvType] = mappedEnum(uint32L,

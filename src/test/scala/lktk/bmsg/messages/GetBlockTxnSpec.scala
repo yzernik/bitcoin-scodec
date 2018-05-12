@@ -13,8 +13,8 @@ class GetBlockTxnSpec extends CodecSuite {
 
       val getblkTxn = GetBlockTxn(hash, List(1,2,3,4))
 
-      roundtrip(GetBlockTxn.codec(ProtocolVersion.v70014), getblkTxn)
-      roundtrip(Message.codec(BitcoinCashParams.testnet, ProtocolVersion.v70014), getblkTxn)
+      roundtrip(GetBlockTxn.codec(ProtocolVersion.shortIdsBlocksVersion), getblkTxn)
+      roundtrip(Message.codec(BitcoinCashParams.testnet, ProtocolVersion.shortIdsBlocksVersion), getblkTxn)
     }
   }
 }
