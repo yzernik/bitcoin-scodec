@@ -80,7 +80,7 @@ object Message {
 object MessageCompanion {
   val all: Set[MessageCompanion[_ <: Message]] =
     Set(
-      Addr, Alert, Block, BlockTxn, CmpctBlock,
+      Addr, Alert, Block, BlockTxn, CmpctBlock, FeeFilter,
       FilterAdd, FilterLoad, FilterClear, MerkleBlock,
       GetAddr, GetBlocks, GetData, GetHeaders, GetBlockTxn,
       Headers, Inv, MemPool, NotFound, Ping, Pong, Reject,
