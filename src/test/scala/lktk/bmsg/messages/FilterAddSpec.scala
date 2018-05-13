@@ -9,7 +9,7 @@ import scodec.bits.ByteVector
 class FilterAddSpec extends CodecSuite {
 
   def filterLoadGen: Gen[FilterAdd] = for {
-    size <- Gen.choose(1, 560)
+    size <- Gen.choose(1, 520)
     byteVector <- Gen.containerOfN[Seq, Byte](size, Gen.choose(0, 100).map(_.toByte))
   } yield FilterAdd(ByteVector(byteVector))
 
