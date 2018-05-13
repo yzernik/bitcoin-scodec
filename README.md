@@ -3,10 +3,22 @@
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/floreslorca/bmsg/master/LICENSE) [![Build Status](https://travis-ci.org/floreslorca/bmsg.svg?branch=master)](https://travis-ci.org/floreslorca/bmsg) [![Coverage Status](https://coveralls.io/repos/github/floreslorca/bmsg/badge.svg?branch=master)](https://coveralls.io/github/floreslorca/bmsg?branch=master)
 
+Library for encoding Bitcoin messages. Particularly for Bitcoin Core and Bitcoin Cash implementations
+Resources used for spec:
 
-Library for encoding Bitcoin messages. Particularly for Bitcoin Core and Bitcoin Cash implementations. [network protocol](https://bitcoin.org/en/developer-reference#p2p-network) in Scala using [scodec](https://github.com/scodec/scodec).
+* [bitcoin developer reference](https://bitcoin.org/en/developer-reference#p2p-network)
+* [bitcoin wiki](https://en.bitcoin.it/wiki/Protocol_documentation)
 
-Supports BIP152, BIP37
+This library implements all the p2p messages used by the following clients, and also specific BIPs implemented on some of them:
+* [`Bitcoin ABC`](https://www.bitcoinabc.org/)
+* [`Bitcoin Core`](https://bitcoin.org/en/bitcoin-core/)
+    * [BIP144](https://github.com/bitcoin/bips/blob/master/bip-0144.mediawiki) Segwit
+* [`Bitcoin Unlimited`](https://www.bitcoinunlimited.info/)
+    * [BUIP10](https://github.com/BitcoinUnlimited/BitcoinUnlimited/blob/release/doc/bu-xthin-protocol.md) Xthinblocks
+* [`Bitcoin XT`](https://bitcoinxt.software/)
+    * [BIP64](https://github.com/bitcoin/bips/blob/master/bip-0064.mediawiki) getutxo message
+
+The library is written in Scala following Functional Programming principles and using [scodec](https://github.com/scodec/scodec).
 
 ### How to use
 
@@ -27,7 +39,7 @@ resolvers += Resolver.bintrayRepo("floreslorca", "io")
 create a message codec
 
 ```
-scala> import lktk.bmsg.structures.Message
+> import lktk.bmsg.structures.Message
 
 scala> val codec = Message.codec(0xD9B4BEF9L, 60002) // on the main network, using version 60002.
 ```
