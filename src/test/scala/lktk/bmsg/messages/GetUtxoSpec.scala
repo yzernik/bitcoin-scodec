@@ -14,7 +14,7 @@ class GetUtxoSpec extends CodecSuite {
       0L
     )
 
-  val GetUtxoGen = for {
+  val getUtxoGen = for {
     num <- Gen.choose(1, 100)
     list <- Gen.containerOfN[List, OutPoint](num, Gen.const(outpoint))
     bool <- Gen.oneOf(true, false)
@@ -22,7 +22,7 @@ class GetUtxoSpec extends CodecSuite {
 
   "GetUtxo codec" should {
     "roundtrip" in {
-      GetUtxoGen.map { getutxo =>
+      getUtxoGen.map { getutxo =>
         roundtrip(GetUtxo.codec(1), getutxo)
         roundtrip(Message.codec(BitcoinCashParams.testnet, 1), getutxo)
       }.sample
