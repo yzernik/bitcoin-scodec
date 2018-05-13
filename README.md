@@ -15,8 +15,7 @@ This library implements all the p2p messages used by the following clients:
 * [`Bitcoin Unlimited`](https://www.bitcoinunlimited.info/)
 * [`Bitcoin XT`](https://bitcoinxt.software/)
 
-
-And also specific messages implemented on some of them:
+It includes specific messages implemented on some of them:
 * [`BIP144`](https://github.com/bitcoin/bips/blob/master/bip-0144.mediawiki) Segwit
 * [`BUIP10`](https://github.com/BitcoinUnlimited/BitcoinUnlimited/blob/release/doc/bu-xthin-protocol.md) Xthinblocks
 * [`BIP64`](https://github.com/bitcoin/bips/blob/master/bip-0064.mediawiki) getutxo message
