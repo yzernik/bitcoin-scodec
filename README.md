@@ -9,14 +9,17 @@ Resources used for spec:
 * [bitcoin developer reference](https://bitcoin.org/en/developer-reference#p2p-network)
 * [bitcoin wiki](https://en.bitcoin.it/wiki/Protocol_documentation)
 
-This library implements all the p2p messages used by the following clients, and also specific BIPs implemented on some of them:
+This library implements all the p2p messages used by the following clients:
 * [`Bitcoin ABC`](https://www.bitcoinabc.org/)
 * [`Bitcoin Core`](https://bitcoin.org/en/bitcoin-core/)
-    * [BIP144](https://github.com/bitcoin/bips/blob/master/bip-0144.mediawiki) Segwit
 * [`Bitcoin Unlimited`](https://www.bitcoinunlimited.info/)
-    * [BUIP10](https://github.com/BitcoinUnlimited/BitcoinUnlimited/blob/release/doc/bu-xthin-protocol.md) Xthinblocks
 * [`Bitcoin XT`](https://bitcoinxt.software/)
-    * [BIP64](https://github.com/bitcoin/bips/blob/master/bip-0064.mediawiki) getutxo message
+
+
+And also specific messages implemented on some of them:
+* [`BIP144`](https://github.com/bitcoin/bips/blob/master/bip-0144.mediawiki) Segwit
+* [`BUIP10`](https://github.com/BitcoinUnlimited/BitcoinUnlimited/blob/release/doc/bu-xthin-protocol.md) Xthinblocks
+* [`BIP64`](https://github.com/bitcoin/bips/blob/master/bip-0064.mediawiki) getutxo message
 
 The library is written in Scala following Functional Programming principles and using [scodec](https://github.com/scodec/scodec).
 
