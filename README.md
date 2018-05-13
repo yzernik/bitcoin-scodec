@@ -6,8 +6,8 @@
 Library for encoding Bitcoin messages. Particularly for Bitcoin Core and Bitcoin Cash implementations
 Resources used for spec:
 
-* [bitcoin developer reference](https://bitcoin.org/en/developer-reference#p2p-network)
-* [bitcoin wiki](https://en.bitcoin.it/wiki/Protocol_documentation)
+* [`Bitcoin developer reference`](https://bitcoin.org/en/developer-reference#p2p-network)
+* [`Bitcoin wiki`](https://en.bitcoin.it/wiki/Protocol_documentation)
 
 This library implements all the p2p messages used by the following clients:
 * [`Bitcoin ABC`](https://www.bitcoinabc.org/)
