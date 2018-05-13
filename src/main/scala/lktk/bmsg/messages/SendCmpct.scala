@@ -16,9 +16,9 @@ case class SendCmpct(
 
 object SendCmpct extends MessageCompanion[SendCmpct] {
 
-  def codec(version: Int): Codec[SendCmpct] =
-    (("announce" | mappedEnum(uint8, false -> 0, true -> 1)).as[Boolean] ::
+  def codec(version: Int): Codec[SendCmpct] = (
+    ("announce" | mappedEnum(uint8, false -> 0, true -> 1)).as[Boolean] ::
       ("version" | Codec[BigInt])
-      ).as[SendCmpct]
+  ).as[SendCmpct]
   def command = "sendcmpct"
 }
