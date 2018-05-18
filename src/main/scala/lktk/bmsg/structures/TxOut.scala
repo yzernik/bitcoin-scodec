@@ -6,7 +6,8 @@ import scodec.codecs._
 
 case class TxOut(
   value: Long,
-  pk_script: ByteVector)
+  pkScript: ByteVector
+)
 
 object TxOut {
 
@@ -17,7 +18,7 @@ object TxOut {
 
   implicit val codec: Codec[TxOut] = {
     ("value" | int64) ::
-      ("pk_script" | scriptCodec)
+    ("pkScript" | scriptCodec)
   }.as[TxOut]
 
 }

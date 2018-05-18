@@ -1,9 +1,8 @@
 package lktk.bp2p.messages
 
 import lktk.bmsg.CodecSuite
-import lktk.bmsg.messages.Tx
+import lktk.bmsg.messages.{Tx, Tx0}
 import lktk.bmsg.structures._
-
 import scodec.bits.ByteVector
 import scodec.bits._
 import scodec.codecs._
@@ -38,7 +37,7 @@ CD 1C BE A6 E7 45 8A 7A  BA D5 12 A9 D9 EA 1A FB
         List(),
         List(),
         12345L)
-      roundtrip(Tx.codec(1), tx1)
+      roundtrip(Tx0.codec(1), tx1)
       roundtrip(Message.codec(0xDAB5BFFAL, 1), tx1)
 
     }
@@ -63,7 +62,7 @@ CD 1C BE A6 E7 45 8A 7A  BA D5 12 A9 D9 EA 1A FB
 
       val tx = Tx(version, txins, txouts, locktime)
 
-      shouldDecodeFullyTo(Tx.codec(1), bytes.toBitVector, tx)
+      shouldDecodeFullyTo(Tx0.codec(1), bytes.toBitVector, tx)
     }
 
   }

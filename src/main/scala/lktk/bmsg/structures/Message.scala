@@ -84,7 +84,7 @@ object MessageCompanion {
       FilterAdd, FilterLoad, FilterClear, MerkleBlock,
       GetAddr, GetBlocks, GetData, GetHeaders, GetUtxo, GetBlockTxn,
       Headers, Inv, MemPool, NotFound, Ping, Pong, Reject,
-      SendCmpct, SendHeaders, Tx, Utxos, Verack, Version
+      SendCmpct, SendHeaders, Tx0, Utxos, Verack, Version
     )
 
   val byCommand: Map[String, MessageCompanion[_ <: Message]] = {
