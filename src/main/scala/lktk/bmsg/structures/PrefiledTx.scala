@@ -13,7 +13,7 @@ case class PrefiledTx(
 
 object PrefiledTx {
   def codec(version: Int): Codec[PrefiledTx] = (
-    ("index" | uint32) ::
+    ("index" | uint32L) ::
     ("tx" | Tx0.codec(version))
   ).as[PrefiledTx]
 }
