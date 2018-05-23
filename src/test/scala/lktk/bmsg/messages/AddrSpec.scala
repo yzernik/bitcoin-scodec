@@ -1,6 +1,7 @@
 package lktk.bmsg.messages
 
 import lktk.bmsg.messages
+import lktk.bmsg.messages.Addr._
 import lktk.bmsg.structures.{Message, NetworkAddress}
 import lktk.bmsg.CodecSuite
 
@@ -13,7 +14,6 @@ import scodec.bits.HexStringSyntax
 
 class AddrSpec extends CodecSuite {
 
-  import lktk.bmsg.messages.Addr._
 
   val addr = messages.Addr(List((1292899810L,
     NetworkAddress(1, new InetSocketAddress(

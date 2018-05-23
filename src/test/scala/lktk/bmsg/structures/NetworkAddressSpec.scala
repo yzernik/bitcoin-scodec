@@ -1,12 +1,11 @@
 package lktk.bmsg.structures
 
 import lktk.bmsg.CodecSuite
-import lktk.bmsg.structures._
 
-import java.net.InetAddress
-import java.net.InetSocketAddress
+import java.net.{InetAddress, InetSocketAddress}
 
 import scala.math.BigInt.int2bigInt
+
 import scodec.bits.HexStringSyntax
 
 class NetworkAddressSpec extends CodecSuite {
@@ -20,15 +19,15 @@ class NetworkAddressSpec extends CodecSuite {
       roundtrip(NetworkAddress(1234, new InetSocketAddress(InetAddress.getByAddress(bytes.toArray), 8080)))
     }
 
-    /*
+
     "encode" in {
       val services = 1L
       val ip = InetAddress.getByAddress(Array(10, 0, 0, 1).map(_.toByte))
       val port = 8333
       val addr = new InetSocketAddress(ip, port)
 
-      codec.encode(NetworkAddress(services, addr)) shouldBe
-        \/.right(hex"01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF 0A 00 00 01 20 8D".toBitVector)
+      NetworkAddress.codec.encode(NetworkAddress(services, addr)).require shouldBe
+        hex"01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF 0A 00 00 01 20 8D".toBitVector
     }
 
     "decode" in {
@@ -37,11 +36,11 @@ class NetworkAddressSpec extends CodecSuite {
       val port = 8333
       val addr = new InetSocketAddress(ip, port)
 
-      codec.decode(hex"01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF 0A 00 00 01 20 8D".toBitVector) shouldBe
-        \/.right(BitVector.empty, NetworkAddress(services, addr))
+      NetworkAddress.codec.decode(hex"01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF 0A 00 00 01 20 8D".toBitVector).require.value shouldBe
+        NetworkAddress(services, addr)
     }
-    * 
-    */
+
+
 
   }
 }

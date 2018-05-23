@@ -1,16 +1,15 @@
 package lktk.bmsg.structures
 
+import lktk.bmsg.structures.UInt64._
+
 import scala.BigInt
 
-import scala.math.BigInt.int2bigInt
-import scala.math.BigInt.long2bigInt
+import scala.math.BigInt.{int2bigInt, long2bigInt}
 
 import scodec.Codec
 import scodec.codecs.int64L
 
 case class UInt64(value: Long) {
-
-  import UInt64._
 
   override def toString = longToBigInt(value).toString
 }
