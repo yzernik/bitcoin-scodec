@@ -74,8 +74,7 @@ class MessageSpec extends CodecSuite {
       val codec = Message.codec(0xD9B4BEF9L, 1)
       val ping = Ping(BigInt(1234))
       val bytes = hex"f9beb4d970696e67000000000000000040000000433ba813d2040000000000".toBitVector
-      val r = codec.decode(bytes) match { case Failure(m) => Failure(scodec.Err(m.message))}
-      r shouldBe Failure(scodec.Err("cannot acquire 64 bits from a vector that contains 56 bits"))
+      codec.decode(bytes).toString shouldBe Failure(scodec.Err("cannot acquire 64 bits from a vector that contains 56 bits")).toString
     }
 
     "fail to decode message with too-long payload" in {
