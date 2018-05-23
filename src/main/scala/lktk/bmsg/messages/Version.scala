@@ -42,5 +42,4 @@ object Version extends MessageCompanion[Version] {
 
   def command = "version"
 
-  def genNonce: BigInt = BigInt(Random.nextLong()) + Long.MaxValue + 1
 }
