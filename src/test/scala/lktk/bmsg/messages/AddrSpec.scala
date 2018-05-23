@@ -5,8 +5,7 @@ import lktk.bmsg.messages.Addr._
 import lktk.bmsg.structures.{Message, NetworkAddress}
 import lktk.bmsg.CodecSuite
 
-import java.net.InetAddress
-import java.net.InetSocketAddress
+import java.net.{InetAddress, InetSocketAddress}
 
 import scala.math.BigInt.int2bigInt
 

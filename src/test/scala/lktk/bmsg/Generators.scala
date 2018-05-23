@@ -31,9 +31,11 @@ object Generators {
 
   def blockHeaderGen: Gen[BlockHeader] = Gen.choose(1, 77).flatMap { rowNum =>
     val reader = CSVReader.open(io.Source.fromResource("blocks.csv"))
-    val row = reader.toStreamWithHeaders.drop(rowNum - 1).take(1).head
+    val rowOpt = reader.toStreamWithHeaders.drop(rowNum - 1).take(1).headOption
     reader.close()
+
     (for {
+      row <- rowOpt
       hashStr <- row.get("hash")
       version <- row.get("version")
       merkleRootStr <- row.get("merkle_root")

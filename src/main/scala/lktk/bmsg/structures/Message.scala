@@ -3,13 +3,11 @@ package lktk.bmsg.structures
 import lktk.bmsg.messages._
 import lktk.bmsg.util.Util
 
-import scala.language.existentials
-import scala.language.implicitConversions
+import scala.language.{existentials, implicitConversions}
 
 import scodec.Attempt.{Failure, Successful}
 import scodec.{Attempt, Codec, DecodeResult}
 import scodec.bits.BitVector
-import scodec.codecs.uint32L
 import scodec.codecs._
 
 trait Message { self =>
