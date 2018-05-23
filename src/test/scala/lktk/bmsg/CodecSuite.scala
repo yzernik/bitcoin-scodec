@@ -1,5 +1,6 @@
 package lktk.bmsg
 
+import lktk.bmsg.messages.Tx0
 import lktk.bmsg.structures.BloomFilter
 import lktk.bmsg.structures.BloomFilter.{BLOOM_UPDATE_ALL, BLOOM_UPDATE_NONE, BLOOM_UPDATE_P2PUBKEY_ONLY}
 
@@ -15,17 +16,12 @@ import scodec.bits.{BitVector, ByteVector}
 
 abstract class CodecSuite extends WordSpec with Matchers with GeneratorDrivenPropertyChecks {
 
-  def bloomfilterGen: Gen[BloomFilter] = for {
-    size <- Gen.choose(1, 36000)
-    filter <- Gen.containerOfN[Seq, Byte](size, Gen.choose(0, 100).map(_.toByte))
-    nHashFuncs <- Gen.choose[Long](1, 50)
-    tweak <- Gen.choose[Long](1, 4294967295L)
-    nFlags <- Gen.oneOf(BLOOM_UPDATE_NONE, BLOOM_UPDATE_ALL, BLOOM_UPDATE_P2PUBKEY_ONLY)
-  } yield BloomFilter(ByteVector(filter), nHashFuncs, tweak, nFlags)
-
   protected def roundtrip[A](a: A)(implicit c: Lazy[Codec[A]]): Unit = {
     roundtrip(c.value, a)
   }
+
+  protected def decodeAll[A](codec: Codec[A], l: List[ByteVector]): List[A] =
+    l.map(b => codec.decode(b.toBitVector).require.value)
 
   protected def roundtrip[A](codec: Codec[A], value: A): Unit = {
     val encoded = codec.encode(value)
@@ -33,6 +29,13 @@ abstract class CodecSuite extends WordSpec with Matchers with GeneratorDrivenPro
     val Attempt.Successful(DecodeResult(decoded, remainder)) = codec.decode(encoded.require)
     remainder shouldEqual BitVector.empty
     decoded shouldEqual value
+  }
+
+  protected def roundtrip[A](codec: Codec[A], bytes: ByteVector): Unit = {
+    val Attempt.Successful(DecodeResult(decoded, remainder)) = codec.decode(bytes.toBitVector)
+    remainder shouldEqual BitVector.empty
+    val encoded = codec.encode(decoded).require
+    encoded shouldEqual bytes.toBitVector
   }
 
   protected def roundtripAll[A](codec: Codec[A], as: GenTraversable[A]): Unit = {

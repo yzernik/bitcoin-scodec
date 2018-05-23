@@ -2,24 +2,21 @@ package lktk.bmsg.messages
 
 import lktk.bmsg.structures._
 
-import scodec.HListCodecEnrichedWithHListSupport
-import scodec.codecs.int32
-import scodec.codecs.int64
 import scodec.codecs._
 
 case class Alert(
   version: Int,
-  relay_until: Long,
+  relayUntil: Long,
   expiration: Long,
   id: Int,
   cancel: Int,
-  set_cancel: List[Int],
-  min_ver: Int,
-  max_ver: Int,
-  set_sub_ver: List[String],
+  setCancel: List[Int],
+  minVer: Int,
+  maxVer: Int,
+  setSubVer: List[String],
   priority: Int,
   comment: String,
-  status_bar: String,
+  statusBar: String,
   reserved: String) extends Message {
   type E = Alert
   def companion = Alert
@@ -27,18 +24,18 @@ case class Alert(
 
 object Alert extends MessageCompanion[Alert] {
   def codec(version: Int) = {
-    ("version" | int32) ::
-      ("relay_until" | int64) ::
-      ("expiration" | int64) ::
-      ("id" | int32) ::
-      ("cancel" | int32) ::
-      ("set_cancel" | VarList.varList(int32)) ::
-      ("min_ver" | int32) ::
-      ("max_ver" | int32) ::
-      ("set_sub_ver" | VarList.varList(VarStr.codec)) ::
-      ("priority" | int32) ::
+    ("version" | int32L) ::
+      ("relayUntil" | int64L) ::
+      ("expiration" | int64L) ::
+      ("id" | int32L) ::
+      ("cancel" | int32L) ::
+      ("setCancel" | VarList.varList(int32L)) ::
+      ("minVer" | int32L) ::
+      ("maxVer" | int32L) ::
+      ("setSubVer" | VarList.varList(VarStr.codec)) ::
+      ("priority" | int32L) ::
       ("comment" | VarStr.codec) ::
-      ("status_bar" | VarStr.codec) ::
+      ("statusBar" | VarStr.codec) ::
       ("reserved" | VarStr.codec)
   }.as[Alert]
   val command = "alert"

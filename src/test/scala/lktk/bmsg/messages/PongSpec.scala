@@ -1,10 +1,7 @@
-package lktk.bp2p.messages
+package lktk.bmsg.messages
 
 import lktk.bmsg.CodecSuite
-import lktk.bmsg.messages.Pong
 import lktk.bmsg.structures.Message
-
-import lktk.bmsg.messages._
 
 class PongSpec extends CodecSuite {
 

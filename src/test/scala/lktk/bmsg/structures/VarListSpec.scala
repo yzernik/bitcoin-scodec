@@ -2,7 +2,6 @@ package lktk.bmsg.structures
 
 import lktk.bmsg.CodecSuite
 import lktk.bmsg.messages._
-import lktk.bmsg.structures.VarList
 
 class VarListSpec extends CodecSuite {
 

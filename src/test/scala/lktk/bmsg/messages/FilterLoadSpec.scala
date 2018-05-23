@@ -1,11 +1,10 @@
-package lktk.bp2p.messages
+package lktk.bmsg.messages
 
 import lktk.bmsg.CodecSuite
-import lktk.bmsg.structures.{BloomFilter, Message}
-import lktk.bmsg.messages._
-import lktk.bmsg.structures.BloomFilter._
+import lktk.bmsg.Generators._
+import lktk.bmsg.structures.Message
 import lktk.bmsg.util.{BitcoinCashParams, ProtocolVersion}
-import scodec.bits.ByteVector
+
 import org.scalacheck.Gen
 
 class FilterLoadSpec extends CodecSuite {
@@ -13,7 +12,6 @@ class FilterLoadSpec extends CodecSuite {
   def filterLoadGen: Gen[FilterLoad] = for {
     bloomFilter <- bloomfilterGen
   } yield FilterLoad(bloomFilter)
-
 
   "FilterLoad codec" should {
     "roundtrip" in {

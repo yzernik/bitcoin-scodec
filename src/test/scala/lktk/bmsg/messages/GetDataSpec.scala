@@ -1,15 +1,10 @@
 package lktk.bmsg.messages
 
-import lktk.bmsg.CodecSuite
-import lktk.bmsg.messages.GetData
 import lktk.bmsg.structures.InvVect.MSG_TX
 import lktk.bmsg.structures.{Hash, InvVect, Message}
 import lktk.bmsg.CodecSuite
 
-import lktk.bmsg.messages._
 import scodec.bits.ByteVector
-import scodec.bits._
-import scodec.codecs._
 
 class GetDataSpec extends CodecSuite {
 

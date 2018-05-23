@@ -1,22 +1,20 @@
 package lktk.bmsg.messages
 
 import lktk.bmsg.CodecSuite
-import lktk.bmsg.messages._
-import scodec.bits.ByteVector
+
 import scodec.bits._
-import scodec.codecs._
 
 class AlertSpec extends CodecSuite {
 
-  import lktk.bmsg.messages.Alert._
-
-  //  val alert = Alert(List((1292899810L, NetworkAddress(1, Left(IPV4("10.0.0.1")), Port(8333)))))
-  //  val bytes = hex"01 E2 15 10 4D 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF 0A 00 00 01 20 8D"
+  val alrt = Alert(60000, 6L, 1L, 1, 1, List(1), 1, 1, List("test"), 1, "", "test", "")
+  val bytes = hex"60ea0000060000000000000001000000000000000100000001000000010100000001000000010000000104746573740100000000047465737400"
 
   "Alert codec" should {
     "roundtrip" in {
-      //roundtrip(alert)
+      roundtrip(Alert.codec(1), alrt)
     }
-
+    "decode" in {
+      shouldDecodeFullyTo(Alert.codec(1), bytes.toBitVector, alrt)
+    }
   }
 }

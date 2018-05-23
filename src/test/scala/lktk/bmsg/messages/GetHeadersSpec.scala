@@ -1,14 +1,9 @@
 package lktk.bmsg.messages
 
-import lktk.bmsg.CodecSuite
-import lktk.bmsg.messages.GetHeaders
 import lktk.bmsg.structures.{Hash, Message}
 import lktk.bmsg.CodecSuite
 
-import lktk.bmsg.messages._
-import scodec.bits.ByteVector
 import scodec.bits._
-import scodec.codecs._
 
 class GetHeadersSpec extends CodecSuite {
 

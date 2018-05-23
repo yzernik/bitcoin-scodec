@@ -1,16 +1,15 @@
 package lktk.bmsg.structures
 
 import lktk.bmsg.CodecSuite
-import lktk.bmsg.structures._
 import lktk.bmsg.messages._
-import java.net.InetAddress
-import java.net.InetSocketAddress
+
+import java.net.{InetAddress, InetSocketAddress}
 
 import scodec.Attempt.Failure
 
 import scala.BigInt
-import scala.math.BigInt.int2bigInt
-import scala.math.BigInt.long2bigInt
+import scala.math.BigInt.{long2bigInt, int2bigInt}
+
 import scodec.bits._
 
 class MessageSpec extends CodecSuite {

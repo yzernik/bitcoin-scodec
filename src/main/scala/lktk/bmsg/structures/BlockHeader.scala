@@ -1,30 +1,23 @@
 package lktk.bmsg.structures
 
-import lktk.bmsg.util.Util
 import scodec.Codec
 import scodec.codecs._
 
 case class BlockHeader(
   version: Long,
-  prev_block: Hash,
-  merkle_root: Hash,
+  prevBlock: Hash,
+  merkleRoot: Hash,
   timestamp: Long,
   bits: Long,
-  nonce: Long) {
-
-  def hash: Hash = {
-    val bytes = BlockHeader.codec.encode(this).toOption.get
-    Util.hash(bytes.toByteArray)
-  }
-
-}
+  nonce: Long
+)
 
 object BlockHeader {
 
   implicit val codec: Codec[BlockHeader] = {
     ("version" | uint32L) ::
-      ("prev_block" | Codec[Hash]) ::
-      ("merkle_root" | Codec[Hash]) ::
+      ("prevBlock" | Codec[Hash]) ::
+      ("merkleRoot" | Codec[Hash]) ::
       ("timestamp" | uint32L) ::
       ("bits" | uint32L) ::
       ("nonce" | uint32L)

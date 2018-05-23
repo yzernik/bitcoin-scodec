@@ -1,22 +1,18 @@
 package lktk.bmsg.messages
 
-import java.net.InetAddress
-import java.net.InetSocketAddress
-
-import lktk.bmsg.CodecSuite
 import lktk.bmsg.messages
-import lktk.bmsg.messages.Addr
+import lktk.bmsg.messages.Addr._
 import lktk.bmsg.structures.{Message, NetworkAddress}
 import lktk.bmsg.CodecSuite
 
-import lktk.bmsg.messages._
+import java.net.{InetAddress, InetSocketAddress}
 
 import scala.math.BigInt.int2bigInt
+
 import scodec.bits.HexStringSyntax
 
 class AddrSpec extends CodecSuite {
 
-  import lktk.bmsg.messages.Addr._
 
   val addr = messages.Addr(List((1292899810L,
     NetworkAddress(1, new InetSocketAddress(

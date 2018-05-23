@@ -1,23 +1,13 @@
 package lktk.bmsg.messages
 
-import lktk.bmsg.CodecSuite
+import lktk.bmsg.{CodecSuite, Generators}
 
 class HeadersSpec extends CodecSuite {
-  //TODO
-  /*
+
   "Headers codec" should {
     "roundtrip" in {
-      //roundtrip(headers)
+      Generators.headerGen.map(h => roundtrip(Headers.codec(1), h)).sample
     }
-
-    "decode" in {
-      val buf = scala.io.Source.fromURL(getClass.getResource("/headerspayload.data"))
-      val bytes = BitVector(buf.toStream.map(_.toByte).toList)
-
-      val Attempt.Successful(DecodeResult(actual, rest)) = Headers.codec(1) decode bytes
-      rest shouldBe BitVector.empty
-    }
-
   }
-  */
+
 }

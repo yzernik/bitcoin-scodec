@@ -1,12 +1,8 @@
-package lktk.bp2p.messages
+package lktk.bmsg.messages
 
 import lktk.bmsg.CodecSuite
-import lktk.bmsg.messages.Reject
-
-import lktk.bmsg.messages._
 import lktk.bmsg.messages.Reject._
 import lktk.bmsg.structures.Message
-import scodec.bits.ByteVector
 
 class RejectSpec extends CodecSuite {
 

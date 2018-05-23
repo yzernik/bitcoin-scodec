@@ -3,7 +3,6 @@ package lktk.bmsg.messages
 import lktk.bmsg.structures._
 
 import scodec.Codec
-import scodec.codecs.uint32L
 import scodec.codecs._
 
 case class Addr(addrs: List[(Long, NetworkAddress)]) extends Message {

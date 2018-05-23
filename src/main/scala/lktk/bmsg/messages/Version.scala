@@ -6,17 +6,15 @@ import lktk.bmsg.util.ProtocolVersion
 import scodec.Codec
 import scodec.codecs._
 
-import scala.util.Random
-
 case class Version(
   version: Int,
   services: BigInt,
   timestamp: Long,
-  addr_recv: NetworkAddress,
-  addr_from: NetworkAddress,
+  addrRecv: NetworkAddress,
+  addrFrom: NetworkAddress,
   nonce: BigInt,
-  user_agent: String,
-  start_height: Int,
+  userAgent: String,
+  startHeight: Int,
   relay: Boolean) extends Message {
   type E = Version
   def companion = Version
@@ -27,11 +25,11 @@ object Version extends MessageCompanion[Version] {
     ("version" | int32L) >>:~ { verNum =>
       ("services" | Codec[BigInt]) ::
         ("timestamp" | int64L) ::
-        ("addr_recv" | Codec[NetworkAddress]) ::
-        ("addr_from" | Codec[NetworkAddress]) ::
+        ("addrRecv" | Codec[NetworkAddress]) ::
+        ("addrFrom" | Codec[NetworkAddress]) ::
         ("nonce" | Codec[BigInt]) ::
-        ("user_agent" | VarStr.codec) ::
-        ("start_height" | int32L) ::
+        ("userAgent" | VarStr.codec) ::
+        ("startHeight" | int32L) ::
         ("relay" | withDefaultValue(conditional(verNum >= ProtocolVersion.bloomVersion, relayCodec), true)) //BIP37
     }
   }.as[Version]
