@@ -27,9 +27,9 @@ object Message {
   def commandCodec = fixedSizeBytes(12, ascii)
 
   def magicCodec(magic: Long): Codec[Long] =
-    ("magic" | uint32L).exmap[Long](
+    ("magic" | uint32L).narrow(
       s => if (s == magic) Successful(s) else Failure(scodec.Err("magic did not match.")),
-      m => if(m == magic) Successful(m) else Failure(scodec.Err("magic did not match."))
+      identity
     )
 
   def payLoadCodec(cmd: String, length: Long, chk: Long, version: Int) = {
