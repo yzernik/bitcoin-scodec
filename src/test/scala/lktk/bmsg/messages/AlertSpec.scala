@@ -11,7 +11,6 @@ class AlertSpec extends CodecSuite {
 
   "Alert codec" should {
     "roundtrip" in {
-      println(Alert.codec(1).encode(alrt).require.toHex)
       roundtrip(Alert.codec(1), alrt)
     }
     "decode" in {

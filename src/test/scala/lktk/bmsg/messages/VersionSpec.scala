@@ -1,16 +1,12 @@
-package lktk.bp2p.messages
-
-
-import lktk.bmsg.messages._
-import scodec.bits.ByteVector
-import scodec.bits._
-import scodec.codecs._
-import java.net.InetSocketAddress
-import java.net.InetAddress
+package lktk.bmsg.messages
 
 import lktk.bmsg.CodecSuite
-import lktk.bmsg.messages.Version
 import lktk.bmsg.structures.{Message, NetworkAddress}
+
+import scodec.bits._
+
+import java.net.InetSocketAddress
+import java.net.InetAddress
 
 class VersionSpec extends CodecSuite {
 

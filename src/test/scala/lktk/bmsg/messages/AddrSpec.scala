@@ -1,17 +1,14 @@
 package lktk.bmsg.messages
 
-import java.net.InetAddress
-import java.net.InetSocketAddress
-
-import lktk.bmsg.CodecSuite
 import lktk.bmsg.messages
-import lktk.bmsg.messages.Addr
 import lktk.bmsg.structures.{Message, NetworkAddress}
 import lktk.bmsg.CodecSuite
 
-import lktk.bmsg.messages._
+import java.net.InetAddress
+import java.net.InetSocketAddress
 
 import scala.math.BigInt.int2bigInt
+
 import scodec.bits.HexStringSyntax
 
 class AddrSpec extends CodecSuite {

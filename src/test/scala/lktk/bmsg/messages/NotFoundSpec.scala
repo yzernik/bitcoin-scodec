@@ -1,13 +1,9 @@
-package lktk.bp2p.messages
+package lktk.bmsg.messages
 
 import lktk.bmsg.CodecSuite
-import lktk.bmsg.messages.NotFound
 import lktk.bmsg.structures.{Hash, InvVect, Message}
 
-import lktk.bmsg.messages._
 import scodec.bits.ByteVector
-import scodec.bits._
-import scodec.codecs._
 
 class NotFoundSpec extends CodecSuite {
 

@@ -1,10 +1,6 @@
 package lktk.bmsg.structures
 
 import lktk.bmsg.CodecSuite
-import lktk.bmsg.structures._
-
-import scodec.codecs.int8
-import scodec.codecs.int64L
 
 class VarIntSpec extends CodecSuite {
 
@@ -25,9 +21,9 @@ class VarIntSpec extends CodecSuite {
       roundtrip(11111111)
       roundtrip(111111111)
       roundtrip(1111111111)
-     // roundtrip(11111111111L)
-     // roundtrip(111111111111L)
-     // roundtrip(1111111111111L)
+      roundtrip(VarInt.varIntCodec, 11111111111L)
+      roundtrip(VarInt.varIntCodec, 111111111111L)
+      roundtrip(VarInt.varIntCodec, 1111111111111L)
     }
 
   }

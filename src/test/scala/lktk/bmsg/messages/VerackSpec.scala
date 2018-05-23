@@ -1,11 +1,7 @@
 package lktk.bmsg.messages
 
-import lktk.bmsg.CodecSuite
-import lktk.bmsg.messages.Verack
 import lktk.bmsg.structures.Message
 import lktk.bmsg.CodecSuite
-
-import lktk.bmsg.messages._
 
 class VerackSpec extends CodecSuite {
 

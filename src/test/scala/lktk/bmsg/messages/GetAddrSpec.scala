@@ -1,10 +1,7 @@
-package lktk.bp2p.messages
+package lktk.bmsg.messages
 
 import lktk.bmsg.CodecSuite
-import lktk.bmsg.messages.GetAddr
 import lktk.bmsg.structures.Message
-
-import lktk.bmsg.messages._
 
 class GetAddrSpec extends CodecSuite {
   "GetAddr codec" should {
