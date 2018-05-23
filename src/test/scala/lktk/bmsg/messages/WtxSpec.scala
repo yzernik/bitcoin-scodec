@@ -1,69 +1,68 @@
-package lktk.bp2p.messages
+package lktk.bmsg.messages
 
 import lktk.bmsg.CodecSuite
-import lktk.bmsg.messages.{Tx, Tx0}
 import lktk.bmsg.structures._
-import scodec.bits.ByteVector
 import scodec.bits._
-import scodec.codecs._
 
-class TxSpec extends CodecSuite {
+class WtxSpec extends CodecSuite {
 
-  val bytes = hex"""
-01 00 00 00 01 6D BD DB 
-08 5B 1D 8A F7 51 84 F0  BC 01 FA D5 8D 12 66 E9 
-B6 3B 50 88 19 90 E4 B4  0D 6A EE 36 29 00 00 00 
-00 8B 48 30 45 02 21 00  F3 58 1E 19 72 AE 8A C7 
-C7 36 7A 7A 25 3B C1 13  52 23 AD B9 A4 68 BB 3A 
-59 23 3F 45 BC 57 83 80  02 20 59 AF 01 CA 17 D0 
-0E 41 83 7A 1D 58 E9 7A  A3 1B AE 58 4E DE C2 8D 
-35 BD 96 92 36 90 91 3B  AE 9A 01 41 04 9C 02 BF 
-C9 7E F2 36 CE 6D 8F E5  D9 40 13 C7 21 E9 15 98  
-2A CD 2B 12 B6 5D 9B 7D  59 E2 0A 84 20 05 F8 FC 
-4E 02 53 2E 87 3D 37 B9  6F 09 D6 D4 51 1A DA 8F 
-14 04 2F 46 61 4A 4C 70  C0 F1 4B EF F5 FF FF FF 
-FF 02 40 4B 4C 00 00 00  00 00 19 76 A9 14 1A A0 
-CD 1C BE A6 E7 45 8A 7A  BA D5 12 A9 D9 EA 1A FB
-22 5E 88 AC 80 FA E9 C7  00 00 00 00 19 76 A9 14 
-0E AB 5B EA 43 6A 04 84  CF AB 12 48 5E FD A0 B7 
-8B 4E CC 52 88 AC 00 00  00 00                   
-"""
+  val bytesP2WPKH = hex"0100000000010115e180dc28a2327e687facc33f10f2a20da717e5548406f7ae8b4c811072f8560200000000ffffffff0188b3f505000000001976a9141d7cd6c75c2e86f4cbf98eaed221b30bd9a0b92888ac02483045022100f9d3fe35f5ec8ceb07d3db95adcedac446f3b19a8f3174e7e8f904b1594d5b43022074d995d89a278bd874d45d0aea835d3936140397392698b7b5bbcdef8d08f2fd012321038262a6c6cec93c2d3ecd6c6072efea86d02ff8e3328bbd0242b20af3425990acac00000000"
 
-  "Tx codec" should {
+  val bytesP2WSH = hex"0100000000010189dd629a094838d8001991f165f79bce833f7fa8f2989d035b5e18e7c797dfdc0300000000ffffffff025ab41f5e000000001976a914bf151342d2859d496036e357d569ab767e07243d88ac56c2231900000000220020701a8d401c84fb13e6baf169d59684e17abd9fa216c8cc5b9fc63d622ff8c58d0400473044022006254598e8747e62d71186f0b0a503386f36de259feb1323fd6212c5eff6ce240220356fc4443490af3efebf43b8f1227b589504c23147c125c00d6b9a1f18cb0c270147304402204751c5634bf2be5150dad317125eedfbf6eb733475178e062c017c77eee696eb02202e31e95dcd35b4fc630014f43cc40e1ea9d2324ed3582dbe7b20f417afbca43f016952210266edd4ef2953675faf0662c088a7f620935807d200d65387290b31648e51e253210372ce38027ee95c98cdc54172964fa3aecf9f24b85c139d3d203365d6b691d0502103c96d495bfdd5ba4145e3e046fee45e84a8a48ad05bd8dbb395c011a32cf9f88053ae00000000"
 
-    "roundtrip" in {
-      val tx1 = Tx(
+
+  val p2wpkh = Wtx(
+    1,
+    List(TxIn(
+      OutPoint(Hash(hex"56f87210814c8baef7068454e517a70da2f2103fc3ac7f687e32a228dc80e115"),2),
+      ByteVector.empty,
+      4294967295L
+    )),
+    List(TxOut(99988360, hex"76a9141d7cd6c75c2e86f4cbf98eaed221b30bd9a0b92888ac")),
+    List(
+      ScriptWitness(hex"3045022100f9d3fe35f5ec8ceb07d3db95adcedac446f3b19a8f3174e7e8f904b1594d5b43022074d995d89a278bd874d45d0aea835d3936140397392698b7b5bbcdef8d08f2fd01"),
+      ScriptWitness(hex"21038262a6c6cec93c2d3ecd6c6072efea86d02ff8e3328bbd0242b20af3425990acac")
+    ),
+    0
+  )
+
+  val p2wsh = Wtx(
+    1,
+    List(TxIn(OutPoint(Hash(hex"dcdf97c7e7185e5b039d98f2a87f3f83ce9bf765f1911900d83848099a62dd89"),3),ByteVector.empty,4294967295L)),
+    List(
+      TxOut(1579136090,hex"76a914bf151342d2859d496036e357d569ab767e07243d88ac"),
+      TxOut(421773910, hex"0020701a8d401c84fb13e6baf169d59684e17abd9fa216c8cc5b9fc63d622ff8c58d")
+    ),
+    List(
+      ScriptWitness(ByteVector.empty),
+      ScriptWitness(hex"3044022006254598e8747e 62d71186f0b0a503386f36de259feb1323fd6212c5eff6ce240220356fc4443490af3efebf43b8f1227b589504c23147c125c00d6b9a1f18cb0c2701"),
+      ScriptWitness(hex"304402204751c5634bf2be5150dad317125eedfbf6eb733475178e062c017c77eee696eb02202e31e95dcd35b4fc630014f43cc40e1ea9d2324ed3582dbe7b20f417afbca43f01"),
+      ScriptWitness(hex"52210266edd4ef2953675faf0662c088a7f620935807d200d65387290b31648e51e253210372ce38027ee95c98cdc54172964fa3aecf9f24b85c139d3d203365d6b691d0502103c96d495bfdd5ba4145e3e046fee45e84a8a48ad05bd8dbb395c011a32cf9f88053ae")),0)
+
+  "Wtx codec" should {
+
+    "empty roundtrip" in {
+      val tx1 = Wtx(
         1L,
         List(),
         List(),
-        12345L)
+        List(),
+        0L)
       roundtrip(Tx0.codec(1), tx1)
       roundtrip(Message.codec(0xDAB5BFFAL, 1), tx1)
 
     }
 
-    "decode" in {
-      val version = 1L
-      val txins = List(
-        TxIn(
-          OutPoint(Hash(hex"6dbddb085b1d8af75184f0bc01fad58d1266e9b63b50881990e4b40d6aee3629".reverse),
-            0),
-          hex"483045022100f3581e1972ae8ac7c7367a7a253bc1135223adb9a468bb3a59233f45bc578380022059af01ca17d00e41837a1d58e97aa31bae584edec28d35bd96923690913bae9a0141049c02bfc97ef236ce6d8fe5d94013c721e915982acd2b12b65d9b7d59e20a842005f8fc4e02532e873d37b96f09d6d4511ada8f14042f46614a4c70c0f14beff5",
-          4294967295L))
-
-      val txouts = List(
-        TxOut(
-          4632880204564398080L,
-          hex"76a9141aa0cd1cbea6e7458a7abad512a9d9ea1afb225e88ac"),
-        TxOut(
-          -9152746251769348096L,
-          hex"76a9140eab5bea436a0484cfab12485efda0b78b4ecc5288ac"))
-      val locktime = 0L
-
-      val tx = Tx(version, txins, txouts, locktime)
-
-      shouldDecodeFullyTo(Tx0.codec(1), bytes.toBitVector, tx)
+    "p2wpkh roundtrip" in {
+      roundtrip(Tx0.codec(1), p2wpkh)
     }
 
+    "decode p2wpkh" in {
+      shouldDecodeFullyTo(Tx0.codec(1), bytesP2WPKH.toBitVector, p2wpkh)
+    }
+
+    "decode p2wpsh" in {
+      shouldDecodeFullyTo(Tx0.codec(1), bytesP2WSH.toBitVector, p2wsh)
+    }
   }
 }

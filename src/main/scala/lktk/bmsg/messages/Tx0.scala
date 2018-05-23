@@ -40,7 +40,7 @@ object Tx0 extends MessageCompanion[Tx0] {
     identity
   )
 
-  def codec(version: Int): Codec[Tx0] = (tx(version) :+: wtx(version)).as[Tx0].choice
+  def codec(version: Int): Codec[Tx0] = (wtx(version) :+: tx(version)).as[Tx0].choice
 
   def tx(version: Int) = (
     ("version" | uint32L) ::

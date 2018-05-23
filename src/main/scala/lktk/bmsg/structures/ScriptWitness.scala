@@ -5,11 +5,14 @@ import scodec.bits.ByteVector
 import scodec.codecs._
 
 case class ScriptWitness(
-  stack: List[ByteVector]
+  stack: ByteVector
 )
 
 object ScriptWitness {
-  def stack = variableSizeBytesLong[ByteVector](VarInt.varIntCodec, bytes)
+  val stack = {
+    val countCodec = VarInt.varIntCodec.xmap(_.toInt, (i: Int) => i.toLong)
+    variableSizeBytes(countCodec, bytes)
+  }
 
-  def codec: Codec[ScriptWitness] = ("stack" | VarList.varList(stack)).as[ScriptWitness]
+  val codec: Codec[ScriptWitness] = ("stack" | stack).as[ScriptWitness]
 }
