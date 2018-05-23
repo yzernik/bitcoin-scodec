@@ -55,5 +55,25 @@ class TxInSpec extends CodecSuite {
       shouldDecodeFullyTo(TxIn.codec, bytes, txin)
     }
 
+    "decode list" in {
+      val txins = List(
+        TxIn(
+          OutPoint(Hash(hex"2936ee6a0db4e4901988503bb6e966128dd5fa01bcf08451f78a1d5b08dbbd6d"), 0),
+          hex"483045022100f3581e1972ae8ac7c7367a7a253bc1135223adb9a468" ++
+            hex"bb3a59233f45bc578380022059af01ca17d00e41837a1d58e97aa31bae" ++
+            hex"584edec28d35bd96923690913bae9a0141049c02bfc97ef236ce6d8fe5d94013c721e915982acd2b1" ++
+            hex"2b65d9b7d59e20a842005f8fc4e02532e873d37b96f09d6d4511ada8f14042f46614a4c70c0f14beff5",
+          4294967295L),
+        TxIn(
+          OutPoint(Hash(hex"2936ee6a0db4e4901988503bb6e966128dd5fa01bcf08451f78a1d5b08dbbd6d"), 0),
+          hex"483045022100f3581e1972ae8ac7c7367a7a253bc1135223adb9a468" ++
+            hex"bb3a59233f45bc578380022059af01ca17d00e41837a1d58e97aa31bae" ++
+            hex"584edec28d35bd96923690913bae9a0141049c02bfc97ef236ce6d8fe5d94013c721e915982acd2b1" ++
+            hex"2b65d9b7d59e20a842005f8fc4e02532e873d37b96f09d6d4511ada8f14042f46614a4c70c0f14beff5",
+          4294967295L)
+      )
+      roundtrip(VarList.varList(TxIn.codec), txins)
+    }
+
   }
 }

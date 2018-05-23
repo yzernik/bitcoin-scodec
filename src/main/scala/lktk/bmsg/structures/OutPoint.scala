@@ -11,7 +11,7 @@ object OutPoint {
 
   implicit val codec: Codec[OutPoint] = {
     ("hash" | Codec[Hash]) ::
-      ("index" | uint32)
+      ("index" | uint32L)
   }.as[OutPoint]
 
 }

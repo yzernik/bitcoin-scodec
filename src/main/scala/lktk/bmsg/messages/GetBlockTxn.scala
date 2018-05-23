@@ -18,7 +18,7 @@ case class GetBlockTxn(
 object GetBlockTxn extends MessageCompanion[GetBlockTxn] {
   def codec(version: Int) = (
     ("hash" | Hash.codec) ::
-    VarList.varList(uint32)
+    VarList.varList(uint32L)
   ).as[GetBlockTxn]
 
   def command = "getblocktxn"

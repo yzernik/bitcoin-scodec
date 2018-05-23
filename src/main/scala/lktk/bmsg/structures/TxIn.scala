@@ -5,9 +5,10 @@ import scodec.bits.ByteVector
 import scodec.codecs._
 
 case class TxIn(
-  previous_output: OutPoint,
-  sig_script: ByteVector,
-  sequence: Long)
+  previousOutput: OutPoint,
+  sigScript: ByteVector,
+  sequence: Long
+)
 
 object TxIn {
 
@@ -17,9 +18,9 @@ object TxIn {
   }
 
   implicit val codec: Codec[TxIn] = {
-    ("previous_output" | Codec[OutPoint]) ::
-      ("sig_script" | scriptCodec) ::
-      ("sequence" | uint32)
+    ("previousOutput" | Codec[OutPoint]) ::
+      ("sigScript" | scriptCodec) ::
+      ("sequence" | uint32L)
   }.as[TxIn]
 
 }

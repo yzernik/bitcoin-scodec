@@ -4,21 +4,15 @@ import scodec.Codec
 import scodec.bits.ByteVector
 import scodec.codecs._
 
-case class TxOut(
-  value: Long,
-  pkScript: ByteVector
+case class ScriptWitness(
+  stack: ByteVector
 )
 
-object TxOut {
-
-  val scriptCodec = {
+object ScriptWitness {
+  val stack = {
     val countCodec = VarInt.varIntCodec.xmap(_.toInt, (i: Int) => i.toLong)
     variableSizeBytes(countCodec, bytes)
   }
 
-  implicit val codec: Codec[TxOut] = {
-    ("value" | int64L) ::
-    ("pkScript" | scriptCodec)
-  }.as[TxOut]
-
+  val codec: Codec[ScriptWitness] = ("stack" | stack).as[ScriptWitness]
 }

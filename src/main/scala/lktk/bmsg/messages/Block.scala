@@ -7,7 +7,7 @@ import scodec.codecs._
 
 case class Block(
   block_header: BlockHeader,
-  txs: List[Tx]) extends Message {
+  txs: List[Tx0]) extends Message {
   type E = Block
   def companion = Block
 }
@@ -15,7 +15,7 @@ case class Block(
 object Block extends MessageCompanion[Block] {
   def codec(version: Int) = {
     ("block_header" | Codec[BlockHeader]) ::
-      ("txs" | VarList.varList(Tx.codec(version)))
+      ("txs" | VarList.varList(Tx0.codec(version)))
   }.as[Block]
   def command = "block"
 }

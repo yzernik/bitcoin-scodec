@@ -36,18 +36,22 @@ object Message {
     val cdc = MessageCompanion.byCommand.get(cmd.trim).map(_.codec(version))
     bits.exmap[Message](
       { b =>
-        val (payload, rest) = b.splitAt(length * 8)
-        if (!rest.isEmpty) {
-          Failure(scodec.Err("payload length did not match."))
-        } else if (Util.checksum(payload.toByteVector) == chk) {
-          cdc.fold[Attempt[Message]](Failure(scodec.Err(s"message: $cmd not recognized")))(s => s.decode(payload).map(_.value))
-        } else {
-          Failure(scodec.Err("checksum didnt match."))
+        cdc.fold[Attempt[Message]](Failure(scodec.Err(s"message: $cmd not recognized"))) {
+          s => s.decode(b).flatMap { p =>
+            if (!p.remainder.isEmpty) {
+              Failure(scodec.Err("payload length did not match."))
+            } else if (Util.checksum(b.toByteVector) == chk) {
+              Successful(p.value)
+            } else {
+              Failure(scodec.Err("checksum did not match."))
+            }
+          }
         }
       },
       codecMsg(version, _)
     )
   }
+
   def codecMsg(version: Int, msg: Message) = msg.companion.codec(version).encode(msg)
 
   def codec(magic: Long, version: Int): Codec[Message] = {
@@ -84,7 +88,7 @@ object MessageCompanion {
       FilterAdd, FilterLoad, FilterClear, MerkleBlock,
       GetAddr, GetBlocks, GetData, GetHeaders, GetUtxo, GetBlockTxn,
       Headers, Inv, MemPool, NotFound, Ping, Pong, Reject,
-      SendCmpct, SendHeaders, Tx, Utxos, Verack, Version
+      SendCmpct, SendHeaders, Tx0, Utxos, Verack, Version
     )
 
   val byCommand: Map[String, MessageCompanion[_ <: Message]] = {
