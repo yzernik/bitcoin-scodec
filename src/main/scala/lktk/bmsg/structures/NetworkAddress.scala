@@ -6,7 +6,6 @@ import UInt64.bigIntCodec
 
 import scodec.{Codec, DecodeResult, ValueCodecEnrichedWithHListSupport}
 import scodec.bits.{HexStringSyntax, BitVector, ByteVector}
-import scodec.codecs.{bytes, uint16}
 import scodec.codecs._
 
 case class NetworkAddress(
