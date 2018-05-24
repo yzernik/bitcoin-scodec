@@ -28,7 +28,7 @@ The library is written in Scala following Functional Programming principles and 
 Add the following to your build.sbt:
 
 ```
-libraryDependencies += "lktk" %% "bmsg" % "0.3.1"
+libraryDependencies += "lktk" %% "bmsg" % "0.4.0"
 ```
 
 with the following resolver
