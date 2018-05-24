@@ -36,15 +36,15 @@ object Generators {
 
     (for {
       row <- rowOpt
-      hashStr <- row.get("hash")
+      prevBlockStr <- row.get("prevBlock")
       version <- row.get("version")
-      merkleRootStr <- row.get("merkle_root")
+      merkleRootStr <- row.get("merkleRoot")
       bits <- row.get("bits")
-      hash <- ByteVector.fromHex(hashStr)
+      prevBlock <- ByteVector.fromHex(prevBlockStr)
       merkleRoot <- ByteVector.fromHex(merkleRootStr)
     } yield BlockHeader(
       version.toLong,
-      Hash(hash),
+      Hash(prevBlock),
       Hash(merkleRoot),
       1231006505L,
       bits.toLong,
