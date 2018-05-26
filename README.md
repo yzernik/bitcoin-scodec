@@ -5,18 +5,33 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f824534cf0a1418ab862e2287cbfb777)](https://www.codacy.com/app/floreslorca/bmsg?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=floreslorca/bmsg&amp;utm_campaign=Badge_Grade)
 
 Library for encoding Bitcoin messages. Particularly for Bitcoin Core and Bitcoin Cash implementations
+
+The bitcoin protocol works by sending messages between other nodes in the network. This is the structure of every message:
+
+| Field Size | Description | Data type | Comments |
+|---         | ---         | ---       | ---      |
+| 4          | magic       | uint32_t  | Magic value indicating message origin network, and used to seek to next message when stream state is unknown |
+| 12         | command     | char[12]  | ASCII string identifying the packet content, NULL padded (non-NULL padding results in packet rejected) |
+| 4          | length      | uint32_t | Length of payload in number of bytes |
+| 4          | checksum    | uint32_t | First 4 bytes of sha256(sha256(payload)) |
+| ?          | payload     | uchar[]  | The actual data |
+
+Almost all integers are encoded in [little endian](https://en.wikipedia.org/wiki/Endianness) except for Port number and IP. All encoding and decoding of message headers is handled by this library. In addition, concrete implementations of most of the currently supported bitcoin messages are provided. For these supported messages, all of the details of marshalling and unmarshalling to and from the wire using bitcoin encoding are handled so the caller doesn't have to concern themselves with the specifics.
+
 Resources used for spec:
 
 * [`Bitcoin developer reference`](https://bitcoin.org/en/developer-reference#p2p-network)
 * [`Bitcoin wiki`](https://en.bitcoin.it/wiki/Protocol_documentation)
 
 This library implements all the p2p messages used by the following clients:
+
 * [`Bitcoin ABC`](https://www.bitcoinabc.org/)
 * [`Bitcoin Core`](https://bitcoin.org/en/bitcoin-core/)
 * [`Bitcoin Unlimited`](https://www.bitcoinunlimited.info/)
 * [`Bitcoin XT`](https://bitcoinxt.software/)
 
 It includes specific messages implemented on some of them:
+
 * [`BIP144`](https://github.com/bitcoin/bips/blob/master/bip-0144.mediawiki) Segwit
 * [`BUIP10`](https://github.com/BitcoinUnlimited/BitcoinUnlimited/blob/release/doc/bu-xthin-protocol.md) Xthinblocks
 * [`BIP64`](https://github.com/bitcoin/bips/blob/master/bip-0064.mediawiki) getutxo message
@@ -37,14 +52,14 @@ with the following resolver
 resolvers += Resolver.bintrayRepo("floreslorca", "io")
 ```
 
-### Encode a Bitcoin message
+### Encode and Decode a Bitcoin message
 
-create a message codec
+create a message codec. This is your interface for encoding and decoding all bitcoin messages
 
 ```
 > import lktk.bmsg.structures.Message
 
-scala> val codec = Message.codec(0xD9B4BEF9L, 60002) // on the main network, using version 60002.
+scala> val codec = Message.codec(0xD9B4BEF9L, 70012) // on the main network, using version 70012.
 ```
 
 encode a ping message
