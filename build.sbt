@@ -2,7 +2,7 @@ name := "bmsg"
 
 organization := "lktk"
 
-version := "0.4.0"
+version := "0.4.1"
 
 scalaVersion := "2.12.4"
 
@@ -16,7 +16,7 @@ bintrayPackageLabels := Seq("bitcoin")
 
 bintrayRepository := "io"
 
-skip in publish := true
+skip in publish := false
 
 libraryDependencies ++= Seq(
   "org.scodec"           %% "scodec-core" % "1.10.3",

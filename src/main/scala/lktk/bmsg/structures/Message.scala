@@ -6,7 +6,7 @@ import lktk.bmsg.util.Util
 import scala.language.{existentials, implicitConversions}
 
 import scodec.Attempt.{Failure, Successful}
-import scodec.{Attempt, Codec, DecodeResult}
+import scodec.Codec
 import scodec.bits.BitVector
 import scodec.codecs._
 
@@ -24,55 +24,48 @@ trait MessageCompanion[E <: Message] {
 object Message {
   def commandCodec = fixedSizeBytes(12, ascii)
 
-  def magicCodec(magic: Long): Codec[Long] =
-    ("magic" | uint32L).narrow(
-      s => if (s == magic) Successful(s) else Failure(scodec.Err("magic did not match.")),
-      identity
-    )
+  def decodeHeader(bits: BitVector, magic: Long, version: Int) =
+    for {
+      m <- uint32L.decode(bits).flatMap { mg =>
+        if (mg.value == magic) Successful(mg) else Failure(scodec.Err("magic did not match."))
+      }
+      command <- commandCodec.decode(m.remainder)
+      length <- uint32L.decode(command.remainder)
+      chksum <- uint32L.decode(length.remainder)
+      (payload, _) = chksum.remainder.splitAt(length.value * 8)
+    } yield (command.value.trim, length, chksum.value, payload)
 
-  def payLoadCodec(cmd: String, length: Long, chk: Long, version: Int) = {
-    val cdc = MessageCompanion.byCommand.get(cmd.trim).map(_.codec(version))
-    bits.exmap[Message](
-      { b =>
-        cdc.fold[Attempt[Message]](Failure(scodec.Err(s"message: $cmd not recognized"))) {
-          s => s.decode(b).flatMap { p =>
-            if (!p.remainder.isEmpty) {
-              Failure(scodec.Err("payload length did not match."))
-            } else if (Util.checksum(b.toByteVector) == chk) {
-              Successful(p.value)
-            } else {
-              Failure(scodec.Err("checksum did not match."))
-            }
-          }
-        }
-      },
-      codecMsg(version, _)
-    )
-  }
-
-  def codecMsg(version: Int, msg: Message) = msg.companion.codec(version).encode(msg)
+  def decodePayload(payload: BitVector, version: Int, chksum: Long, command: String) =
+    MessageCompanion.byCommand.get(command)
+      .map(_.codec(version).decode(payload).flatMap { p =>
+        if (!p.remainder.isEmpty) {
+          Failure(scodec.Err("payload length did not match."))
+        } else if (Util.checksum(payload.toByteVector) == chksum) {
+          Successful(p)
+        } else {
+          Failure(scodec.Err("checksum did not match."))
+        }})
+      .getOrElse(Failure(scodec.Err(s"message: $command not recognized")))
 
   def codec(magic: Long, version: Int): Codec[Message] = {
-    def encode(msg: Message): Attempt[BitVector] = {
+
+    def encode(msg: Message) = {
+      val c = msg.companion.codec(version)
       for {
-        magic <- magicCodec(magic).encode(magic)
-        cmd <- commandCodec.encode(msg.companion.command) //How can i get the discriminator value out?
-        payload <- codecMsg(version, msg)
+        magic <- uint32L.encode(magic)
+        command <- commandCodec.encode(msg.companion.command)
+        payload <- c.encode(msg)
         length <- uint32L.encode(payload.length / 8)
         chksum <- uint32L.encode(Util.checksum(payload.toByteVector))
-      } yield magic ++ cmd ++ length ++ chksum ++ payload
+      } yield magic ++ command ++ length ++ chksum ++ payload
     }
 
-    def decode(bits: BitVector): Attempt[DecodeResult[Message]] = {
-      (for {
-        magic <- magicCodec(magic)
-        cmd <- fixedSizeBytes(12, ascii) //this is the label for finding the payload in Msg
-        length <- uint32L
-        chk <- uint32L
-        payload <- payLoadCodec(cmd.trim, length, chk, version)
-      } yield payload)
-        .decode(bits)
-    }
+    def decode(bits: BitVector) =
+      for {
+        metadata <- decodeHeader(bits, magic, version)
+        (command, length, chksum, payload) = metadata
+        msg <- decodePayload(payload, version, chksum, command)
+      } yield msg
 
     Codec[Message](encode _, decode _)
   }
