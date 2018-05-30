@@ -8,15 +8,15 @@ Library for encoding Bitcoin messages. Particularly for Bitcoin Core and Bitcoin
 
 The bitcoin protocol works by sending messages between other nodes in the network. This is the structure of every message:
 
-| Field Size | Description | Data type | Comments |
-|---         | ---         | ---       | ---      |
-| 4          | magic       | uint32_t  | Magic value indicating message origin network, and used to seek to next message when stream state is unknown |
-| 12         | command     | char[12]  | ASCII string identifying the packet content, NULL padded (non-NULL padding results in packet rejected) |
-| 4          | length      | uint32_t | Length of payload in number of bytes |
-| 4          | checksum    | uint32_t | First 4 bytes of sha256(sha256(payload)) |
-| ?          | payload     | uchar[]  | The actual data |
+| Field Size | Description | Serial Data type | Comments |
+|:---:       | :---:       | :---:  | ---      |
+| 4          | magic       | uint32L  | Magic value indicating message origin network, and used to seek to next message when stream state is unknown |
+| 12         | command     | ascii  | ASCII string identifying the packet content, NULL padded (non-NULL padding results in packet rejected) |
+| 4          | length      | uint32L | Length of payload in number of bytes |
+| 4          | checksum    | uint32L | First 4 bytes of sha256(sha256(payload)) |
+| ?          | payload     | byteVector | The actual data |
 
-Almost all integers are encoded in [little endian](https://en.wikipedia.org/wiki/Endianness) except for Port number and IP. All encoding and decoding of message headers is handled by this library. In addition, concrete implementations of most of the currently supported bitcoin messages are provided. For these supported messages, all of the details of marshalling and unmarshalling to and from the wire using bitcoin encoding are handled so the caller doesn't have to concern themselves with the specifics.
+The sufix "L" refers to little endian. Almost all integers are encoded in [little endian](https://en.wikipedia.org/wiki/Endianness) except for Port number and IP. All encoding and decoding of message headers is handled by this library. In addition, concrete implementations of most of the currently supported bitcoin messages are provided. For these supported messages, all of the details of marshalling and unmarshalling to and from the wire using bitcoin encoding are handled so the caller doesn't have to concern themselves with the specifics.
 
 Resources used for spec:
 
