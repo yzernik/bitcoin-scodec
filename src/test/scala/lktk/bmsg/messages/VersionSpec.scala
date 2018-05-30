@@ -1,16 +1,33 @@
 package lktk.bmsg.messages
 
 import lktk.bmsg.CodecSuite
-import lktk.bmsg.structures.{Message, NetworkAddress}
-
+import lktk.bmsg.structures.{Message, NetworkAddress, UInt64}
 import scodec.bits._
-
 import java.net.InetSocketAddress
 import java.net.InetAddress
+
+import lktk.bmsg.util.BitcoinCashParams
 
 class VersionSpec extends CodecSuite {
 
   val version = Version(
+    version = 60002,
+    services = BigInt(32), //0b100000
+    timestamp = 1527700852L,
+    addrRecv = NetworkAddress(37, new InetSocketAddress(
+      InetAddress.getByAddress(Array(0, 0, 0, 0).map(_.toByte)),
+      0)),
+    addrFrom = NetworkAddress(37, new InetSocketAddress(
+      InetAddress.getByAddress(Array(0, 0, 0, 0).map(_.toByte)),
+      0)),
+    nonce = Version.genNonce,
+    userAgent = "/Bcloud:0.1.0/(EB32.0; Scala; Cloud; N-computing)",
+    startHeight = 1236023,
+    relay = true
+  )
+
+
+  val versionF = Version(
     60002,
     1,
     1355854353L,
@@ -53,13 +70,13 @@ class VersionSpec extends CodecSuite {
       roundtrip(Version.codec(1), version)
       roundtrip(Version.codec(1), version.copy(version = 70001, relay = false))
       roundtrip(Version.codec(1), version.copy(version = 70001, relay = true))
-      roundtrip(Message.codec(0xDAB5BFFAL, 1), version)
-      roundtrip(Message.codec(0xD9B4BEF9L, 1), version)
+      roundtrip(Message.codec(BitcoinCashParams.testnet, 1), version)
+      roundtrip(Message.codec(BitcoinCashParams.testnet, 1), version)
     }
 
     "decode" in {
-      shouldDecodeFullyTo(Version.codec(1), bytesV60002.toBitVector, version)
-      shouldDecodeFullyTo(Version.codec(1), bytesV70001.toBitVector, version.copy(version = 70001))
+      shouldDecodeFullyTo(Version.codec(1), bytesV60002.toBitVector, versionF)
+      shouldDecodeFullyTo(Version.codec(1), bytesV70001.toBitVector, versionF.copy(version = 70001))
     }
 
   }

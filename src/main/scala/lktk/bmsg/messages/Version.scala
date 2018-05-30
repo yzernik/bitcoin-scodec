@@ -1,8 +1,9 @@
 package lktk.bmsg.messages
 
-import lktk.bmsg.structures.{Message, MessageCompanion, NetworkAddress, VarStr}
+import lktk.bmsg.structures._
 import lktk.bmsg.structures.UInt64.bigIntCodec
 import lktk.bmsg.util.ProtocolVersion
+
 import scodec.Codec
 import scodec.codecs._
 
@@ -39,5 +40,7 @@ object Version extends MessageCompanion[Version] {
   }.as[Boolean]
 
   def command = "version"
+
+  def genNonce = UInt64.genRandom
 
 }

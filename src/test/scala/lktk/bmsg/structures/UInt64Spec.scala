@@ -7,6 +7,7 @@ class UInt64Spec extends CodecSuite {
 
   "UInt64 codec" should {
     "roundtrip" in {
+      roundtrip(UInt64(UInt64.bigIntToLong(UInt64.genRandom)))
       roundtrip(UInt64(1234))
       roundtrip(UInt64(12345))
       roundtrip(UInt64(Long.MinValue))
