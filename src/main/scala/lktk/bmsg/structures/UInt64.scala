@@ -19,7 +19,7 @@ object UInt64 {
 
   private val rng = Cmwc5()
 
-  def genRng = rng.next[BigInt](Dist[Long, BigInt](longToBigInt))
+  def genRandom = rng.next[BigInt](Dist[Long, BigInt](longToBigInt))
 
   def longToBigInt(unsignedLong: Long): BigInt =
     (BigInt(unsignedLong >>> 1) << 1) + (unsignedLong & 1)

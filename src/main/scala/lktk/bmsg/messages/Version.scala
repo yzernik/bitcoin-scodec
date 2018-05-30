@@ -41,6 +41,6 @@ object Version extends MessageCompanion[Version] {
 
   def command = "version"
 
-  def genNonce = UInt64.genRng
+  def genNonce = UInt64.genRandom
 
 }
