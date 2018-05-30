@@ -2,12 +2,13 @@ package lktk.bmsg.structures
 
 import lktk.bmsg.structures.UInt64._
 
-import scala.BigInt
-
 import scala.math.BigInt.{int2bigInt, long2bigInt}
 
 import scodec.Codec
 import scodec.codecs.int64L
+
+import spire.random.Dist
+import spire.random.rng.Cmwc5
 
 case class UInt64(value: Long) {
 
@@ -15,6 +16,10 @@ case class UInt64(value: Long) {
 }
 
 object UInt64 {
+
+  private val rng = Cmwc5()
+
+  def genRng = rng.next[BigInt](Dist[Long, BigInt](longToBigInt))
 
   def longToBigInt(unsignedLong: Long): BigInt =
     (BigInt(unsignedLong >>> 1) << 1) + (unsignedLong & 1)
