@@ -43,7 +43,7 @@ object Generators {
       prevBlock <- ByteVector.fromHex(prevBlockStr)
       merkleRoot <- ByteVector.fromHex(merkleRootStr)
     } yield BlockHeader(
-      version.toLong,
+      version.toInt,
       Hash(prevBlock),
       Hash(merkleRoot),
       1231006505L,

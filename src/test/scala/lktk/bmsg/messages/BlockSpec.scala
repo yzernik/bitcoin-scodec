@@ -9,7 +9,7 @@ class BlockSpec extends CodecSuite {
 
   val genesis = Block(
     BlockHeader(
-      1L,
+      1,
       Hash.NULL,
       Hash(hex"4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"),
       1231006505L,

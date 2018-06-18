@@ -4,7 +4,7 @@ import scodec.Codec
 import scodec.codecs._
 
 case class BlockHeader(
-  version: Long,
+  version: Int,
   prevBlock: Hash,
   merkleRoot: Hash,
   timestamp: Long,
@@ -15,7 +15,7 @@ case class BlockHeader(
 object BlockHeader {
 
   implicit val codec: Codec[BlockHeader] = {
-    ("version" | uint32L) ::
+    ("version" | int32L) ::
       ("prevBlock" | Codec[Hash]) ::
       ("merkleRoot" | Codec[Hash]) ::
       ("timestamp" | uint32L) ::
