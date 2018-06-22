@@ -8,7 +8,7 @@ import scodec.Codec
 import scodec.codecs.int64L
 
 import spire.random.Dist
-import spire.random.rng.Cmwc5
+import spire.random.rng.SecureJava
 
 case class UInt64(value: Long) {
 
@@ -17,7 +17,7 @@ case class UInt64(value: Long) {
 
 object UInt64 {
 
-  private val rng = Cmwc5()
+  private val rng = SecureJava()
 
   def genRandom = rng.next[BigInt](Dist[Long, BigInt](longToBigInt))
 
