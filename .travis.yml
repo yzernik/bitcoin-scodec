@@ -2,7 +2,7 @@ language: scala
 scala:
   - 2.12.6
 script:
-    - sbt clean coverage test coverageOff publish
+    - sbt clean coverage test coverageOff
 after_success:
     - sbt coverageReport coveralls
 sudo: false

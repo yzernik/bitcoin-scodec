@@ -10,6 +10,8 @@ scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature", "-Ypartial-unifi
 
 licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
+coverageEnabled := true
+
 scmInfo := Some(ScmInfo(url("https://github.com/floreslorca/bmsg"), "git@github.com:floreslorca/bmsg.git"))
 
 bintrayPackageLabels := Seq("bitcoin")
