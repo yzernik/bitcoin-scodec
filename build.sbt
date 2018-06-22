@@ -2,7 +2,7 @@ name := "bmsg"
 
 organization := "lktk"
 
-version := "0.4.4"
+version := "0.4.5"
 
 scalaVersion := "2.12.6"
 
@@ -10,15 +10,11 @@ scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature", "-Ypartial-unifi
 
 licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
-coverageEnabled := true
-
 scmInfo := Some(ScmInfo(url("https://github.com/floreslorca/bmsg"), "git@github.com:floreslorca/bmsg.git"))
 
 bintrayPackageLabels := Seq("bitcoin")
 
 bintrayRepository := "io"
-
-skip in publish := true
 
 libraryDependencies ++= Seq(
   "org.scodec"           %% "scodec-core" % "1.10.3",
