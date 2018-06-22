@@ -1,8 +1,8 @@
 # bmsg
 
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/floreslorca/bmsg/master/LICENSE) [![Build Status](https://travis-ci.org/floreslorca/bmsg.svg?branch=master)](https://travis-ci.org/floreslorca/bmsg) [![Coverage Status](https://coveralls.io/repos/github/floreslorca/bmsg/badge.svg?branch=master)](https://coveralls.io/github/floreslorca/bmsg?branch=master)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f824534cf0a1418ab862e2287cbfb777)](https://www.codacy.com/app/floreslorca/bmsg?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=floreslorca/bmsg&amp;utm_campaign=Badge_Grade)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/lktkorg/bmsg/master/LICENSE) [![Build Status](https://travis-ci.org/lktkorg/bmsg.svg?branch=master)](https://travis-ci.org/lktkorg/bmsg) [![Coverage Status](https://coveralls.io/repos/github/lktkorg/bmsg/badge.svg?branch=master)](https://coveralls.io/github/lktkorg/bmsg?branch=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f824534cf0a1418ab862e2287cbfb777)](https://www.codacy.com/app/lktkorg/bmsg?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lktkorg/bmsg&amp;utm_campaign=Badge_Grade)
 
 Library for encoding Bitcoin messages. Particularly for Bitcoin Core and Bitcoin Cash implementations
 
@@ -43,13 +43,13 @@ The library is written in Scala following Functional Programming principles and 
 Add the following to your build.sbt:
 
 ```
-libraryDependencies += "lktk" %% "bmsg" % "0.4.3"
+libraryDependencies += "lktk" %% "bmsg" % "0.4.5"
 ```
 
 with the following resolver
 
 ```
-resolvers += Resolver.bintrayRepo("floreslorca", "io")
+resolvers += Resolver.bintrayRepo("lktk", "io")
 ```
 
 ### Encode and Decode a Bitcoin message
