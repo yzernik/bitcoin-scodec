@@ -83,5 +83,5 @@ decode a pong message
 scala> import scodec.bits._
 
 scala> codec.decode(hex"f9beb4d9706f6e67000000000000000040000000433ba813d204000000000000".toBitVector)
-res1: scodec.Attempt[scodec.DecodeResult[scala> import lktk.bmsg.structures.Message]] = Successful(DecodeResult(Pong(1234),BitVector(empty)))
+res1: scodec.Attempt[scodec.DecodeResult[lktk.bmsg.structures.Message]] = Successful(DecodeResult(Pong(1234),BitVector(empty)))
 ```
