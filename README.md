@@ -49,7 +49,7 @@ Scala 2.12.x
 Add the following to your build.sbt:
 
 ```
-libraryDependencies += "lktk" %% "bmsg" % "0.4.6"
+libraryDependencies += "org.lktk" %% "bmsg" % "0.5.1"
 ```
 
 with the following resolver
