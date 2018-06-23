@@ -2,7 +2,7 @@ name := "bmsg"
 
 organization := "lktkorg"
 
-version := "0.4.5"
+version := "0.4.6"
 
 scalaVersion := "2.12.6"
 
