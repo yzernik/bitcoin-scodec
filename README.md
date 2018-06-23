@@ -38,7 +38,7 @@ It includes specific messages implemented on some of them:
 
 The library is written in Scala following Functional Programming principles and using [scodec](https://github.com/scodec/scodec).
 
-### Requirements To dos
+### Todos
  Script parsing
 
 ### Requirements
