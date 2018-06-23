@@ -1,8 +1,6 @@
 name := "bmsg"
 
-organization := "lktkorg"
-
-version := "0.4.6"
+organization := "org.lktk"
 
 scalaVersion := "2.12.6"
 
@@ -14,8 +12,9 @@ coverageEnabled := true //has to be turned off when publishing
 
 scmInfo := Some(ScmInfo(url("https://github.com/lktkorg/bmsg"), "git@github.com:lktkorg/bmsg.git"))
 
-bintrayPackageLabels := Seq("bitcoin")
+bintrayPackageLabels := Seq("bitcoin", "bitcoin cash", "p2p", "blockchain")
 
+bintrayOrganization := Some("lktk")
 bintrayRepository := "io"
 
 libraryDependencies ++= Seq(
