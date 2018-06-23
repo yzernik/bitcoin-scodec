@@ -3,17 +3,15 @@ name := "bmsg"
 organization := "org.lktk"
 
 scalaVersion := "2.12.6"
-
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature", "-Ypartial-unification")
-
-licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
 coverageEnabled := true //has to be turned off when publishing
 
+homepage := Some(url("https://www.lktk.org"))
 scmInfo := Some(ScmInfo(url("https://github.com/lktkorg/bmsg"), "git@github.com:lktkorg/bmsg.git"))
+licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
 bintrayPackageLabels := Seq("bitcoin", "bitcoin cash", "p2p", "blockchain")
-
 bintrayOrganization := Some("lktk")
 bintrayRepository := "io"
 
