@@ -1,6 +1,6 @@
 name := "bmsg"
 
-organization := "lktk"
+organization := "lktkorg"
 
 version := "0.4.5"
 
@@ -10,9 +10,9 @@ scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature", "-Ypartial-unifi
 
 licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
-coverageEnabled := true
+coverageEnabled := true //has to be turned off when publishing
 
-scmInfo := Some(ScmInfo(url("https://github.com/floreslorca/bmsg"), "git@github.com:floreslorca/bmsg.git"))
+scmInfo := Some(ScmInfo(url("https://github.com/lktkorg/bmsg"), "git@github.com:lktkorg/bmsg.git"))
 
 bintrayPackageLabels := Seq("bitcoin")
 
