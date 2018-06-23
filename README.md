@@ -38,12 +38,18 @@ It includes specific messages implemented on some of them:
 
 The library is written in Scala following Functional Programming principles and using [scodec](https://github.com/scodec/scodec).
 
+
+### Requirements
+```
+Scala 2.12.x
+```
+
 ### How to use
 
 Add the following to your build.sbt:
 
 ```
-libraryDependencies += "lktk" %% "bmsg" % "0.4.5"
+libraryDependencies += "lktk" %% "bmsg" % "0.4.6"
 ```
 
 with the following resolver
