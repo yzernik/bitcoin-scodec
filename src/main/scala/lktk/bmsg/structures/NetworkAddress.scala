@@ -2,7 +2,7 @@ package lktk.bmsg.structures
 
 import java.net.{InetAddress, InetSocketAddress}
 
-import UInt64.bigIntCodec
+import UInt64.uint64L
 
 import scodec.{Codec, DecodeResult, ValueCodecEnrichedWithHListSupport}
 import scodec.bits.{HexStringSyntax, BitVector, ByteVector}
@@ -42,7 +42,7 @@ object NetworkAddress {
       isa => (isa.getAddress(), isa.getPort()))
 
   implicit val codec: Codec[NetworkAddress] = {
-    ("services" | Codec[BigInt]) ::
+    ("services" | uint64L) ::
       ("address" | Codec[InetSocketAddress])
   }.as[NetworkAddress]
 

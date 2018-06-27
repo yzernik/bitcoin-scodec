@@ -1,7 +1,7 @@
 package lktk.bmsg.messages
 
 import lktk.bmsg.structures._
-import lktk.bmsg.structures.UInt64.bigIntCodec
+import lktk.bmsg.structures.UInt64.uint64L
 
 import scodec.Codec
 import scodec.codecs._
@@ -21,8 +21,8 @@ case class CmpctBlock(
 object CmpctBlock extends MessageCompanion[CmpctBlock] {
   def codec(version: Int): Codec[CmpctBlock] = (
     ("header" | BlockHeader.codec) ::
-    ("nonce" | Codec[BigInt]) ::
-    VarList.varList(Codec[BigInt]) ::
+    ("nonce" | uint64L) ::
+    VarList.varList(uint64L) ::
     VarList.varList(PrefiledTx.codec(version))
   ).as[CmpctBlock]
 

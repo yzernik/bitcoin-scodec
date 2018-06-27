@@ -31,8 +31,8 @@ case class Wtx(
 object Tx0 extends MessageCompanion[Tx0] {
 
   val witnessFlag = for {
-    marker <- UInt8.codec.encode(UInt8(0))
-    flag <- UInt8.codec.encode(UInt8(1))
+    marker <- uint8L.encode(0)
+    flag <- uint8L.encode(1)
   } yield (marker ++ flag).toByteVector
 
   val flag: Codec[ByteVector] = bytes(2).narrow[ByteVector](f =>
