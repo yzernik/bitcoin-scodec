@@ -1,7 +1,7 @@
 package lktk.bmsg.messages
 
 import lktk.bmsg.structures.{Message, MessageCompanion}
-import lktk.bmsg.structures.UInt64.bigIntCodec
+import lktk.bmsg.structures.UInt64.uint64L
 
 import scodec.Codec
 import scodec.codecs._
@@ -18,7 +18,7 @@ object SendCmpct extends MessageCompanion[SendCmpct] {
 
   def codec(version: Int): Codec[SendCmpct] = (
     ("announce" | mappedEnum(uint8, false -> 0, true -> 1)).as[Boolean] ::
-      ("version" | Codec[BigInt])
+      ("version" | uint64L)
   ).as[SendCmpct]
   def command = "sendcmpct"
 }

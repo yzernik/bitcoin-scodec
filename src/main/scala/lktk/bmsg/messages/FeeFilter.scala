@@ -1,8 +1,8 @@
 package lktk.bmsg.messages
 
 import lktk.bmsg.structures.{Message, MessageCompanion}
+import lktk.bmsg.structures.UInt64.uint64L
 
-import lktk.bmsg.structures.UInt64.bigIntCodec
 import scodec.Codec
 
 //BIP133
@@ -13,7 +13,7 @@ case class FeeFilter(feerate: BigInt) extends Message {
 
 object FeeFilter extends MessageCompanion[FeeFilter] {
   def codec(version: Int): Codec[FeeFilter] =
-    Codec[BigInt].xmap(FeeFilter.apply, _.feerate)
+    uint64L.xmap(FeeFilter.apply, _.feerate)
 
   def command = "feefilter"
 }

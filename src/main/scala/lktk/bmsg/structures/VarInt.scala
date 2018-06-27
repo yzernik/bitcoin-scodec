@@ -2,7 +2,7 @@ package lktk.bmsg.structures
 
 import scala.BigInt
 
-import UInt64.bigIntCodec
+import UInt64.uint64L
 
 import scodec.Attempt.{ Failure, Successful }
 import scodec.Codec
@@ -34,7 +34,7 @@ object VarInt {
         case i =>
           for {
             a <- uint8L.encode(0xff)
-            b <- Codec[BigInt].encode(BigInt(i))
+            b <- uint64L.encode(BigInt(i))
           } yield a ++ b
       },
     (buf: BitVector) => {
@@ -42,7 +42,7 @@ object VarInt {
         case Successful(byte) =>
           byte.value match {
             case 0xff =>
-              Codec[BigInt].decode(byte.remainder)
+              uint64L.decode(byte.remainder)
                 .map { case b => b.map(_.toLong) }
             case 0xfe =>
               uint32L.decode(byte.remainder)

@@ -1,7 +1,7 @@
 package lktk.bmsg.messages
 
 import lktk.bmsg.structures._
-import lktk.bmsg.structures.UInt64.bigIntCodec
+import lktk.bmsg.structures.UInt64.uint64L
 import lktk.bmsg.util.ProtocolVersion
 
 import scodec.Codec
@@ -24,11 +24,11 @@ case class Version(
 object Version extends MessageCompanion[Version] {
   def codec(version: Int): Codec[Version] = {
     ("version" | int32L) >>:~ { verNum =>
-      ("services" | Codec[BigInt]) ::
+      ("services" | uint64L) ::
         ("timestamp" | int64L) ::
         ("addrRecv" | Codec[NetworkAddress]) ::
         ("addrFrom" | Codec[NetworkAddress]) ::
-        ("nonce" | Codec[BigInt]) ::
+        ("nonce" | uint64L) ::
         ("userAgent" | VarStr.codec) ::
         ("startHeight" | int32L) ::
         ("relay" | withDefaultValue(conditional(verNum >= ProtocolVersion.bloomVersion, relayCodec), true)) //BIP37

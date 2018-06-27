@@ -26,11 +26,11 @@ object BloomFilter {
   case object BLOOM_UPDATE_P2PUBKEY_ONLY extends BloomFlag
   case object BLOOM_UPDATE_MASK extends BloomFlag
 
-  implicit val bloomFlag: Codec[BloomFlag] = mappedEnum(UInt8.codec,
-    BLOOM_UPDATE_NONE -> UInt8(0),
-    BLOOM_UPDATE_ALL -> UInt8(1),
-    BLOOM_UPDATE_P2PUBKEY_ONLY -> UInt8(2),
-    BLOOM_UPDATE_MASK -> UInt8(3)
+  implicit val bloomFlag: Codec[BloomFlag] = mappedEnum(uint8L,
+    BLOOM_UPDATE_NONE -> 0,
+    BLOOM_UPDATE_ALL -> 1,
+    BLOOM_UPDATE_P2PUBKEY_ONLY -> 2,
+    BLOOM_UPDATE_MASK -> 3
   )
 
   val nHashFuncs = uint32L.narrow[Long](f =>
