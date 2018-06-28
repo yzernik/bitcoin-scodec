@@ -4,9 +4,7 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.security.MessageDigest
 
-import lktk.bmsg.structures.Hash
 import scodec.bits.ByteVector
-
 
 object Util {
 
@@ -16,11 +14,6 @@ object Util {
     val byteBuffer = ByteBuffer.wrap(hash.slice(0, 4) ++ padding)
       .order(ByteOrder.LITTLE_ENDIAN)
     byteBuffer.getLong()
-  }
-
-  def hash(bytes: Array[Byte]): Hash = {
-    val hash = hashBytes(bytes)
-    Hash(ByteVector(hash).reverse)
   }
 
   def hashBytes(bytes: Array[Byte]): Array[Byte] = {

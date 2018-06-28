@@ -19,8 +19,6 @@ object FilterAdd extends MessageCompanion[FilterAdd] {
   //(the maximum size of any potentially matched object).
   val maxScriptElementSize = 520
 
-  def codecError(v: Int)= Failure(scodec.Err(s"unable to encode version $v not supported for $command"))
-
   def codec(version: Int): Codec[FilterAdd] = limitedSizeBytes(maxScriptElementSize, bytes).as[FilterAdd]
 
   def command = "filteradd"
