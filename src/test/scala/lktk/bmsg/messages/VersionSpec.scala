@@ -1,7 +1,7 @@
 package lktk.bmsg.messages
 
 import lktk.bmsg.CodecSuite
-import lktk.bmsg.structures.{Message, NetworkAddress, UInt64}
+import lktk.bmsg.structures.{Message, NetworkAddress, ServiceFlags}
 import scodec.bits._
 import java.net.InetSocketAddress
 import java.net.InetAddress
@@ -12,7 +12,7 @@ class VersionSpec extends CodecSuite {
 
   val version = Version(
     version = 60002,
-    services = BigInt(32), //0b100000
+    services = ServiceFlags.NodeNetwork,
     timestamp = 1527700852L,
     addrRecv = NetworkAddress(37, new InetSocketAddress(
       InetAddress.getByAddress(Array(0, 0, 0, 0).map(_.toByte)),
