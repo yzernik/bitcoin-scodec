@@ -50,14 +50,18 @@ object Message {
   def codec(magic: Long, version: Int): Codec[Message] = {
 
     def encode(msg: Message) = {
-      val c = msg.companion.codec(version)
-      for {
-        magic <- uint32L.encode(magic)
-        command <- commandCodec.encode(msg.companion.command)
-        payload <- c.encode(msg)
-        length <- uint32L.encode(payload.length / 8)
-        chksum <- uint32L.encode(Util.checksum(payload.toByteVector))
-      } yield magic ++ command ++ length ++ chksum ++ payload
+      if(!MessageCompanion.byCommand.contains(msg.companion.command)) {
+        Failure(scodec.Err(s"message: ${msg.companion.command} not recognized"))
+      } else {
+        val c = msg.companion.codec(version)
+        for {
+          magic <- uint32L.encode(magic)
+          command <- commandCodec.encode(msg.companion.command)
+          payload <- c.encode(msg)
+          length <- uint32L.encode(payload.length / 8)
+          chksum <- uint32L.encode(Util.checksum(payload.toByteVector))
+        } yield magic ++ command ++ length ++ chksum ++ payload
+      }
     }
 
     def decode(bits: BitVector) =

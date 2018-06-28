@@ -6,13 +6,22 @@ import lktk.bmsg.messages._
 import java.net.{InetAddress, InetSocketAddress}
 
 import scodec.Attempt.Failure
-
-import scala.BigInt
-import scala.math.BigInt.{long2bigInt, int2bigInt}
-
+import scodec.Codec
 import scodec.bits._
+import scodec.codecs.provide
+
+import scala.math.BigInt.{int2bigInt, long2bigInt}
 
 class MessageSpec extends CodecSuite {
+  case class Dummy() extends Message {
+    type E = Dummy
+    def companion = Dummy
+  }
+
+  object Dummy extends MessageCompanion[Dummy] {
+    def codec(version: Int): Codec[Dummy] = provide(Dummy())
+    def command = "dummy"
+  }
 
   val addr = NetworkAddress(1, new InetSocketAddress(
     InetAddress.getByAddress(Array(0, 0, 0, 0).map(_.toByte)),
@@ -57,31 +66,37 @@ class MessageSpec extends CodecSuite {
 
     "fail to decode message with wrong magic" in {
       val codec = Message.codec(0xD9B4BEF9L, 1)
-      val verack = Verack()
       val bytes = hex"F8 BE B4 D9 76 65 72 61  63 6B 00 00 00 00 00 00 00 00 00 00 5D F6 E0 E2".toBitVector
       codec.decode(bytes) shouldBe Failure(scodec.Err("magic did not match."))
     }
 
     "fail to decode message with wrong checksum" in {
       val codec = Message.codec(0xD9B4BEF9L, 1)
-      val verack = Verack()
       val bytes = hex"F9 BE B4 D9 76 65 72 61  63 6B 00 00 00 00 00 00 00 00 00 00 5D F6 E0 E1".toBitVector
       codec.decode(bytes) shouldBe Failure(scodec.Err("checksum did not match."))
     }
 
     "fail to decode message with cut-off payload" in {
       val codec = Message.codec(0xD9B4BEF9L, 1)
-      val ping = Ping(BigInt(1234))
       val bytes = hex"f9beb4d970696e67000000000000000040000000433ba813d2040000000000".toBitVector
       codec.decode(bytes).toString shouldBe Failure(scodec.Err("cannot acquire 64 bits from a vector that contains 56 bits")).toString
     }
 
     "fail to decode message with too-long payload" in {
       val codec = Message.codec(0xD9B4BEF9L, 1)
-      val ping = Ping(BigInt(1234))
       val bytes = hex"f9beb4d970696e67000000000000000050000000433ba813d20400000000000000".toBitVector
       codec.decode(bytes) shouldBe Failure(scodec.Err("payload length did not match."))
     }
 
+    "fail to encode unrecoginzed message" in {
+      val codec = Message.codec(0xD9B4BEF9L, 1)
+      codec.encode(Dummy()) shouldBe Failure(scodec.Err(s"message: dummy not recognized"))
+    }
+
+    "fail to decode unrecognized message" in {
+      val codec = Message.codec(0xD9B4BEF9L, 1)
+      val bytes = hex"0xf9beb4d964756d6d7900000000000000000000005df6e0e2".toBitVector
+      codec.decode(bytes) shouldBe Failure(scodec.Err(s"message: dummy not recognized"))
+    }
   }
 }

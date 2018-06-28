@@ -10,13 +10,12 @@ import com.github.tototoshi.csv._
 
 import scodec.bits.ByteVector
 
-
 object Generators {
 
   def bloomfilterGen: Gen[BloomFilter] = for {
-    size <- Gen.choose(1, 36000)
+    size <- Gen.choose(1, maxFilterSize)
     filter <- Gen.containerOfN[Seq, Byte](size, Gen.choose(0, 100).map(_.toByte))
-    nHashFuncs <- Gen.choose[Long](1, 50)
+    nHashFuncs <- Gen.choose[Long](1, maxNHashFuncs)
     tweak <- Gen.choose[Long](1, 4294967295L)
     nFlags <- Gen.oneOf(BLOOM_UPDATE_NONE, BLOOM_UPDATE_ALL, BLOOM_UPDATE_P2PUBKEY_ONLY)
   } yield BloomFilter(ByteVector(filter), nHashFuncs, tweak, nFlags)
