@@ -10,14 +10,14 @@ import scodec.bits.HexStringSyntax
 
 class NetworkAddressSpec extends CodecSuite {
 
-  val services = 1L
+  val services = ServiceFlags.NodeNetwork
   val ip = InetAddress.getByAddress(Array(10, 0, 0, 1).map(_.toByte))
   val port = 8333
   val addr = new InetSocketAddress(ip, port)
 
   "NetworkAddress codec" should {
     "roundtrip" in {
-      roundtrip(NetworkAddress(1234, new InetSocketAddress(
+      roundtrip(NetworkAddress(ServiceFlags.NodeNetwork | ServiceFlags.NodeXThin, new InetSocketAddress(
         InetAddress.getByAddress(Array(10, 0, 0, 1).map(_.toByte)),
         8080)))
       val bytes = hex"2001 0db8 85a3 0042 1000 8a2e 0370 7334"

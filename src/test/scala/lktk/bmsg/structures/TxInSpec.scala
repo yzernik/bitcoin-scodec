@@ -1,7 +1,6 @@
 package lktk.bmsg.structures
 
 import lktk.bmsg.CodecSuite
-import lktk.bmsg.structures._
 
 import scodec.bits.ByteVector
 import scodec.bits._

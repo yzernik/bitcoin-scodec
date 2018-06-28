@@ -1,18 +1,17 @@
 package lktk.bmsg
 
-import lktk.bmsg.messages.Tx0
-import lktk.bmsg.structures.BloomFilter
-import lktk.bmsg.structures.BloomFilter.{BLOOM_UPDATE_ALL, BLOOM_UPDATE_NONE, BLOOM_UPDATE_P2PUBKEY_ONLY}
+import scodec._
+import scodec.bits.{BitVector, ByteVector}
 
 import scala.collection.GenTraversable
 import scala.concurrent.duration._
+
 import shapeless.Lazy
 import org.scalacheck.{Arbitrary, Gen}
 import org.scalacheck.Arbitrary.arbitrary
+
 import org.scalatest.{Matchers, WordSpec}
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
-import scodec._
-import scodec.bits.{BitVector, ByteVector}
 
 abstract class CodecSuite extends WordSpec with Matchers with GeneratorDrivenPropertyChecks {
 
