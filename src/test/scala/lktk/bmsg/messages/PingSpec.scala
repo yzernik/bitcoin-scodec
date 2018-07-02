@@ -9,6 +9,7 @@ class PingSpec extends CodecSuite {
     "roundtrip" in {
       val ping = Ping(BigInt(0))
       roundtrip(Ping.codec(1), ping)
+      roundtrip(Ping.codec(1), Ping.genPing)
       roundtrip(Message.codec(0xDAB5BFFAL, 1), ping)
       roundtrip(Ping.codec(1), Ping(BigInt(1234)))
       roundtrip(Ping.codec(1), Ping(BigInt(Long.MaxValue)))

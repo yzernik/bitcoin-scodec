@@ -1,8 +1,7 @@
 package lktk.bmsg.messages
 
-import lktk.bmsg.structures.{Message, MessageCompanion}
+import lktk.bmsg.structures.{Message, MessageCompanion, UInt64}
 import lktk.bmsg.structures.UInt64.uint64L
-
 import scodec.Codec
 
 case class Pong(nonce: BigInt) extends Message {
@@ -14,4 +13,6 @@ object Pong extends MessageCompanion[Pong] {
   def codec(version: Int): Codec[Pong] = uint64L.xmap(Pong.apply, _.nonce)
 
   def command = "pong"
+
+  def genPong = Pong(UInt64.genRandom)
 }
