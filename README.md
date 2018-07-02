@@ -74,7 +74,7 @@ encode a ping message
 ```
 scala> import lktk.bmsg.messages._
 
-scala> codec.encode(Ping.genPing) // creates Ping message with random nonce
+scala> codec.encode(Ping.generate) // creates Ping message with random nonce
 res0: scodec.Attempt[scodec.bits.BitVector] = Successful(BitVector(256 bits, 0xf9beb4d970696e67000000000000000008000000433ba813d204000000000000))
 ```
 

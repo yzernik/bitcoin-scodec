@@ -14,5 +14,5 @@ object Pong extends MessageCompanion[Pong] {
 
   def command = "pong"
 
-  def genPong = Pong(UInt64.genRandom)
+  def generate = Pong(UInt64.genRandom)
 }

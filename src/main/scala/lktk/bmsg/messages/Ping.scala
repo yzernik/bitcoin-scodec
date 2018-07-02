@@ -14,5 +14,5 @@ object Ping extends MessageCompanion[Ping] {
 
   def command = "ping"
 
-  def genPing = Ping(UInt64.genRandom)
+  def generate = Ping(UInt64.genRandom)
 }
