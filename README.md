@@ -51,7 +51,7 @@ Scala 2.12.x
 Add the following to your build.sbt:
 
 ```
-libraryDependencies += "org.lktk" %% "bmsg" % "0.5.2"
+libraryDependencies += "org.lktk" %% "bmsg" % "0.5.3"
 ```
 
 with the following resolver
@@ -74,7 +74,7 @@ encode a ping message
 ```
 scala> import lktk.bmsg.messages._
 
-scala> codec.encode(Ping(BigInt(1234)))
+scala> codec.encode(Ping.genPing) // creates Ping message with random nonce
 res0: scodec.Attempt[scodec.bits.BitVector] = Successful(BitVector(256 bits, 0xf9beb4d970696e67000000000000000008000000433ba813d204000000000000))
 ```
 
