@@ -4,6 +4,7 @@ import lktk.bmsg.CodecSuite
 import lktk.bmsg.structures.UInt64._
 import scodec.Attempt.Failure
 import spire.math.ULong
+
 class UInt64Spec extends CodecSuite {
 
   "UInt64 codec" should {
@@ -14,7 +15,7 @@ class UInt64Spec extends CodecSuite {
       roundtrip(BigInt(Long.MaxValue))
       roundtrip(ULong.MinValue.toBigInt)
       roundtrip(ULong.MaxValue.toBigInt)
-      roundtrip(BigInt("18446744073709551615"))
+      roundtrip(UInt64.MaxValue)
     }
 
     "should fail" in {

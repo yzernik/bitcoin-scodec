@@ -22,9 +22,11 @@ object UInt64 {
 
   def genRandom = rng.unsafeRunSync
 
+  val MaxValue = BigInt("18446744073709551615")
+
   implicit val uint64L: Codec[BigInt] = int64L.widen(
     longToBigInt,
-    n => if(n.signum == -1) {
+    n => if(n.signum == -1 || n > MaxValue) {
       Failure(scodec.Err(s"cant encode negative number in uint64L: $n"))
     } else {
       Successful(bigIntToLong(n))
