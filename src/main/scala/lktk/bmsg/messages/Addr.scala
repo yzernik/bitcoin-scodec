@@ -15,6 +15,7 @@ case object Addr extends MessageCompanion[Addr] {
     ("time" | uint32L) ::
       ("net_addr" | Codec[NetworkAddress])
   }.as[(Long, NetworkAddress)]
+
   def codec(version: Int): Codec[Addr] =
     VarList.varList(timeAddr).as[Addr]
   val command = "addr"

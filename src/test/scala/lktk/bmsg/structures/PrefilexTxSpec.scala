@@ -28,10 +28,10 @@ class PrefilexTxSpec extends CodecSuite {
 
     val tx = Tx(version, txins, txouts, locktime)
 
-    val prefiledTx = PrefiledTx(1L, tx)
+    val prefiledTx = PrefilledTx(1L, tx)
 
     "roundtrip" in {
-      roundtrip(PrefiledTx.codec(ProtocolVersion.shortIdsBlocksVersion), prefiledTx)
+      roundtrip(PrefilledTx.codec(ProtocolVersion.shortIdsBlocksVersion), prefiledTx)
     }
   }
 }

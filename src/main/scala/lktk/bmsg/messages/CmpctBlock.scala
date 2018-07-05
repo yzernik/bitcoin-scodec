@@ -12,7 +12,7 @@ case class CmpctBlock(
   header: BlockHeader,
   nonce: BigInt,
   shortIds: List[BigInt],
-  prefilledTxn: List[PrefiledTx]
+  prefilledTxn: List[PrefilledTx]
 ) extends Message {
   type E = CmpctBlock
   def companion = CmpctBlock
@@ -23,7 +23,7 @@ object CmpctBlock extends MessageCompanion[CmpctBlock] {
     ("header" | BlockHeader.codec) ::
     ("nonce" | uint64L) ::
     VarList.varList(uint64L) ::
-    VarList.varList(PrefiledTx.codec(version))
+    VarList.varList(PrefilledTx.codec(version))
   ).as[CmpctBlock]
 
   def command = "cmpctblock"

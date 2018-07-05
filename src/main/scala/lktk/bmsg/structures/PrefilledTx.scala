@@ -6,14 +6,14 @@ import lktk.bmsg.messages.Tx0
 import scodec.Codec
 import scodec.codecs._
 
-case class PrefiledTx(
+case class PrefilledTx(
   index: Long,
   tx: Tx0
 )
 
-object PrefiledTx {
-  def codec(version: Int): Codec[PrefiledTx] = (
+object PrefilledTx {
+  def codec(version: Int): Codec[PrefilledTx] = (
     ("index" | uint32L) ::
     ("tx" | Tx0.codec(version))
-  ).as[PrefiledTx]
+  ).as[PrefilledTx]
 }
