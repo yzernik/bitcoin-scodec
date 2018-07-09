@@ -33,8 +33,6 @@ class MessageSpec extends CodecSuite {
     "roundtrip" in {
       val codec = Message.codec(0xD9B4BEF9L, 1)
       roundtrip(codec, Verack())
-      roundtrip(codec, Ping(BigInt(1234)))
-      roundtrip(codec, Pong(BigInt(1234)))
       roundtrip(codec, Addr(List((0.toLong, NetworkAddress(1234, new InetSocketAddress(
         InetAddress.getByAddress(Array(10, 0, 0, 1).map(_.toByte)),
         8080))))))
@@ -77,18 +75,18 @@ class MessageSpec extends CodecSuite {
     }
 
     "fail to decode message with cut-off payload" in {
-      val codec = Message.codec(0xD9B4BEF9L, 1)
+      val codec = TypeMessage.codec(0xD9B4BEF9L, 1)
       val bytes = hex"f9beb4d970696e67000000000000000040000000433ba813d2040000000000".toBitVector
-      codec.decode(bytes).toString shouldBe Failure(scodec.Err("cannot acquire 64 bits from a vector that contains 56 bits")).toString
+      codec.decode(bytes).isFailure shouldBe true
     }
 
     "fail to decode message with too-long payload" in {
-      val codec = Message.codec(0xD9B4BEF9L, 1)
+      val codec = TypeMessage.codec(0xD9B4BEF9L, 1)
       val bytes = hex"f9beb4d970696e67000000000000000050000000433ba813d20400000000000000".toBitVector
-      codec.decode(bytes) shouldBe Failure(scodec.Err("payload length did not match."))
+      codec.decode(bytes).isFailure shouldBe true
     }
 
-    "fail to encode unrecoginzed message" in {
+    "fail to encode unrecognized message" in {
       val codec = Message.codec(0xD9B4BEF9L, 1)
       codec.encode(Dummy()) shouldBe Failure(scodec.Err(s"message: dummy not recognized"))
     }

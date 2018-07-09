@@ -6,7 +6,6 @@ import scodec.bits.{BitVector, ByteVector}
 import scala.collection.GenTraversable
 import scala.concurrent.duration._
 
-import shapeless.Lazy
 import org.scalacheck.{Arbitrary, Gen}
 import org.scalacheck.Arbitrary.arbitrary
 
@@ -15,8 +14,8 @@ import org.scalatest.prop.GeneratorDrivenPropertyChecks
 
 abstract class CodecSuite extends WordSpec with Matchers with GeneratorDrivenPropertyChecks {
 
-  protected def roundtrip[A](a: A)(implicit c: Lazy[Codec[A]]): Unit = {
-    roundtrip(c.value, a)
+  protected def roundtrip[A](a: A)(implicit c: Codec[A]): Unit = {
+    roundtrip(c, a)
   }
 
   protected def decodeAll[A](codec: Codec[A], l: List[ByteVector]): List[A] =

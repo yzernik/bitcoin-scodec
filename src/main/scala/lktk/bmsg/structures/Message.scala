@@ -24,6 +24,11 @@ trait MessageCompanion[E <: Message] {
 object Message {
   def commandCodec = fixedSizeBytes(12, ascii)
 
+  def magicCodec(mg: Long): Codec[Long] = uint32L.narrow(m =>
+    if (m == mg) Successful(m) else Failure(scodec.Err("magic did not match.")),
+    identity
+  )
+
   def decodeHeader(bits: BitVector, magic: Long, version: Int) =
     for {
       m <- uint32L.decode(bits).flatMap { mg =>
@@ -55,7 +60,7 @@ object Message {
       } else {
         val c = msg.companion.codec(version)
         for {
-          magic <- uint32L.encode(magic)
+          magic <- magicCodec(magic).encode(magic)
           command <- commandCodec.encode(msg.companion.command)
           payload <- c.encode(msg)
           length <- uint32L.encode(payload.length / 8)
@@ -82,7 +87,7 @@ object MessageCompanion {
       Addr, Alert, Block, BlockTxn, CmpctBlock, FeeFilter,
       FilterAdd, FilterLoad, FilterClear, MerkleBlock,
       GetAddr, GetBlocks, GetData, GetHeaders, GetUtxo, GetBlockTxn,
-      Headers, Inv, MemPool, NotFound, Ping, Pong, Reject,
+      Headers, Inv, MemPool, NotFound, Reject,
       SendCmpct, SendHeaders, Tx0, Utxos, Verack, Version
     )
 

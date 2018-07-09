@@ -1,18 +1,13 @@
 package lktk.bmsg.messages
 
-import lktk.bmsg.structures.{Message, MessageCompanion, UInt64}
 import lktk.bmsg.structures.UInt64.uint64L
-import scodec.Codec
+import lktk.bmsg.structures.{Pong, TypeMsg, UInt64}
+import scodec.codecs.Discriminator
 
-case class Pong(nonce: BigInt) extends Message {
-  type E = Pong
-  def companion = Pong
-}
+object PongCodecs {
+  implicit val cPongT = uint64L.xmap[Pong](Pong, _.nonce)
+  implicit val discPongT: Discriminator[TypeMsg, Pong, String] = Discriminator("pong")
 
-object Pong extends MessageCompanion[Pong] {
-  def codec(version: Int): Codec[Pong] = uint64L.xmap(Pong.apply, _.nonce)
-
-  def command = "pong"
 
   def generate = Pong(UInt64.genRandom)
 }
