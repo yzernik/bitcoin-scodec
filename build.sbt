@@ -1,26 +1,26 @@
-name := "bitcoin-scodec"
+name := "bmsg"
 
-organization := "io.github.yzernik"
+organization := "org.lktk"
 
-version := "0.2.9"
+scalaVersion := "2.12.6"
+scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature", "-Ypartial-unification")
 
-scalaVersion := "2.11.6"
+coverageEnabled := true //has to be turned off when publishing
 
+homepage := Some(url("https://www.lktk.org"))
+scmInfo := Some(ScmInfo(url("https://github.com/lktkorg/bmsg"), "git@github.com:lktkorg/bmsg.git"))
 licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
-resolvers += "Sonatype Public" at "https://oss.sonatype.org/content/groups/public/"
-
-resolvers += "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases"
+bintrayPackageLabels := Seq("bitcoin", "bitcoin cash", "p2p", "blockchain")
+bintrayOrganization := Some("lktk")
+bintrayRepository := "io"
 
 libraryDependencies ++= Seq(
-  "org.scodec"                    %% "scodec-core"    % "1.7.1",
-  "org.scalatest"                 %% "scalatest"      % "2.2.0"  % "test",
-  "org.scalacheck"                %% "scalacheck"     % "1.11.3" % "test",
-  "com.github.scala-incubator.io" %% "scala-io-core"  % "0.4.3"  % "test"
+  "org.scodec"           %% "scodec-core" % "1.10.3",
+  "org.typelevel"        %% "spire"       % "0.14.1",
+  "org.typelevel"        %% "cats-effect" % "0.10.1",
+  "org.scalatest"        %% "scalatest"   % "3.0.5"   % "test",
+  "org.scalacheck"       %% "scalacheck"  % "1.13.4"  % "test",
+  "com.github.tototoshi" %% "scala-csv"   % "1.3.5"   % "test"
 )
 
-scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
-
-scoverage.ScoverageSbtPlugin.instrumentSettings
-
-org.scoverage.coveralls.CoverallsPlugin.coverallsSettings
