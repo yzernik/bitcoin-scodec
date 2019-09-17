@@ -3,7 +3,7 @@ package io.github.yzernik.bitcoinscodec.structures
 import io.github.yzernik.bitcoinscodec.messages._
 import io.github.yzernik.bitcoinscodec.util.Util
 import scodec.Attempt.{Failure, Successful}
-import scodec.Codec
+import scodec.{Codec, DecodeResult}
 import scodec.bits.{BitVector, ByteVector}
 import scodec.codecs.{bytes, uint32L}
 
@@ -38,18 +38,21 @@ object Message {
       command = c.value
       l <- uint32L.decode(c.remainder)
       length = l.value
-      ch <- uint32L.decode(l.remainder)
+      ch <- uint32L.decode(l.remainder).flatMap{ p =>
+        if (p.remainder.length < length)
+          Failure(scodec.Err("payload is less than specified length."))
+        else
+          Successful(p)
+      }
       chksum = ch.value
-      (payload, _) = ch.remainder.splitAt(length * 8)
-    } yield (command, length, chksum, payload)
+      (payload, rest) = ch.remainder.splitAt(length * 8)
+    } yield (command, length, chksum, payload, rest)
 
   private def decodePayload(payload: BitVector, length: Long, version: Int, chksum: Long, command: ByteVector) = {
     val cmd = MessageCompanion.byCommand(command)
     val payloadCodec = cmd.codec(version)
     payloadCodec.decode(payload).flatMap { p =>
-      if (length != payload.size / 8)
-        Failure(scodec.Err("payload length did not match."))
-      else if (chksum != Util.checksum(payload.toByteVector))
+      if (chksum != Util.checksum(payload.toByteVector))
         Failure(scodec.Err("checksum did not match."))
       else
         Successful(p)
@@ -72,9 +75,9 @@ object Message {
     def decode(bits: BitVector) =
       for {
         metadata <- decodeHeader(bits, magic, version)
-        (command, length, chksum, payload) = metadata
+        (command, length, chksum, payload, rest) = metadata
         msg <- decodePayload(payload, length, version, chksum, command)
-      } yield msg
+      } yield DecodeResult(msg.value, rest)
 
     Codec[Message](encode _, decode _)
   }

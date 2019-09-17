@@ -24,5 +24,15 @@ class HeadersSpec extends CodecSuite {
       rest shouldBe BitVector.empty
     }
 
+    "decode multiple messages" in {
+      val resource = getClass.getResource("/headerspayload.data")
+      val bytes = Files.readAllBytes(Paths.get(resource.getPath))
+      val bitVector = BitVector(bytes)
+      val combinedVector = bitVector ++ bitVector
+
+      val Attempt.Successful(DecodeResult(actual, rest)) = Headers.codec(1) decode combinedVector
+      rest shouldBe bitVector
+    }
+
   }
 }
