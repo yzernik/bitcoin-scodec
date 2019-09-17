@@ -6,7 +6,7 @@ import scodec.codecs.{bytes, variableSizeBytes}
 
 case class Script(value: ByteVector) {
 
-  override def toString = s"${value.toHex}"
+  override def toString = s"Script(0x${value.toHex})"
 }
 
 object Script {
