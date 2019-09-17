@@ -14,11 +14,11 @@ class NetworkAddressSpec extends CodecSuite {
 
   "NetworkAddress codec" should {
     "roundtrip" in {
-      roundtrip(NetworkAddress(1234, new InetSocketAddress(
+      roundtrip(NetworkAddress(UInt64(1234), new InetSocketAddress(
         InetAddress.getByAddress(Array(10, 0, 0, 1).map(_.toByte)),
         8080)))
       val bytes = hex"2001 0db8 85a3 0042 1000 8a2e 0370 7334"
-      roundtrip(NetworkAddress(1234, new InetSocketAddress(InetAddress.getByAddress(bytes.toArray), 8080)))
+      roundtrip(NetworkAddress(UInt64(1234), new InetSocketAddress(InetAddress.getByAddress(bytes.toArray), 8080)))
     }
 
     /*

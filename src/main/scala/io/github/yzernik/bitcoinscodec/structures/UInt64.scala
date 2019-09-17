@@ -1,20 +1,47 @@
 package io.github.yzernik.bitcoinscodec.structures
 
-import scala.BigInt
+
 import scala.math.BigInt.int2bigInt
 import scala.math.BigInt.long2bigInt
-
 import scodec.Codec
-import scodec.codecs.int64L
+import scodec.bits.ByteVector
+import scodec.codecs.{bytes, int64L}
 
-case class UInt64(value: Long) {
+case class UInt64(value: ByteVector) {
+  require(value.size == 8)
 
-  import UInt64._
-
-  override def toString = longToBigInt(value).toString
+  override def toString = s"${value.toHex}"
 }
 
 object UInt64 {
+
+  def apply(value: Long): UInt64 = {
+    require(value >= 0)
+    val bytes = longToByteVector(value)
+    UInt64(bytes)
+  }
+
+  def apply(value: BigInt): UInt64 = {
+    require(value >= 0)
+    val bytes = bigIntToByteVector(value)
+    UInt64(bytes)
+  }
+
+  def longToByteVector(value: Long): ByteVector = {
+    val bigInt = longToBigInt(value)
+    bigIntToByteVector(bigInt)
+  }
+
+  def bigIntToByteVector(value: BigInt): ByteVector = {
+    val byteVector = ByteVector(value.toByteArray)
+    // pad the byte vector
+    ByteVector.fill(8 - byteVector.length)(0) ++ byteVector
+  }
+
+  def byteVectorToLong(byteVector: ByteVector): Long = {
+    val bigInt = BigInt(byteVector.toArray)
+    bigIntToLong(bigInt)
+  }
 
   def longToBigInt(unsignedLong: Long): BigInt =
     (BigInt(unsignedLong >>> 1) << 1) + (unsignedLong & 1)
@@ -24,9 +51,6 @@ object UInt64 {
     ((n >> 1).toLong << 1) | smallestBit
   }
 
-  implicit val codec: Codec[UInt64] = int64L.xmap(UInt64.apply, _.value)
-
-  implicit val bigIntCodec: Codec[BigInt] = Codec[UInt64].xmap(
-    n => (UInt64.longToBigInt(n.value)),
-    b => UInt64(UInt64.bigIntToLong(b)))
+  implicit val codec: Codec[UInt64] = bytes(8)
+    .xmap(b => UInt64.apply(b.reverse), _.value.reverse)
 }

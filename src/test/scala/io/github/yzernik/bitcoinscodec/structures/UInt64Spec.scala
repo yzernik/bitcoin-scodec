@@ -1,6 +1,7 @@
 package io.github.yzernik.bitcoinscodec.structures
 
 import io.github.yzernik.bitcoinscodec.CodecSuite
+import scodec.bits.ByteVector
 
 class UInt64Spec extends CodecSuite {
 
@@ -10,19 +11,22 @@ class UInt64Spec extends CodecSuite {
     "roundtrip" in {
       roundtrip(UInt64(1234))
       roundtrip(UInt64(12345))
-      roundtrip(UInt64(Long.MinValue))
+      roundtrip(UInt64(0))
       roundtrip(UInt64(Long.MaxValue))
+      roundtrip(UInt64(ByteVector.fill(8)(0x00)))
+      roundtrip(UInt64(ByteVector.fill(8)(0x42)))
     }
 
     "print" in {
-      def shouldPrint(n: BigInt) = {
-        UInt64(UInt64.bigIntToLong(n)).toString shouldBe n.toString
+      def shouldPrint(n: UInt64) = {
+        n.toString.length shouldBe 16
       }
 
-      shouldPrint(0)
-      shouldPrint(1234)
-      shouldPrint(Long.MaxValue)
-      shouldPrint(BigInt(Long.MaxValue) * 2 + 1)
+      shouldPrint(UInt64(0))
+      shouldPrint(UInt64(1234))
+      shouldPrint(UInt64(Long.MaxValue))
+      shouldPrint(UInt64(ByteVector.fill(8)(0x42)))
     }
+
   }
 }

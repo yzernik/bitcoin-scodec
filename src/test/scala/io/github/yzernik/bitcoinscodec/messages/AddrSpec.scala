@@ -4,11 +4,9 @@ import java.net.InetAddress
 import java.net.InetSocketAddress
 
 import scala.math.BigInt.int2bigInt
-
 import Addr.codec
 import io.github.yzernik.bitcoinscodec.CodecSuite
-import io.github.yzernik.bitcoinscodec.structures.Message
-import io.github.yzernik.bitcoinscodec.structures.NetworkAddress
+import io.github.yzernik.bitcoinscodec.structures.{Message, NetworkAddress, UInt64}
 import scodec.bits.HexStringSyntax
 
 class AddrSpec extends CodecSuite {
@@ -16,7 +14,7 @@ class AddrSpec extends CodecSuite {
   import Addr._
 
   val addr = Addr(List((1292899810L,
-    NetworkAddress(1, new InetSocketAddress(
+    NetworkAddress(UInt64(1), new InetSocketAddress(
       InetAddress.getByAddress(Array(10, 0, 0, 1).map(_.toByte)),
       8333)))))
   val bytes = hex"01 E2 15 10 4D 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF 0A 00 00 01 20 8D"

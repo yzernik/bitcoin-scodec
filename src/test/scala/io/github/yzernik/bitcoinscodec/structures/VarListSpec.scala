@@ -15,9 +15,9 @@ class VarListSpec extends CodecSuite {
     "roundtrip" in {
       roundtrip(codec, List())
       roundtrip(List(
-        Ping(0),
-        Ping(1),
-        Ping(2)))
+        Ping(UInt64(0)),
+        Ping(UInt64(1)),
+        Ping(UInt64(2))))
     }
 
   }

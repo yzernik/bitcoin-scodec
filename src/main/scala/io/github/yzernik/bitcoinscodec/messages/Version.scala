@@ -1,21 +1,18 @@
 package io.github.yzernik.bitcoinscodec.messages
 
-import io.github.yzernik.bitcoinscodec.structures.Message
-import io.github.yzernik.bitcoinscodec.structures.MessageCompanion
-import io.github.yzernik.bitcoinscodec.structures.NetworkAddress
-import io.github.yzernik.bitcoinscodec.structures.UInt64.bigIntCodec
-import io.github.yzernik.bitcoinscodec.structures.VarStr
+import io.github.yzernik.bitcoinscodec.structures.{Message, MessageCompanion, NetworkAddress, UInt64, VarStr}
 import scodec.Codec
 import scodec.codecs._
+
 import scala.util.Random
 
 case class Version(
   version: Int,
-  services: BigInt,
+  services: UInt64,
   timestamp: Long,
   addr_recv: NetworkAddress,
   addr_from: NetworkAddress,
-  nonce: BigInt,
+  nonce: UInt64,
   user_agent: String,
   start_height: Int,
   relay: Boolean) extends Message {
@@ -26,11 +23,11 @@ case class Version(
 object Version extends MessageCompanion[Version] {
   def codec(version: Int): Codec[Version] = {
     ("version" | int32L) >>:~ { verNum =>
-      ("services" | Codec[BigInt]) ::
+      ("services" | Codec[UInt64]) ::
         ("timestamp" | int64L) ::
         ("addr_recv" | Codec[NetworkAddress]) ::
         ("addr_from" | Codec[NetworkAddress]) ::
-        ("nonce" | Codec[BigInt]) ::
+        ("nonce" | Codec[UInt64]) ::
         ("user_agent" | VarStr()) ::
         ("start_height" | int32L) ::
         ("relay" | withDefault(conditional(verNum >= 70001, relayCodec), provide(true)))

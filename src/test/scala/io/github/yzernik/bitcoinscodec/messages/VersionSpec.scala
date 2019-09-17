@@ -14,15 +14,15 @@ class VersionSpec extends CodecSuite {
 
   val version = Version(
     60002,
-    1,
+    UInt64(1),
     1355854353L,
-    NetworkAddress(1, new InetSocketAddress(
+    NetworkAddress(UInt64(1), new InetSocketAddress(
       InetAddress.getByAddress(Array(0, 0, 0, 0).map(_.toByte)),
       0)),
-    NetworkAddress(1, new InetSocketAddress(
+    NetworkAddress(UInt64(1), new InetSocketAddress(
       InetAddress.getByAddress(Array(0, 0, 0, 0).map(_.toByte)),
       0)),
-    7284544412836900411L,
+    UInt64(7284544412836900411L),
     "/Satoshi:0.7.2/",
     212672,
     true)
