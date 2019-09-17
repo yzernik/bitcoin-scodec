@@ -12,10 +12,12 @@ case class BlockHeader(
   bits: Long,
   nonce: Long) {
 
-  def hash: Hash = {
-    val bytes = BlockHeader.codec.encode(this).toOption.get
-    Util.hash(bytes.toByteArray)
-  }
+  def bytes =
+    BlockHeader.codec.encode(this)
+      .toOption.get.toByteArray
+
+  def hash: Hash =
+    Util.hash(bytes)
 
 }
 

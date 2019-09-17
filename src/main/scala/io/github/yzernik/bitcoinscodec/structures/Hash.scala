@@ -15,5 +15,5 @@ object Hash {
   implicit val codec: Codec[Hash] = bytes(32)
     .xmap(b => Hash.apply(b.reverse), _.value.reverse)
 
-  val NULL = Hash(hex"0000000000000000000000000000000000000000000000000000000000000000")
+  val NULL = Hash(ByteVector.fill(32)(0))
 }

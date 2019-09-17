@@ -1,18 +1,16 @@
 package io.github.yzernik.bitcoinscodec.messages
 
-import io.github.yzernik.bitcoinscodec.structures.BlockHeader
-import io.github.yzernik.bitcoinscodec.structures.Message
-import io.github.yzernik.bitcoinscodec.structures.MessageCompanion
-import io.github.yzernik.bitcoinscodec.structures.VarList
-
+import io.github.yzernik.bitcoinscodec.structures.{BlockHeader, Hash, Hashable, Message, MessageCompanion, VarList}
 import scodec.Codec
 import scodec.codecs._
 
 case class Block(
   block_header: BlockHeader,
-  txs: List[Tx]) extends Message {
+  txs: List[Tx]) extends Message with Hashable{
   type E = Block
   def companion = Block
+
+  override def hash: Hash = block_header.hash
 }
 
 object Block extends MessageCompanion[Block] {
