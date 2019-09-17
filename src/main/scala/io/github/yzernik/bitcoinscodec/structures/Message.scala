@@ -33,7 +33,7 @@ object Message {
   private def decodeHeader(bits: BitVector, magic: Long, version: Int) =
     for {
       m <- uint32L.decode(bits).flatMap { mg =>
-        if (mg.value != magic)
+        if (magic != mg.value)
           Failure(scodec.Err("magic did not match."))
         else
           Successful(mg)
@@ -47,13 +47,13 @@ object Message {
       (payload, _) = ch.remainder.splitAt(length * 8)
     } yield (command, length, chksum, payload)
 
-  private def decodePayload(payload: BitVector, version: Int, chksum: Long, command: ByteVector) = {
+  private def decodePayload(payload: BitVector, length: Long, version: Int, chksum: Long, command: ByteVector) = {
     val cmd = MessageCompanion.byCommand(command)
     val payloadCodec = cmd.codec(version)
     payloadCodec.decode(payload).flatMap { p =>
-      if (!p.remainder.isEmpty)
+      if (length != payload.size / 8)
         Failure(scodec.Err("payload length did not match."))
-      else if (Util.checksum(payload.toByteVector) != chksum)
+      else if (chksum != Util.checksum(payload.toByteVector))
         Failure(scodec.Err("checksum did not match."))
       else
         Successful(p)
@@ -63,11 +63,11 @@ object Message {
   def codec(magic: Long, version: Int): Codec[Message] = {
 
     def encode(msg: Message) = {
-      val c = msg.companion.codec(version)
+      val payloadCodec = msg.companion.codec(version)
       for {
         magic <- uint32L.encode(magic)
         command <- bytes(12).encode(padCommand(msg.companion.command))
-        payload <- c.encode(msg)
+        payload <- payloadCodec.encode(msg)
         length <- uint32L.encode(payload.length / 8)
         chksum <- uint32L.encode(Util.checksum(payload.toByteVector))
       } yield magic ++ command ++ length ++ chksum ++ payload
@@ -77,7 +77,7 @@ object Message {
       for {
         metadata <- decodeHeader(bits, magic, version)
         (command, length, chksum, payload) = metadata
-        msg <- decodePayload(payload, version, chksum, command)
+        msg <- decodePayload(payload, length, version, chksum, command)
       } yield msg
 
     Codec[Message](encode _, decode _)
