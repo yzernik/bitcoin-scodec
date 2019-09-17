@@ -19,10 +19,4 @@ libraryDependencies ++= Seq(
   "org.scalacheck"                %% "scalacheck"     % "1.14.0" % "test"
 )
 
-libraryDependencies ++= {
-  if (scalaBinaryVersion.value startsWith "2.10")
-    Seq(compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full))
-  else Nil
-}
-
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
