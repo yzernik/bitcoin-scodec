@@ -14,6 +14,6 @@ case class Inv(invs: List[InvVect]) extends Message {
 
 object Inv extends MessageCompanion[Inv] {
   def codec(version: Int): Codec[Inv] =
-    VarList.varList(Codec[InvVect]).as[Inv]
+    VarList(Codec[InvVect]).as[Inv]
   def command = "inv"
 }

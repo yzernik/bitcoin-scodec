@@ -14,6 +14,6 @@ case class GetData(invs: List[InvVect]) extends Message {
 
 object GetData extends MessageCompanion[GetData] {
   def codec(version: Int): Codec[GetData] =
-    VarList.varList(Codec[InvVect]).as[GetData]
+    VarList(Codec[InvVect]).as[GetData]
   def command = "getdata"
 }

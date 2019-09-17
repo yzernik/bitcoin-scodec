@@ -13,6 +13,6 @@ case class Headers(invs: List[Block]) extends Message {
 
 object Headers extends MessageCompanion[Headers] {
   def codec(version: Int): Codec[Headers] =
-    VarList.varList(Block.codec(version)).as[Headers]
+    VarList(Block.codec(version)).as[Headers]
   def command = "headers"
 }

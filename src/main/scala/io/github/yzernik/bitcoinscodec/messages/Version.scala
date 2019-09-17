@@ -31,7 +31,7 @@ object Version extends MessageCompanion[Version] {
         ("addr_recv" | Codec[NetworkAddress]) ::
         ("addr_from" | Codec[NetworkAddress]) ::
         ("nonce" | Codec[BigInt]) ::
-        ("user_agent" | VarStr.codec) ::
+        ("user_agent" | VarStr()) ::
         ("start_height" | int32L) ::
         ("relay" | withDefault(conditional(verNum >= 70001, relayCodec), provide(true)))
     }

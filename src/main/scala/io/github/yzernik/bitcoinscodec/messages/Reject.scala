@@ -38,9 +38,9 @@ object Reject extends MessageCompanion[Reject] {
     REJECT_CHECKPOINT -> 0x43)
 
   def codec(version: Int): Codec[Reject] = {
-    ("message" | VarStr.codec) ::
+    ("message" | VarStr()) ::
       ("ccode" | ccodeCodec) ::
-      ("reason" | VarStr.codec)
+      ("reason" | VarStr())
   }.as[Reject]
 
   def command = "reject"

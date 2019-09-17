@@ -14,6 +14,6 @@ case class NotFound(invs: List[InvVect]) extends Message {
 
 object NotFound extends MessageCompanion[NotFound] {
   def codec(version: Int): Codec[NotFound] =
-    VarList.varList(Codec[InvVect]).as[NotFound]
+    VarList(Codec[InvVect]).as[NotFound]
   def command = "notfound"
 }
