@@ -13,13 +13,13 @@ class TxOutSpec extends CodecSuite {
     "roundtrip" in {
       roundtrip(TxOut(
         123456L,
-        hex"123456"))
+        Script(hex"123456")))
     }
 
     "decode" in {
       val txout = TxOut(
         4632880204564398080L,
-        hex"76a9141aa0cd1cbea6e7458a7abad512a9d9ea1afb225e88ac")
+        Script(hex"76a9141aa0cd1cbea6e7458a7abad512a9d9ea1afb225e88ac"))
       val bytes = hex"""            
  40 4B 4C 00 00 00 00 00                          
  19                                                
