@@ -1,5 +1,7 @@
 language: scala
+jdk: openjdk8
 scala:
-  - 2.11.6
-script: "sbt coveralls"
+  - 2.12.10
+script: "sbt clean coverage test"
+after_success: "sbt coverageReport coveralls"
 sudo: false

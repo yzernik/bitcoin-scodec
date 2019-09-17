@@ -1,7 +1,7 @@
 resolvers += Classpaths.sbtPluginReleases
 
-addSbtPlugin("org.scoverage" %% "sbt-scoverage" % "0.99.11")
+addSbtPlugin("org.scoverage" %% "sbt-scoverage" % "1.6.0")
 
-addSbtPlugin("org.scoverage" %% "sbt-coveralls" % "0.99.0")
+addSbtPlugin("org.scoverage" %% "sbt-coveralls" % "1.2.7")
 
-addSbtPlugin("me.lessis" % "bintray-sbt" % "0.3.0")
+addSbtPlugin("org.foundweekends" % "sbt-bintray" % "0.5.4")

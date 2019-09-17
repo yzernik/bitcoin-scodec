@@ -24,3 +24,8 @@ project/plugins/project/
 .classpath
 .project
 .settings/
+
+# intellij
+.idea/
+bitcoin-scodec.iml
+out/
