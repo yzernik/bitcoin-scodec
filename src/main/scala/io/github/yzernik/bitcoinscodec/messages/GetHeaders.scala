@@ -18,11 +18,10 @@ case class GetHeaders(
 }
 
 object GetHeaders extends MessageCompanion[GetHeaders] {
-  def codec(version: Int): Codec[GetHeaders] = {
+  override def codec(version: Int): Codec[GetHeaders] = {
     ("version" | uint32L) ::
       ("block_locator_hashes" | VarList(Codec[Hash])) ::
       ("hash_stop" | Codec[Hash])
   }.as[GetHeaders]
-
-  def command = "getheaders"
+  override def command = "getheaders"
 }

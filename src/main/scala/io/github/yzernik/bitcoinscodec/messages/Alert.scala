@@ -30,7 +30,7 @@ case class Alert(
 }
 
 object Alert extends MessageCompanion[Alert] {
-  def codec(version: Int) = {
+  override def codec(version: Int) = {
     ("version" | int32) ::
       ("relay_until" | int64) ::
       ("expiration" | int64) ::
@@ -45,5 +45,5 @@ object Alert extends MessageCompanion[Alert] {
       ("status_bar" | VarStr()) ::
       ("reserved" | VarStr())
   }.as[Alert]
-  val command = "alert"
+  override val command = "alert"
 }

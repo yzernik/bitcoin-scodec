@@ -1,10 +1,12 @@
 package io.github.yzernik.bitcoinscodec.util
 
+import scodec.codecs._
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.security.MessageDigest
-import scodec.bits.ByteVector
-import io.github.yzernik.bitcoinscodec.structures.Hash
+
+import scodec.bits.{BitVector, ByteVector}
+import io.github.yzernik.bitcoinscodec.structures.{Hash, UInt64}
 
 object Util {
 
@@ -27,5 +29,18 @@ object Util {
     val hash2 = messageDigest.digest(hash1)
     hash2
   }
+
+  def generateNonce32(): Long = {
+    val bytes = randomBytes(4)
+    uint32L.decode(BitVector(bytes)).toOption.get.value
+  }
+
+  def generateNonce64(): UInt64 = {
+    val bytes = randomBytes(8)
+    UInt64.codec.decode(BitVector(bytes)).toOption.get.value
+  }
+
+  private def randomBytes(length: Int): Array[Byte] =
+    Array.fill(length)((scala.util.Random.nextInt(256) - 128).toByte)
 
 }

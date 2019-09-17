@@ -12,6 +12,6 @@ case class Verack() extends Message {
 }
 
 object Verack extends MessageCompanion[Verack] {
-  def codec(version: Int): Codec[Verack] = provide(Verack())
-  def command = "verack"
+  override def codec(version: Int): Codec[Verack] = provide(Verack())
+  override def command = "verack"
 }

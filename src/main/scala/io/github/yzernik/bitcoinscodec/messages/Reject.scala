@@ -37,11 +37,11 @@ object Reject extends MessageCompanion[Reject] {
     REJECT_INSUFFICIENTFEE -> 0x42,
     REJECT_CHECKPOINT -> 0x43)
 
-  def codec(version: Int): Codec[Reject] = {
+  override def codec(version: Int): Codec[Reject] = {
     ("message" | VarStr()) ::
       ("ccode" | ccodeCodec) ::
       ("reason" | VarStr())
   }.as[Reject]
 
-  def command = "reject"
+  override def command = "reject"
 }

@@ -23,11 +23,11 @@ case class Tx(
 }
 
 object Tx extends MessageCompanion[Tx] {
-  def codec(version: Int) = {
+  override def codec(version: Int) = {
     ("version" | uint32L) ::
       ("tx_in" | VarList(Codec[TxIn])) ::
       ("tx_out" | VarList(Codec[TxOut])) ::
       ("lock_time" | uint32L)
   }.as[Tx]
-  def command = "tx"
+  override def command = "tx"
 }

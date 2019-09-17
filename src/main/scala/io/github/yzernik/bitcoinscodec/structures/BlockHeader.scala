@@ -10,13 +10,13 @@ case class BlockHeader(
   merkle_root: Hash,
   timestamp: Long,
   bits: Long,
-  nonce: Long) {
+  nonce: Long) extends Hashable {
 
   def bytes =
     BlockHeader.codec.encode(this)
       .toOption.get.toByteArray
 
-  def hash: Hash =
+  override def hash: Hash =
     Util.hash(bytes)
 
 }

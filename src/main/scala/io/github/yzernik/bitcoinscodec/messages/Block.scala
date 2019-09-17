@@ -10,13 +10,14 @@ case class Block(
   type E = Block
   def companion = Block
 
-  override def hash: Hash = block_header.hash
+  override def hash: Hash =
+    block_header.hash
 }
 
 object Block extends MessageCompanion[Block] {
-  def codec(version: Int) = {
+  override def codec(version: Int) = {
     ("block_header" | Codec[BlockHeader]) ::
       ("txs" | VarList(Tx.codec(version)))
   }.as[Block]
-  def command = "block"
+  override def command = "block"
 }

@@ -8,8 +8,6 @@ import io.github.yzernik.bitcoinscodec.structures._
 
 class GetDataSpec extends CodecSuite {
 
-  import GetData._
-
   "GetData codec" should {
     "roundtrip" in {
       val getdata = GetData(List(InvVect(InvVect.MSG_TX,

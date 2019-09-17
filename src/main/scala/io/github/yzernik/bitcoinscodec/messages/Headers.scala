@@ -12,7 +12,7 @@ case class Headers(invs: List[Block]) extends Message {
 }
 
 object Headers extends MessageCompanion[Headers] {
-  def codec(version: Int): Codec[Headers] =
+  override def codec(version: Int): Codec[Headers] =
     VarList(Block.codec(version)).as[Headers]
-  def command = "headers"
+  override def command = "headers"
 }

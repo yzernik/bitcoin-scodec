@@ -21,7 +21,7 @@ case class Version(
 }
 
 object Version extends MessageCompanion[Version] {
-  def codec(version: Int): Codec[Version] = {
+  override def codec(version: Int): Codec[Version] = {
     ("version" | int32L) >>:~ { verNum =>
       ("services" | Codec[UInt64]) ::
         ("timestamp" | int64L) ::
@@ -38,7 +38,5 @@ object Version extends MessageCompanion[Version] {
     ("relay" | mappedEnum(uint8, false -> 0, true -> 1))
   }.as[Boolean]
 
-  def command = "version"
-
-  def genNonce: BigInt = BigInt(Random.nextLong()) + Long.MaxValue + 1
+  override def command = "version"
 }

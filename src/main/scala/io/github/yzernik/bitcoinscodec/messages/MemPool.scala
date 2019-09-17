@@ -12,6 +12,6 @@ case class MemPool() extends Message {
 }
 
 object MemPool extends MessageCompanion[MemPool] {
-  def codec(version: Int): Codec[MemPool] = provide(MemPool())
-  def command = "mempool"
+  override def codec(version: Int): Codec[MemPool] = provide(MemPool())
+  override def command = "mempool"
 }
