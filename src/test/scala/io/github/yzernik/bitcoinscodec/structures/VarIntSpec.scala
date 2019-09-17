@@ -4,25 +4,23 @@ import io.github.yzernik.bitcoinscodec.CodecSuite
 
 class VarIntSpec extends CodecSuite {
 
-  import VarInt._
-
   "VarInt codec" should {
 
-    implicit val countCodec = VarInt.varIntCodec.xmap(_.toInt, (i: Int) => i.toLong)
+    implicit val countCodec = VarInt.varIntCodec
 
     "roundtrip" in {
-      roundtrip(0)
-      roundtrip(1)
-      roundtrip(2)
-      roundtrip(11)
-      roundtrip(111)
-      roundtrip(1111)
-      roundtrip(11111)
-      roundtrip(111111)
-      roundtrip(1111111)
-      roundtrip(11111111)
-      roundtrip(111111111)
-      roundtrip(1111111111)
+      roundtrip(0L)
+      roundtrip(1L)
+      roundtrip(2L)
+      roundtrip(11L)
+      roundtrip(111L)
+      roundtrip(1111L)
+      roundtrip(11111L)
+      roundtrip(111111L)
+      roundtrip(1111111L)
+      roundtrip(11111111L)
+      roundtrip(111111111L)
+      roundtrip(1111111111L)
       roundtrip(11111111111L)
       roundtrip(111111111111L)
       roundtrip(1111111111111L)
