@@ -12,7 +12,7 @@ Add the following to your build.sbt:
 
 
 ```
-libraryDependencies += "io.github.yzernik" %% "bitcoin-scodec" % "0.2.7"
+libraryDependencies += "io.github.yzernik" %% "bitcoin-scodec" % "0.3.0"
 ```
 
 with the following resolver
