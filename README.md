@@ -36,14 +36,17 @@ encode a ping message
 ```
 scala> import io.github.yzernik.bitcoinscodec.messages._
 
-scala> codec.encode(Ping.generate)
-res1: scodec.Attempt[scodec.bits.BitVector] = Successful(BitVector(256 bits, 0xf9beb4d970696e670000000000000000080000005ab304eee3c5449c496dbb7d))
+scala> val ping = Ping.generate
+ping: io.github.yzernik.bitcoinscodec.messages.Ping = Ping(UInt64(0xd60c4f7719060e2e))
+
+scala> codec.encode(ping)
+res7: scodec.Attempt[scodec.bits.BitVector] = Successful(BitVector(256 bits, 0xf9beb4d970696e670000000000000000080000003c0a64b42e0e0619774f0cd6))
 ```
 
 decode a pong message
 ```
 scala> import scodec.bits._
 
-scala> codec.decode(hex"0xf9beb4d9706f6e67000000000000000008000000fb8558ea62e96de205767e7c".toBitVector)
-res3: scodec.Attempt[scodec.DecodeResult[io.github.yzernik.bitcoinscodec.structures.Message]] = Successful(DecodeResult(Pong(7c7e7605e26de962),BitVector(empty)))
+scala> codec.decode(hex"0xf9beb4d9706f6e670000000000000000080000003c0a64b42e0e0619774f0cd6".toBitVector)
+res10: scodec.Attempt[scodec.DecodeResult[io.github.yzernik.bitcoinscodec.structures.Message]] = Successful(DecodeResult(Pong(UInt64(0xd60c4f7719060e2e)),BitVector(empty)))
 ```

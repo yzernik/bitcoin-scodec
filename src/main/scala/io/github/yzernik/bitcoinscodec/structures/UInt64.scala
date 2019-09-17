@@ -10,7 +10,7 @@ import scodec.codecs.{bytes, int64L}
 case class UInt64(value: ByteVector) {
   require(value.size == 8)
 
-  override def toString = s"${value.toHex}"
+  override def toString = s"UInt64(0x${value.toHex})"
 }
 
 object UInt64 {

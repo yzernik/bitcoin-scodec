@@ -19,7 +19,7 @@ class UInt64Spec extends CodecSuite {
 
     "print" in {
       def shouldPrint(n: UInt64) = {
-        n.toString.length shouldBe 16
+        n.toString.length shouldBe 26
       }
 
       shouldPrint(UInt64(0))
