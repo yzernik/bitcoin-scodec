@@ -1,4 +1,5 @@
 language: scala
+jdk: openjdk8
 scala:
   - 2.12.10
 script: "sbt clean coverage test"
