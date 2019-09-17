@@ -5,8 +5,6 @@ import scodec.bits.ByteVector
 
 class UInt64Spec extends CodecSuite {
 
-  import UInt64._
-
   "UInt64 codec" should {
     "roundtrip" in {
       roundtrip(UInt64(1234))

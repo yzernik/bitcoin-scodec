@@ -2,7 +2,6 @@ package io.github.yzernik.bitcoinscodec.structures
 
 import io.github.yzernik.bitcoinscodec.CodecSuite
 import io.github.yzernik.bitcoinscodec.messages.Ping
-import scodec.Codec
 
 class VarListSpec extends CodecSuite {
 

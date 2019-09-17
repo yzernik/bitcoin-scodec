@@ -1,12 +1,7 @@
 package io.github.yzernik.bitcoinscodec.messages
 
-import io.github.yzernik.bitcoinscodec.structures.Message
-import io.github.yzernik.bitcoinscodec.structures.MessageCompanion
-import io.github.yzernik.bitcoinscodec.structures.NetworkAddress
-import io.github.yzernik.bitcoinscodec.structures.VarList
-
+import io.github.yzernik.bitcoinscodec.structures.{Message, MessageCompanion, NetworkAddress, VarList}
 import scodec.Codec
-import scodec.codecs.uint32L
 import scodec.codecs._
 
 case class Addr(addrs: List[(Long, NetworkAddress)]) extends Message {

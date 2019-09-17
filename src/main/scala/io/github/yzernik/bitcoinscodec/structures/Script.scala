@@ -2,7 +2,6 @@ package io.github.yzernik.bitcoinscodec.structures
 
 import scodec.Codec
 import scodec.bits.ByteVector
-import scodec.bits.HexStringSyntax
 import scodec.codecs.{bytes, variableSizeBytes}
 
 case class Script(value: ByteVector) {

@@ -1,14 +1,10 @@
 package io.github.yzernik.bitcoinscodec.messages
 
 import io.github.yzernik.bitcoinscodec.CodecSuite
-import scodec.bits.ByteVector
-import scodec.bits._
-import scodec.codecs._
 import io.github.yzernik.bitcoinscodec.structures._
+import scodec.bits._
 
 class GetHeadersSpec extends CodecSuite {
-
-  import GetHeaders._
 
   val getheaders = GetHeaders(
     70001L,

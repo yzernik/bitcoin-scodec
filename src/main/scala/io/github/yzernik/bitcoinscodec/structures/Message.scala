@@ -1,17 +1,13 @@
 package io.github.yzernik.bitcoinscodec.structures
 
-import scala.language.existentials
-import scala.language.implicitConversions
-
 import io.github.yzernik.bitcoinscodec.messages._
 import io.github.yzernik.bitcoinscodec.util.Util
-
-import scodec.Attempt.{ Failure, Successful }
+import scodec.Attempt.{Failure, Successful}
 import scodec.Codec
-import scodec.bits.BitVector
-import scodec.bits.ByteVector
-import scodec.codecs.bytes
-import scodec.codecs.uint32L
+import scodec.bits.{BitVector, ByteVector}
+import scodec.codecs.{bytes, uint32L}
+
+import scala.language.{existentials, implicitConversions}
 
 trait Message { self =>
   type E >: self.type <: Message

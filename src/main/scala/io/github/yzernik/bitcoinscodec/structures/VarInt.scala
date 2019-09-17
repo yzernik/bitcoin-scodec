@@ -2,10 +2,7 @@ package io.github.yzernik.bitcoinscodec.structures
 
 import scodec.Attempt.{Failure, Successful}
 import scodec.Codec
-import scodec.bits.{BitVector, ByteVector}
-import scodec.codecs.uint16L
-import scodec.codecs.uint32L
-import scodec.codecs.uint8L
+import scodec.bits.BitVector
 
 case class VarInt(value: Long)
 

@@ -1,9 +1,9 @@
 package io.github.yzernik.bitcoinscodec.structures
 
-import scala.language.implicitConversions
-
 import scodec.Codec
 import scodec.codecs.listOfN
+
+import scala.language.implicitConversions
 
 object VarList {
 

@@ -1,7 +1,6 @@
 package io.github.yzernik.bitcoinscodec.messages
 
 import io.github.yzernik.bitcoinscodec.CodecSuite
-import scodec.bits.ByteVector
 import io.github.yzernik.bitcoinscodec.structures._
 
 class RejectSpec extends CodecSuite {

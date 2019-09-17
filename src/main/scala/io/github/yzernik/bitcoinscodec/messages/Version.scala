@@ -1,10 +1,8 @@
 package io.github.yzernik.bitcoinscodec.messages
 
-import io.github.yzernik.bitcoinscodec.structures.{Message, MessageCompanion, NetworkAddress, UInt64, VarStr}
+import io.github.yzernik.bitcoinscodec.structures._
 import scodec.Codec
 import scodec.codecs._
-
-import scala.util.Random
 
 case class Version(
   version: Int,

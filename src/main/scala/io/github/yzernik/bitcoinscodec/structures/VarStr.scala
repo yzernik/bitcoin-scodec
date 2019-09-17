@@ -1,10 +1,9 @@
 package io.github.yzernik.bitcoinscodec.structures
 
-import scala.language.implicitConversions
-
 import scodec.Codec
-import scodec.codecs.ascii
-import scodec.codecs.variableSizeBytes
+import scodec.codecs.{ascii, variableSizeBytes}
+
+import scala.language.implicitConversions
 
 object VarStr {
 

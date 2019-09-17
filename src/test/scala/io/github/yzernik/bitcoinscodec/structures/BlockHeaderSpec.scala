@@ -2,13 +2,9 @@ package io.github.yzernik.bitcoinscodec.structures
 
 import io.github.yzernik.bitcoinscodec.CodecSuite
 import io.github.yzernik.bitcoinscodec.util.Util
-import scodec.bits.ByteVector
 import scodec.bits._
-import scodec.codecs._
 
 class BlockHeaderSpec extends CodecSuite {
-
-  import BlockHeader._
 
   val blockheader = BlockHeader(
     1L,

@@ -1,12 +1,7 @@
 package io.github.yzernik.bitcoinscodec.messages
 
-import io.github.yzernik.bitcoinscodec.structures.Hash
-import io.github.yzernik.bitcoinscodec.structures.Message
-import io.github.yzernik.bitcoinscodec.structures.MessageCompanion
-import io.github.yzernik.bitcoinscodec.structures.VarList
-
+import io.github.yzernik.bitcoinscodec.structures.{Hash, Message, MessageCompanion, VarList}
 import scodec.Codec
-import scodec.bits.ByteVector
 import scodec.codecs._
 
 case class GetHeaders(

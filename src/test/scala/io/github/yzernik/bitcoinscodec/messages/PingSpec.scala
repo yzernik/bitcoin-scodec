@@ -3,8 +3,7 @@ package io.github.yzernik.bitcoinscodec.messages
 import io.github.yzernik.bitcoinscodec.CodecSuite
 import io.github.yzernik.bitcoinscodec.structures._
 import io.github.yzernik.bitcoinscodec.util.Util
-import scodec.bits.ByteVector
-import scodec.bits._
+import scodec.bits.{ByteVector, _}
 
 class PingSpec extends CodecSuite {
 

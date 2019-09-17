@@ -1,10 +1,7 @@
 package io.github.yzernik.bitcoinscodec.messages
 
-import java.net.InetAddress
-import java.net.InetSocketAddress
+import java.net.{InetAddress, InetSocketAddress}
 
-import scala.math.BigInt.int2bigInt
-import Addr.codec
 import io.github.yzernik.bitcoinscodec.CodecSuite
 import io.github.yzernik.bitcoinscodec.structures.{Message, NetworkAddress, UInt64}
 import scodec.bits.HexStringSyntax

@@ -5,8 +5,6 @@ import io.github.yzernik.bitcoinscodec.structures._
 
 class VerackSpec extends CodecSuite {
 
-  import Verack._
-
   "Verack codec" should {
     "roundtrip" in {
       val verack = Verack()

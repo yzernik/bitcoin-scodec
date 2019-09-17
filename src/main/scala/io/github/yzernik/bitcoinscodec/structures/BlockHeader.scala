@@ -1,8 +1,8 @@
 package io.github.yzernik.bitcoinscodec.structures
 
+import io.github.yzernik.bitcoinscodec.util.Util
 import scodec.Codec
 import scodec.codecs._
-import io.github.yzernik.bitcoinscodec.util.Util
 
 case class BlockHeader(
   version: Long,

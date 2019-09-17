@@ -1,12 +1,9 @@
 package io.github.yzernik.bitcoinscodec.structures
 
 import io.github.yzernik.bitcoinscodec.CodecSuite
-import scodec.bits.ByteVector
-import scodec.bits._
+import scodec.bits.{ByteVector, _}
 
 class TxInSpec extends CodecSuite {
-
-  import TxIn._
 
   "TxIn codec" should {
 

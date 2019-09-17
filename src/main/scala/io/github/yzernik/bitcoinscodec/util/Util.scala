@@ -1,12 +1,11 @@
 package io.github.yzernik.bitcoinscodec.util
 
-import scodec.codecs._
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
+import java.nio.{ByteBuffer, ByteOrder}
 import java.security.MessageDigest
 
-import scodec.bits.{BitVector, ByteVector}
 import io.github.yzernik.bitcoinscodec.structures.{Hash, UInt64}
+import scodec.bits.{BitVector, ByteVector}
+import scodec.codecs._
 
 object Util {
 

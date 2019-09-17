@@ -7,8 +7,6 @@ import scodec.bits.ByteVector
 
 class PongSpec extends CodecSuite {
 
-  import Pong._
-
   "Pong codec" should {
     "roundtrip" in {
       val pong = Pong(Util.generateNonce64)

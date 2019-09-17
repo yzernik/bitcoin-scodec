@@ -1,11 +1,11 @@
 package io.github.yzernik.bitcoinscodec.structures
 
 
-import scala.math.BigInt.int2bigInt
-import scala.math.BigInt.long2bigInt
 import scodec.Codec
 import scodec.bits.ByteVector
-import scodec.codecs.{bytes, int64L}
+import scodec.codecs.bytes
+
+import scala.math.BigInt.{int2bigInt, long2bigInt}
 
 case class UInt64(value: ByteVector) {
   require(value.size == 8)

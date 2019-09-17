@@ -1,10 +1,8 @@
 package io.github.yzernik.bitcoinscodec.messages
 
 import io.github.yzernik.bitcoinscodec.CodecSuite
-import scodec.bits.ByteVector
-import scodec.bits._
-import scodec.codecs._
 import io.github.yzernik.bitcoinscodec.structures._
+import scodec.bits.ByteVector
 
 class GetDataSpec extends CodecSuite {
 

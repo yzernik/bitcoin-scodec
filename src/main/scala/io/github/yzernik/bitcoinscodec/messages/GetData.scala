@@ -1,10 +1,6 @@
 package io.github.yzernik.bitcoinscodec.messages
 
-import io.github.yzernik.bitcoinscodec.structures.InvVect
-import io.github.yzernik.bitcoinscodec.structures.Message
-import io.github.yzernik.bitcoinscodec.structures.MessageCompanion
-import io.github.yzernik.bitcoinscodec.structures.VarList
-
+import io.github.yzernik.bitcoinscodec.structures.{InvVect, Message, MessageCompanion, VarList}
 import scodec.Codec
 
 case class GetData(invs: List[InvVect]) extends Message {

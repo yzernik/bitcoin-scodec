@@ -1,6 +1,6 @@
 package io.github.yzernik.bitcoinscodec.messages
 
-import io.github.yzernik.bitcoinscodec.structures.{BlockHeader, Hash, Hashable, Message, MessageCompanion, TxIn, TxOut, VarList}
+import io.github.yzernik.bitcoinscodec.structures._
 import io.github.yzernik.bitcoinscodec.util.Util
 import scodec.Codec
 import scodec.codecs._

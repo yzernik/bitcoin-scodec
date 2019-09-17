@@ -1,16 +1,11 @@
 package io.github.yzernik.bitcoinscodec.structures
 
-import java.net.InetAddress
-import java.net.InetSocketAddress
-
-import scala.math.BigInt.int2bigInt
+import java.net.{InetAddress, InetSocketAddress}
 
 import io.github.yzernik.bitcoinscodec.CodecSuite
 import scodec.bits.HexStringSyntax
 
 class NetworkAddressSpec extends CodecSuite {
-
-  import NetworkAddress._
 
   "NetworkAddress codec" should {
     "roundtrip" in {

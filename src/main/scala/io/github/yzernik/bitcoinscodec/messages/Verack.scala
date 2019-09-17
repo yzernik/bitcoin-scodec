@@ -1,8 +1,6 @@
 package io.github.yzernik.bitcoinscodec.messages
 
-import io.github.yzernik.bitcoinscodec.structures.Message
-import io.github.yzernik.bitcoinscodec.structures.MessageCompanion
-
+import io.github.yzernik.bitcoinscodec.structures.{Message, MessageCompanion}
 import scodec.Codec
 import scodec.codecs.provide
 

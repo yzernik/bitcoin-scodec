@@ -1,14 +1,10 @@
 package io.github.yzernik.bitcoinscodec.messages
 
 import io.github.yzernik.bitcoinscodec.CodecSuite
-import scodec.bits.ByteVector
-import scodec.bits._
-import scodec.codecs._
 import io.github.yzernik.bitcoinscodec.structures._
+import scodec.bits._
 
 class TxSpec extends CodecSuite {
-
-  import Tx._
 
   val bytes = hex"""
 01 00 00 00 01 6D BD DB 

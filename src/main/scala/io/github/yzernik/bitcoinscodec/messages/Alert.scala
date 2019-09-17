@@ -1,14 +1,7 @@
 package io.github.yzernik.bitcoinscodec.messages
 
-import io.github.yzernik.bitcoinscodec.structures.Message
-import io.github.yzernik.bitcoinscodec.structures.MessageCompanion
-import io.github.yzernik.bitcoinscodec.structures.VarList
-import io.github.yzernik.bitcoinscodec.structures.VarStr
-
-import scodec.HListCodecEnrichedWithHListSupport
-import scodec.ValueCodecEnrichedWithHListSupport
-import scodec.codecs.int32
-import scodec.codecs.int64
+import io.github.yzernik.bitcoinscodec.structures.{Message, MessageCompanion, VarList, VarStr}
+import scodec.{HListCodecEnrichedWithHListSupport, ValueCodecEnrichedWithHListSupport}
 import scodec.codecs._
 
 case class Alert(

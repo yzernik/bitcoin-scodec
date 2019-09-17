@@ -1,18 +1,11 @@
 package io.github.yzernik.bitcoinscodec.structures
 
-import java.net.InetAddress
-import java.net.InetSocketAddress
-
-import scala.BigInt
-import scala.math.BigInt.int2bigInt
-import scala.math.BigInt.long2bigInt
+import java.net.{InetAddress, InetSocketAddress}
 
 import io.github.yzernik.bitcoinscodec.CodecSuite
-import io.github.yzernik.bitcoinscodec.messages._
 
 class MessageSpec extends CodecSuite {
 
-  import Message._
   import io.github.yzernik.bitcoinscodec.messages._
 
   "Message codec" should {
