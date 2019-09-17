@@ -5,8 +5,6 @@ import io.github.yzernik.bitcoinscodec.structures._
 
 class GetAddrSpec extends CodecSuite {
 
-  import GetAddr._
-
   "GetAddr codec" should {
     "roundtrip" in {
       val getaddr = GetAddr()

@@ -1,22 +1,13 @@
 package io.github.yzernik.bitcoinscodec.structures
 
-import java.net.InetAddress
-import java.net.InetSocketAddress
+import java.net.{InetAddress, InetSocketAddress}
 
-import io.github.yzernik.bitcoinscodec.structures.UInt64.bigIntCodec
-
-import scodec.Codec
-import scodec.DecodeResult
-import scodec.ValueCodecEnrichedWithHListSupport
-import scodec.bits.BitVector
-import scodec.bits.ByteVector
-import scodec.bits.HexStringSyntax
-import scodec.codecs.bytes
-import scodec.codecs.uint16
-import scodec.codecs._
+import scodec.{Codec, DecodeResult, ValueCodecEnrichedWithHListSupport}
+import scodec.bits.{BitVector, ByteVector, HexStringSyntax}
+import scodec.codecs.{bytes, uint16, _}
 
 case class NetworkAddress(
-  services: BigInt,
+  services: UInt64,
   address: InetSocketAddress)
 
 object NetworkAddress {
@@ -49,7 +40,7 @@ object NetworkAddress {
       isa => (isa.getAddress(), isa.getPort()))
 
   implicit val codec: Codec[NetworkAddress] = {
-    ("services" | Codec[BigInt]) ::
+    ("services" | Codec[UInt64]) ::
       ("address" | Codec[InetSocketAddress])
   }.as[NetworkAddress]
 

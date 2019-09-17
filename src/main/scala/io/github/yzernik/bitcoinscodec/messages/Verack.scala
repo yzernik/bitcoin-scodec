@@ -1,8 +1,6 @@
 package io.github.yzernik.bitcoinscodec.messages
 
-import io.github.yzernik.bitcoinscodec.structures.Message
-import io.github.yzernik.bitcoinscodec.structures.MessageCompanion
-
+import io.github.yzernik.bitcoinscodec.structures.{Message, MessageCompanion}
 import scodec.Codec
 import scodec.codecs.provide
 
@@ -12,6 +10,6 @@ case class Verack() extends Message {
 }
 
 object Verack extends MessageCompanion[Verack] {
-  def codec(version: Int): Codec[Verack] = provide(Verack())
-  def command = "verack"
+  override def codec(version: Int): Codec[Verack] = provide(Verack())
+  override def command = "verack"
 }

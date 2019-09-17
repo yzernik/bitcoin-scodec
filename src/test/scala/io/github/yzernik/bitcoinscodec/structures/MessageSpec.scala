@@ -1,18 +1,11 @@
 package io.github.yzernik.bitcoinscodec.structures
 
-import java.net.InetAddress
-import java.net.InetSocketAddress
-
-import scala.BigInt
-import scala.math.BigInt.int2bigInt
-import scala.math.BigInt.long2bigInt
+import java.net.{InetAddress, InetSocketAddress}
 
 import io.github.yzernik.bitcoinscodec.CodecSuite
-import io.github.yzernik.bitcoinscodec.messages._
 
 class MessageSpec extends CodecSuite {
 
-  import Message._
   import io.github.yzernik.bitcoinscodec.messages._
 
   "Message codec" should {
@@ -20,22 +13,22 @@ class MessageSpec extends CodecSuite {
     "roundtrip" in {
       val codec = Message.codec(0xD9B4BEF9L, 1)
       roundtrip(codec, Verack())
-      roundtrip(codec, Ping(BigInt(1234)))
-      roundtrip(codec, Pong(BigInt(1234)))
-      roundtrip(codec, Addr(List((0, NetworkAddress(1234, new InetSocketAddress(
+      roundtrip(codec, Ping(UInt64(1234)))
+      roundtrip(codec, Pong(UInt64(1234)))
+      roundtrip(codec, Addr(List((0, NetworkAddress(UInt64(1234), new InetSocketAddress(
         InetAddress.getByAddress(Array(10, 0, 0, 1).map(_.toByte)),
         8080))))))
       roundtrip(codec, Version(
         60002,
-        1,
+        UInt64(1),
         1355854353L,
-        NetworkAddress(1, new InetSocketAddress(
+        NetworkAddress(UInt64(1), new InetSocketAddress(
           InetAddress.getByAddress(Array(0, 0, 0, 0).map(_.toByte)),
           0)),
-        NetworkAddress(1, new InetSocketAddress(
+        NetworkAddress(UInt64(1), new InetSocketAddress(
           InetAddress.getByAddress(Array(0, 0, 0, 0).map(_.toByte)),
           0)),
-        7284544412836900411L,
+        UInt64(7284544412836900411L),
         "/Satoshi:0.7.2/",
         212672,
         true))

@@ -1,28 +1,25 @@
 package io.github.yzernik.bitcoinscodec.messages
 
+import java.net.{InetAddress, InetSocketAddress}
+
 import io.github.yzernik.bitcoinscodec.CodecSuite
-import scodec.bits.ByteVector
-import scodec.bits._
-import scodec.codecs._
 import io.github.yzernik.bitcoinscodec.structures._
-import java.net.InetSocketAddress
-import java.net.InetAddress
+import io.github.yzernik.bitcoinscodec.util.Util
+import scodec.bits._
 
 class VersionSpec extends CodecSuite {
 
-  import Version._
-
   val version = Version(
     60002,
-    1,
+    UInt64(1),
     1355854353L,
-    NetworkAddress(1, new InetSocketAddress(
+    NetworkAddress(UInt64(1), new InetSocketAddress(
       InetAddress.getByAddress(Array(0, 0, 0, 0).map(_.toByte)),
       0)),
-    NetworkAddress(1, new InetSocketAddress(
+    NetworkAddress(UInt64(1), new InetSocketAddress(
       InetAddress.getByAddress(Array(0, 0, 0, 0).map(_.toByte)),
       0)),
-    7284544412836900411L,
+    UInt64(7284544412836900411L),
     "/Satoshi:0.7.2/",
     212672,
     true)
@@ -55,6 +52,7 @@ class VersionSpec extends CodecSuite {
       roundtrip(Version.codec(1), version)
       roundtrip(Version.codec(1), version.copy(version = 70001, relay = false))
       roundtrip(Version.codec(1), version.copy(version = 70001, relay = true))
+      roundtrip(Version.codec(1), version.copy(nonce = Util.generateNonce64))
       roundtrip(Message.codec(0xDAB5BFFAL, 1), version)
       roundtrip(Message.codec(0xD9B4BEF9L, 1), version)
     }

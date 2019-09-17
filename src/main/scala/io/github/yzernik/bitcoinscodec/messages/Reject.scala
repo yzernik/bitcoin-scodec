@@ -1,9 +1,6 @@
 package io.github.yzernik.bitcoinscodec.messages
 
-import io.github.yzernik.bitcoinscodec.structures.Message
-import io.github.yzernik.bitcoinscodec.structures.MessageCompanion
-import io.github.yzernik.bitcoinscodec.structures.VarStr
-
+import io.github.yzernik.bitcoinscodec.structures.{Message, MessageCompanion, VarStr}
 import scodec.Codec
 import scodec.codecs._
 
@@ -37,11 +34,11 @@ object Reject extends MessageCompanion[Reject] {
     REJECT_INSUFFICIENTFEE -> 0x42,
     REJECT_CHECKPOINT -> 0x43)
 
-  def codec(version: Int): Codec[Reject] = {
-    ("message" | VarStr.codec) ::
-      ("ccode" | ccodeCodec) ::
-      ("reason" | VarStr.codec)
+  override def codec(version: Int): Codec[Reject] = {
+    ("message" | VarStr()) ::
+      ("ccode" | Codec[CCode]) ::
+      ("reason" | VarStr())
   }.as[Reject]
 
-  def command = "reject"
+  override def command = "reject"
 }

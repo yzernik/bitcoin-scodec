@@ -1,13 +1,13 @@
 package io.github.yzernik.bitcoinscodec.structures
 
+import scodec.Codec
+import scodec.codecs.{ascii, variableSizeBytes}
+
 import scala.language.implicitConversions
 
-import scodec.Codec
-import scodec.codecs.ascii
-import scodec.codecs.variableSizeBytes
-
 object VarStr {
-  import VarInt._
+
+  def apply(): Codec[String] = codec
 
   implicit val codec: Codec[String] = {
     val countCodec = VarInt.varIntCodec.xmap(_.toInt, (i: Int) => i.toLong)

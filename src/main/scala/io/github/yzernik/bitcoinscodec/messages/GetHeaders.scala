@@ -1,29 +1,22 @@
 package io.github.yzernik.bitcoinscodec.messages
 
-import io.github.yzernik.bitcoinscodec.structures.Hash
-import io.github.yzernik.bitcoinscodec.structures.Message
-import io.github.yzernik.bitcoinscodec.structures.MessageCompanion
-import io.github.yzernik.bitcoinscodec.structures.VarList
-
+import io.github.yzernik.bitcoinscodec.structures.{Hash, Message, MessageCompanion, VarList}
 import scodec.Codec
-import scodec.bits.ByteVector
 import scodec.codecs._
 
 case class GetHeaders(
   version: Long,
   block_locator_hashes: List[Hash],
-  hash_stop: Hash = GetBlocks.zeroStop) extends Message {
+  hash_stop: Hash = Hash.NULL) extends Message {
   type E = GetHeaders
   def companion = GetHeaders
 }
 
 object GetHeaders extends MessageCompanion[GetHeaders] {
-  val zeroStop = Hash(ByteVector.fill(32)(0))
-  def codec(version: Int): Codec[GetHeaders] = {
+  override def codec(version: Int): Codec[GetHeaders] = {
     ("version" | uint32L) ::
-      ("block_locator_hashes" | VarList.varList(Codec[Hash])) ::
+      ("block_locator_hashes" | VarList(Codec[Hash])) ::
       ("hash_stop" | Codec[Hash])
   }.as[GetHeaders]
-
-  def command = "getheaders"
+  override def command = "getheaders"
 }

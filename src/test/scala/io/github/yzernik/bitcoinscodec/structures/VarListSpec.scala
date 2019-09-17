@@ -2,7 +2,6 @@ package io.github.yzernik.bitcoinscodec.structures
 
 import io.github.yzernik.bitcoinscodec.CodecSuite
 import io.github.yzernik.bitcoinscodec.messages.Ping
-import scodec.Codec
 
 class VarListSpec extends CodecSuite {
 
@@ -15,9 +14,9 @@ class VarListSpec extends CodecSuite {
     "roundtrip" in {
       roundtrip(codec, List())
       roundtrip(List(
-        Ping(0),
-        Ping(1),
-        Ping(2)))
+        Ping(UInt64(0)),
+        Ping(UInt64(1)),
+        Ping(UInt64(2))))
     }
 
   }

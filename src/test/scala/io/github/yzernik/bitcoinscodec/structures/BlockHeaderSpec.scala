@@ -1,13 +1,10 @@
 package io.github.yzernik.bitcoinscodec.structures
 
 import io.github.yzernik.bitcoinscodec.CodecSuite
-import scodec.bits.ByteVector
+import io.github.yzernik.bitcoinscodec.util.Util
 import scodec.bits._
-import scodec.codecs._
 
 class BlockHeaderSpec extends CodecSuite {
-
-  import BlockHeader._
 
   val blockheader = BlockHeader(
     1L,
@@ -17,9 +14,18 @@ class BlockHeaderSpec extends CodecSuite {
     486604799L,
     2083236893L)
 
+  val blockheader2 = BlockHeader(
+    1L,
+    Hash(hex"0000000000000000000000000000000000000000000000000000000000000000"),
+    Hash(hex"4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"),
+    1231006505L,
+    486604799L,
+    Util.generateNonce32)
+
   "BlockHeader codec" should {
     "roundtrip" in {
       roundtrip(blockheader)
+      roundtrip(blockheader2)
     }
 
     "decode" in {

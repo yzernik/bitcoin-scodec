@@ -5,8 +5,6 @@ import io.github.yzernik.bitcoinscodec.structures._
 
 class MemPoolSpec extends CodecSuite {
 
-  import MemPool._
-
   "MemPool codec" should {
     "roundtrip" in {
       val mempool = MemPool()

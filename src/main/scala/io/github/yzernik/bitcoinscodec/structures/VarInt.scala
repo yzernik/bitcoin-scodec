@@ -1,15 +1,8 @@
 package io.github.yzernik.bitcoinscodec.structures
 
-import scala.BigInt
-
-import io.github.yzernik.bitcoinscodec.structures.UInt64.bigIntCodec
-
-import scodec.Attempt.{ Failure, Successful }
+import scodec.Attempt.{Failure, Successful}
 import scodec.Codec
 import scodec.bits.BitVector
-import scodec.codecs.uint16L
-import scodec.codecs.uint32L
-import scodec.codecs.uint8L
 
 case class VarInt(value: Long)
 
@@ -35,7 +28,8 @@ object VarInt {
         case i =>
           for {
             a <- uint8L.encode(0xff)
-            b <- Codec[BigInt].encode(BigInt(i))
+            vector = UInt64.longToByteVector(i)
+            b <- Codec[UInt64].encode(UInt64(vector))
           } yield a ++ b
       },
     (buf: BitVector) => {
@@ -43,8 +37,12 @@ object VarInt {
         case Successful(byte) =>
           byte.value match {
             case 0xff =>
-              Codec[BigInt].decode(byte.remainder)
-                .map { case b => b.map(_.toLong) }
+              Codec[UInt64].decode(byte.remainder)
+                .map { case b =>
+                  b.map(bytes =>
+                    UInt64.byteVectorToLong(bytes.value)
+                  )
+                }
             case 0xfe =>
               uint32L.decode(byte.remainder)
             case 0xfd =>

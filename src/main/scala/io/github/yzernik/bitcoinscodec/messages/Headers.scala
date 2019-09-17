@@ -1,18 +1,17 @@
 package io.github.yzernik.bitcoinscodec.messages
 
-import io.github.yzernik.bitcoinscodec.structures.Message
-import io.github.yzernik.bitcoinscodec.structures.MessageCompanion
-import io.github.yzernik.bitcoinscodec.structures.VarList
-
+import io.github.yzernik.bitcoinscodec.structures.{Message, MessageCompanion, VarList}
 import scodec.Codec
 
 case class Headers(invs: List[Block]) extends Message {
+  require(invs.forall(_.txs.isEmpty))
+
   type E = Headers
   def companion = Headers
 }
 
 object Headers extends MessageCompanion[Headers] {
-  def codec(version: Int): Codec[Headers] =
-    VarList.varList(Block.codec(version)).as[Headers]
-  def command = "headers"
+  override def codec(version: Int): Codec[Headers] =
+    VarList(Block.codec(version)).as[Headers]
+  override def command = "headers"
 }

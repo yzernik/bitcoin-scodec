@@ -1,8 +1,8 @@
 package io.github.yzernik.bitcoinscodec.structures
 
+import io.github.yzernik.bitcoinscodec.util.Util
 import scodec.Codec
 import scodec.codecs._
-import io.github.yzernik.bitcoinscodec.util.Util
 
 case class BlockHeader(
   version: Long,
@@ -10,12 +10,14 @@ case class BlockHeader(
   merkle_root: Hash,
   timestamp: Long,
   bits: Long,
-  nonce: Long) {
+  nonce: Long) extends Hashable {
 
-  def hash: Hash = {
-    val bytes = BlockHeader.codec.encode(this).toOption.get
-    Util.hash(bytes.toByteArray)
-  }
+  def bytes =
+    BlockHeader.codec.encode(this)
+      .toOption.get.toByteArray
+
+  override def hash: Hash =
+    Util.hash(bytes)
 
 }
 

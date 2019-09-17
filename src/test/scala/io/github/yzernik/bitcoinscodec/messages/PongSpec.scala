@@ -2,19 +2,22 @@ package io.github.yzernik.bitcoinscodec.messages
 
 import io.github.yzernik.bitcoinscodec.CodecSuite
 import io.github.yzernik.bitcoinscodec.structures._
+import io.github.yzernik.bitcoinscodec.util.Util
+import scodec.bits.ByteVector
 
 class PongSpec extends CodecSuite {
 
-  import Pong._
-
   "Pong codec" should {
     "roundtrip" in {
-      val pong = Pong(BigInt(0))
+      val pong = Pong(Util.generateNonce64)
       roundtrip(Pong.codec(1), pong)
       roundtrip(Message.codec(0xDAB5BFFAL, 1), pong)
-      roundtrip(Pong.codec(1), Pong(BigInt(1234)))
-      roundtrip(Pong.codec(1), Pong(BigInt(Long.MaxValue)))
-      roundtrip(Pong.codec(1), Pong(BigInt(Long.MaxValue) * 2 + 1))
+      roundtrip(Pong.codec(1), Pong(UInt64(1234L)))
+      roundtrip(Pong.codec(1), Pong(UInt64(Long.MaxValue)))
+      roundtrip(Pong.codec(1), Pong.generate)
+
+      val value = UInt64(ByteVector.fill(8)(0x42))
+      roundtrip(Pong.codec(1), Pong(value))
     }
   }
 }
