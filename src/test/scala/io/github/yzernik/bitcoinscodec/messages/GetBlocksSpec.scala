@@ -14,7 +14,7 @@ class GetBlocksSpec extends CodecSuite {
   "GetBlocks codec" should {
     "roundtrip" in {
       roundtrip(GetBlocks.codec(1), getblocks)
-      roundtrip(Message.codec(Message.TESTNET, 1), getblocks)
+      roundtrip(Message.codec(Network.Testnet, 1), getblocks)
     }
 
   }

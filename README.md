@@ -27,9 +27,9 @@ resolvers += "yzernik repo" at "http://dl.bintray.com/yzernik/maven/"
 create a message codec
 
 ```
-scala> import io.github.yzernik.bitcoinscodec.structures.Message
+scala> import io.github.yzernik.bitcoinscodec.structures.{Message, Network}
 
-scala> val codec = Message.codec(Message.MAINNET, 60002) // on the main network, using version 60002.
+scala> val codec = Message.codec(Network.Mainnet) // on the main network
 ```
 
 encode a ping message

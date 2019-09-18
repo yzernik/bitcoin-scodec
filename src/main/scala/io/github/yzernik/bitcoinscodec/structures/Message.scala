@@ -22,11 +22,7 @@ trait MessageCompanion[E <: Message] {
 
 object Message {
 
-  abstract class MAGIC(val value: Long)
-  case object MAINNET extends MAGIC(0xD9B4BEF9L)
-  case object TESTNET extends MAGIC(0xDAB5BFFAL)
-  case object TESTNET3 extends MAGIC(0x0709110BL)
-  case object NAMECOIN extends MAGIC(0xFEB4BEF9L)
+  val CURRENT_VERSION = 70015
 
   def padCommand(command: String) =
     ByteVector(command.getBytes()) ++
@@ -88,8 +84,8 @@ object Message {
     Codec[Message](encode _, decode _)
   }
 
-  def codec(magic: Message.MAGIC, version: Int): Codec[Message] =
-    codec(magic.value, version)
+  def codec(network: Network.NetworkConfig, version: Int = CURRENT_VERSION): Codec[Message] =
+    codec(network.magic, version)
 }
 
 object MessageCompanion {

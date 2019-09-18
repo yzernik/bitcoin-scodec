@@ -3,7 +3,7 @@ package io.github.yzernik.bitcoinscodec.messages
 import java.net.{InetAddress, InetSocketAddress}
 
 import io.github.yzernik.bitcoinscodec.CodecSuite
-import io.github.yzernik.bitcoinscodec.structures.{Message, NetworkAddress, UInt64}
+import io.github.yzernik.bitcoinscodec.structures.{Message, Network, NetworkAddress, UInt64}
 import scodec.bits.HexStringSyntax
 
 class AddrSpec extends CodecSuite {
@@ -25,8 +25,8 @@ ED 52 39 9B
   "Addr codec" should {
     "roundtrip" in {
       roundtrip(Addr.codec(1), addr)
-      roundtrip(Message.codec(Message.TESTNET, 1), addr)
-      roundtrip(Message.codec(Message.MAINNET, 1), addr)
+      roundtrip(Message.codec(Network.Testnet, 1), addr)
+      roundtrip(Message.codec(Network.Mainnet, 1), addr)
     }
 
     "decode" in {
