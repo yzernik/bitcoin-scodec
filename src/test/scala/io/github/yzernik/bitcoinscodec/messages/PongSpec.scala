@@ -11,7 +11,7 @@ class PongSpec extends CodecSuite {
     "roundtrip" in {
       val pong = Pong(Util.generateNonce64)
       roundtrip(Pong.codec(1), pong)
-      roundtrip(Message.codec(Message.TESTNET, 1), pong)
+      roundtrip(Message.codec(Network.Testnet, 1), pong)
       roundtrip(Pong.codec(1), Pong(UInt64(1234L)))
       roundtrip(Pong.codec(1), Pong(UInt64(Long.MaxValue)))
       roundtrip(Pong.codec(1), Pong.generate)

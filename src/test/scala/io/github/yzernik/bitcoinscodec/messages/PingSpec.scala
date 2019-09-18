@@ -11,7 +11,7 @@ class PingSpec extends CodecSuite {
     "roundtrip" in {
       val ping = Ping(Util.generateNonce64)
       roundtrip(Ping.codec(1), ping)
-      roundtrip(Message.codec(Message.TESTNET, 1), ping)
+      roundtrip(Message.codec(Network.Testnet, 1), ping)
       roundtrip(Ping.codec(1), Ping(UInt64(1234L)))
       roundtrip(Ping.codec(1), Ping(UInt64(Long.MaxValue)))
       roundtrip(Ping.codec(1), Ping(UInt64(hex"ffffffffffffffff")))
