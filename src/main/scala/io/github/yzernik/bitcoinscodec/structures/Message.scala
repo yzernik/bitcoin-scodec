@@ -22,7 +22,7 @@ trait MessageCompanion[E <: Message] {
 
 object Message {
 
-  sealed abstract class MAGIC(val value: Long)
+  abstract class MAGIC(val value: Long)
   case object MAINNET extends MAGIC(0xD9B4BEF9L)
   case object TESTNET extends MAGIC(0xDAB5BFFAL)
   case object TESTNET3 extends MAGIC(0x0709110BL)
