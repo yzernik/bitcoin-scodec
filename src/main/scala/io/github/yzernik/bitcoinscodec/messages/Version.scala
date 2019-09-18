@@ -6,7 +6,7 @@ import scodec.codecs._
 
 case class Version(
   version: Int,
-  services: UInt64,
+  services: Version.SERVICES,
   timestamp: Long,
   addr_recv: NetworkAddress,
   addr_from: NetworkAddress,
@@ -19,9 +19,24 @@ case class Version(
 }
 
 object Version extends MessageCompanion[Version] {
+
+  sealed trait SERVICES
+  case object NODE_NETWORK extends SERVICES
+  case object NODE_GETUTXO extends SERVICES
+  case object NODE_BLOOM extends SERVICES
+  case object NODE_WITNESS extends SERVICES
+  case object NODE_NETWORK_LIMITED extends SERVICES
+
+  implicit val servicesCodec: Codec[SERVICES] = mappedEnum(Codec[UInt64],
+    NODE_NETWORK -> UInt64(1L),
+    NODE_GETUTXO -> UInt64(2L),
+    NODE_BLOOM -> UInt64(4L),
+    NODE_WITNESS -> UInt64(8L),
+    NODE_NETWORK_LIMITED -> UInt64(1024L))
+
   override def codec(version: Int): Codec[Version] = {
     ("version" | int32L) >>:~ { verNum =>
-      ("services" | Codec[UInt64]) ::
+      ("services" | Codec[SERVICES]) ::
         ("timestamp" | int64L) ::
         ("addr_recv" | Codec[NetworkAddress]) ::
         ("addr_from" | Codec[NetworkAddress]) ::
