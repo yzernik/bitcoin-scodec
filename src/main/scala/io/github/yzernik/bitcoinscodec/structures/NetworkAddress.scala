@@ -2,9 +2,9 @@ package io.github.yzernik.bitcoinscodec.structures
 
 import java.net.{InetAddress, InetSocketAddress}
 
-import scodec.{Codec, DecodeResult, ValueCodecEnrichedWithHListSupport}
 import scodec.bits.{BitVector, ByteVector, HexStringSyntax}
 import scodec.codecs.{bytes, uint16, _}
+import scodec.{Codec, DecodeResult, ValueCodecEnrichedWithHListSupport}
 
 case class NetworkAddress(
   services: UInt64,

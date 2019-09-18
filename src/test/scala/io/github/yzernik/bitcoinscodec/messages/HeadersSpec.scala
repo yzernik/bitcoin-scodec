@@ -6,8 +6,6 @@ import io.github.yzernik.bitcoinscodec.CodecSuite
 import scodec._
 import scodec.bits._
 
-import scala.io.Source
-
 class HeadersSpec extends CodecSuite {
 
   "Headers codec" should {
@@ -22,6 +20,16 @@ class HeadersSpec extends CodecSuite {
 
       val Attempt.Successful(DecodeResult(actual, rest)) = Headers.codec(1) decode bitVector
       rest shouldBe BitVector.empty
+    }
+
+    "decode multiple messages" in {
+      val resource = getClass.getResource("/headerspayload.data")
+      val bytes = Files.readAllBytes(Paths.get(resource.getPath))
+      val bitVector = BitVector(bytes)
+      val combinedVector = bitVector ++ BitVector.high(80)
+
+      val Attempt.Successful(DecodeResult(actual, rest)) = Headers.codec(1) decode combinedVector
+      rest shouldBe BitVector.high(80)
     }
 
   }

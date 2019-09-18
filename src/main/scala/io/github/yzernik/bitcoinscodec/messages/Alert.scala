@@ -1,8 +1,8 @@
 package io.github.yzernik.bitcoinscodec.messages
 
 import io.github.yzernik.bitcoinscodec.structures.{Message, MessageCompanion, VarList, VarStr}
-import scodec.{HListCodecEnrichedWithHListSupport, ValueCodecEnrichedWithHListSupport}
 import scodec.codecs._
+import scodec.{HListCodecEnrichedWithHListSupport, ValueCodecEnrichedWithHListSupport}
 
 case class Alert(
   version: Int,
