@@ -22,6 +22,7 @@ trait MessageCompanion[E <: Message] {
 
 object Message {
 
+  val CURRENT_VERSION = 70015
 
   def padCommand(command: String) =
     ByteVector(command.getBytes()) ++
@@ -83,7 +84,7 @@ object Message {
     Codec[Message](encode _, decode _)
   }
 
-  def codec(network: Network.NetworkConfig, version: Int): Codec[Message] =
+  def codec(network: Network.NetworkConfig, version: Int = CURRENT_VERSION): Codec[Message] =
     codec(network.magic, version)
 }
 
