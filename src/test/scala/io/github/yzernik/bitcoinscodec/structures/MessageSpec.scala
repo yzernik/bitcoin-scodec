@@ -23,7 +23,7 @@ class MessageSpec extends CodecSuite {
         8080))))))
       roundtrip(codec, Version(
         60002,
-        UInt64(1),
+        Version.NODE_NETWORK,
         1355854353L,
         NetworkAddress(UInt64(1), new InetSocketAddress(
           InetAddress.getByAddress(Array(0, 0, 0, 0).map(_.toByte)),
