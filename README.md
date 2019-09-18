@@ -47,6 +47,9 @@ decode a pong message
 ```
 scala> import scodec.bits._
 
-scala> codec.decode(hex"0xf9beb4d9706f6e670000000000000000080000003c0a64b42e0e0619774f0cd6".toBitVector)
-res10: scodec.Attempt[scodec.DecodeResult[io.github.yzernik.bitcoinscodec.structures.Message]] = Successful(DecodeResult(Pong(UInt64(0xd60c4f7719060e2e)),BitVector(empty)))
+scala> val bytes = hex"0xf9beb4d9706f6e670000000000000000080000003c0a64b42e0e0619774f0cd6"
+bytes: scodec.bits.ByteVector = ByteVector(32 bytes, 0xf9beb4d9706f6e670000000000000000080000003c0a64b42e0e0619774f0cd6)
+
+scala> codec.decode(bytes.toBitVector)
+res1: scodec.Attempt[scodec.DecodeResult[io.github.yzernik.bitcoinscodec.structures.Message]] = Successful(DecodeResult(Pong(UInt64(0xd60c4f7719060e2e)),BitVector(empty)))
 ```
