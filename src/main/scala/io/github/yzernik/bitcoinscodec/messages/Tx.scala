@@ -14,6 +14,7 @@ case class Tx(
   tx_witness: List[TxWitness],
   lock_time: Long) extends Message with Hashable {
   require(flag || tx_witness.isEmpty)
+  require(lock_time >= 0)
 
   type E = Tx
   def companion = Tx
@@ -25,6 +26,8 @@ case class Tx(
   override def hash: Hash =
     Util.hash(bytes)
 
+  def isLocked: Boolean =
+    lock_time != 0L
 }
 
 object Tx extends MessageCompanion[Tx] {
