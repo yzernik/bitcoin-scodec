@@ -1,7 +1,6 @@
 package io.github.yzernik.bitcoinscodec.messages
 
 import io.github.yzernik.bitcoinscodec.structures._
-import io.github.yzernik.bitcoinscodec.structures.TxWitness._
 import io.github.yzernik.bitcoinscodec.util.Util
 import scodec.Codec
 import scodec.bits.BitVector
@@ -14,6 +13,8 @@ case class Tx(
   tx_out: List[TxOut],
   tx_witness: List[TxWitness],
   lock_time: Long) extends Message with Hashable {
+  require(flag || tx_witness.isEmpty)
+
   type E = Tx
   def companion = Tx
 
