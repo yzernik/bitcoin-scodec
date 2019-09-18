@@ -31,6 +31,8 @@ CD 1C BE A6 E7 45 8A 7A  BA D5 12 A9 D9 EA 1A FB
     "roundtrip" in {
       val tx1 = Tx(
         1L,
+        false,
+        List(),
         List(),
         List(),
         12345L)
@@ -41,6 +43,7 @@ CD 1C BE A6 E7 45 8A 7A  BA D5 12 A9 D9 EA 1A FB
 
     "decode" in {
       val version = 1L
+      val flag = false
       val txins = List(
         TxIn(
           OutPoint(Hash(hex"6dbddb085b1d8af75184f0bc01fad58d1266e9b63b50881990e4b40d6aee3629".reverse),
@@ -55,9 +58,10 @@ CD 1C BE A6 E7 45 8A 7A  BA D5 12 A9 D9 EA 1A FB
         TxOut(
           -9152746251769348096L,
           Script(hex"76a9140eab5bea436a0484cfab12485efda0b78b4ecc5288ac")))
+      val txwitnesses = List[TxWitness]()
       val locktime = 0L
 
-      val tx = Tx(version, txins, txouts, locktime)
+      val tx = Tx(version, flag, txins, txouts, txwitnesses, locktime)
 
       shouldDecodeFullyTo(Tx.codec(1), bytes.toBitVector, tx)
     }
