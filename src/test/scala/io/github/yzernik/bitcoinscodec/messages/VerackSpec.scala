@@ -9,7 +9,7 @@ class VerackSpec extends CodecSuite {
     "roundtrip" in {
       val verack = Verack()
       roundtrip(Verack.codec(1), verack)
-      roundtrip(Message.codec(0xDAB5BFFAL, 1), verack)
+      roundtrip(Message.codec(Message.TESTNET, 1), verack)
     }
   }
 }

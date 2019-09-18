@@ -9,7 +9,7 @@ class MemPoolSpec extends CodecSuite {
     "roundtrip" in {
       val mempool = MemPool()
       roundtrip(MemPool.codec(1), mempool)
-      roundtrip(Message.codec(0xDAB5BFFAL, 1), mempool)
+      roundtrip(Message.codec(Message.TESTNET, 1), mempool)
     }
   }
 }

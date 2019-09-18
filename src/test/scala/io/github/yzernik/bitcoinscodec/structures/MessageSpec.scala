@@ -14,7 +14,7 @@ class MessageSpec extends CodecSuite {
   "Message codec" should {
 
     "roundtrip" in {
-      val codec = Message.codec(0xD9B4BEF9L, 1)
+      val codec = Message.codec(Message.TESTNET, 1)
       roundtrip(codec, Verack())
       roundtrip(codec, Ping(UInt64(1234)))
       roundtrip(codec, Pong(UInt64(1234)))
@@ -38,14 +38,14 @@ class MessageSpec extends CodecSuite {
     }
 
     "encode" in {
-      val codec = Message.codec(0xD9B4BEF9L, 1)
+      val codec = Message.codec(Message.MAINNET, 1)
       val verack = Verack()
       val bytes = hex"F9 BE B4 D9 76 65 72 61  63 6B 00 00 00 00 00 00 00 00 00 00 5D F6 E0 E2"
       codec.encode(verack) shouldBe Successful(bytes.toBitVector)
     }
 
     "decode" in {
-      val codec = Message.codec(0xD9B4BEF9L, 1)
+      val codec = Message.codec( Message.MAINNET, 1)
       val verack = Verack()
       val bytes = hex"F9 BE B4 D9 76 65 72 61  63 6B 00 00 00 00 00 00 00 00 00 00 5D F6 E0 E2"
 
@@ -55,19 +55,19 @@ class MessageSpec extends CodecSuite {
     }
 
     "fail to decode message with wrong magic" in {
-      val codec = Message.codec(0xD9B4BEF9L, 1)
-      val bytes = hex"F8 BE B4 D9 76 65 72 61  63 6B 00 00 00 00 00 00 00 00 00 00 5D F6 E0 E2"
+      val codec = Message.codec(Message.TESTNET, 1)
+      val bytes = hex"F9 BE B4 D9 76 65 72 61  63 6B 00 00 00 00 00 00 00 00 00 00 5D F6 E0 E2"
       codec.decode(bytes.toBitVector) shouldBe Attempt.Failure(scodec.Err("magic did not match."))
     }
 
     "fail to decode message with wrong checksum" in {
-      val codec = Message.codec(0xD9B4BEF9L, 1)
+      val codec = Message.codec(Message.MAINNET, 1)
       val bytes = hex"F9 BE B4 D9 76 65 72 61  63 6B 00 00 00 00 00 00 00 00 00 00 5D F6 E0 E1"
       codec.decode(bytes.toBitVector) shouldBe Attempt.Failure(scodec.Err("checksum did not match."))
     }
 
     "fail to decode message with cut-off payload" in {
-      val codec = Message.codec(0xD9B4BEF9L, 1)
+      val codec = Message.codec(Message.MAINNET, 1)
       val ping = Ping.generate
       val bitVector: BitVector = codec.encode(ping).toOption.get
       val truncatedVector = bitVector.dropRight(1)
@@ -75,7 +75,7 @@ class MessageSpec extends CodecSuite {
     }
 
     "decode message with remaining bits" in {
-      val codec = Message.codec(0xD9B4BEF9L, 1)
+      val codec = Message.codec(Message.MAINNET, 1)
       val ping = Ping.generate
       val bitVector: BitVector = codec.encode(ping).toOption.get
       val paddedVector = bitVector ++ BitVector.high(32)

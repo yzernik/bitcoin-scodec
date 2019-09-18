@@ -21,7 +21,7 @@ class RejectSpec extends CodecSuite {
         "Your message was rejected again.",
         REJECT_INVALID,
         "Your message was invalid."))
-      roundtrip(Message.codec(0xDAB5BFFAL, 1), reject)
+      roundtrip(Message.codec(Message.TESTNET, 1), reject)
     }
   }
 }
