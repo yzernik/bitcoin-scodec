@@ -6,8 +6,6 @@ import io.github.yzernik.bitcoinscodec.CodecSuite
 import scodec._
 import scodec.bits._
 
-import scala.io.Source
-
 class HeadersSpec extends CodecSuite {
 
   "Headers codec" should {

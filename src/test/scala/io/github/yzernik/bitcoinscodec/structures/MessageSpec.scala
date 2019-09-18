@@ -4,8 +4,8 @@ import java.net.{InetAddress, InetSocketAddress}
 
 import io.github.yzernik.bitcoinscodec.CodecSuite
 import scodec.Attempt.Successful
-import scodec.{Attempt, DecodeResult}
 import scodec.bits._
+import scodec.{Attempt, DecodeResult}
 
 class MessageSpec extends CodecSuite {
 

@@ -3,9 +3,9 @@ package io.github.yzernik.bitcoinscodec.structures
 import io.github.yzernik.bitcoinscodec.messages._
 import io.github.yzernik.bitcoinscodec.util.Util
 import scodec.Attempt.{Failure, Successful}
-import scodec.{Codec, DecodeResult}
 import scodec.bits.{BitVector, ByteVector}
 import scodec.codecs.{bytes, uint32L}
+import scodec.{Codec, DecodeResult}
 
 import scala.language.{existentials, implicitConversions}
 
