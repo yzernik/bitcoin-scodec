@@ -39,7 +39,7 @@ object Message {
       l <- uint32L.decode(c.remainder)
       length = l.value
       ch <- uint32L.decode(l.remainder).flatMap{ p =>
-        if (p.remainder.length < length)
+        if (p.remainder.length < length * 8)
           Failure(scodec.Err("payload is less than specified length."))
         else
           Successful(p)

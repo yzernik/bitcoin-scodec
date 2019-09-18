@@ -3,6 +3,9 @@ package io.github.yzernik.bitcoinscodec.structures
 import java.net.{InetAddress, InetSocketAddress}
 
 import io.github.yzernik.bitcoinscodec.CodecSuite
+import scodec.Attempt.Successful
+import scodec.{Attempt, DecodeResult}
+import scodec.bits._
 
 class MessageSpec extends CodecSuite {
 
@@ -34,55 +37,53 @@ class MessageSpec extends CodecSuite {
         true))
     }
 
-    /*
     "encode" in {
       val codec = Message.codec(0xD9B4BEF9L, 1)
       val verack = Verack()
-      val bytes = hex"F9 BE B4 D9 76 65 72 61  63 6B 00 00 00 00 00 00 00 00 00 00 5D F6 E0 E2".toBitVector
-      codec.encode(verack) shouldBe
-        \/.right(bytes)
+      val bytes = hex"F9 BE B4 D9 76 65 72 61  63 6B 00 00 00 00 00 00 00 00 00 00 5D F6 E0 E2"
+      codec.encode(verack) shouldBe Successful(bytes.toBitVector)
     }
 
     "decode" in {
       val codec = Message.codec(0xD9B4BEF9L, 1)
       val verack = Verack()
-      val bytes = hex"F9 BE B4 D9 76 65 72 61  63 6B 00 00 00 00 00 00 00 00 00 00 5D F6 E0 E2".toBitVector
-      shouldDecodeFullyTo(codec, bytes, verack)
+      val bytes = hex"F9 BE B4 D9 76 65 72 61  63 6B 00 00 00 00 00 00 00 00 00 00 5D F6 E0 E2"
+
+      val Attempt.Successful(DecodeResult(actual, rest)) = codec decode bytes.toBitVector
+      rest shouldBe BitVector.empty
+      actual shouldBe verack
     }
 
     "fail to decode message with wrong magic" in {
       val codec = Message.codec(0xD9B4BEF9L, 1)
-      val verack = Verack()
-      val bytes = hex"F8 BE B4 D9 76 65 72 61  63 6B 00 00 00 00 00 00 00 00 00 00 5D F6 E0 E2".toBitVector
-      codec.decode(bytes) shouldBe
-        -\/("magic did not match.")
+      val bytes = hex"F8 BE B4 D9 76 65 72 61  63 6B 00 00 00 00 00 00 00 00 00 00 5D F6 E0 E2"
+      codec.decode(bytes.toBitVector) shouldBe Attempt.Failure(scodec.Err("magic did not match."))
     }
 
     "fail to decode message with wrong checksum" in {
       val codec = Message.codec(0xD9B4BEF9L, 1)
-      val verack = Verack()
-      val bytes = hex"F9 BE B4 D9 76 65 72 61  63 6B 00 00 00 00 00 00 00 00 00 00 5D F6 E0 E1".toBitVector
-      codec.decode(bytes) shouldBe
-        -\/("checksum did not match.")
+      val bytes = hex"F9 BE B4 D9 76 65 72 61  63 6B 00 00 00 00 00 00 00 00 00 00 5D F6 E0 E1"
+      codec.decode(bytes.toBitVector) shouldBe Attempt.Failure(scodec.Err("checksum did not match."))
     }
 
     "fail to decode message with cut-off payload" in {
       val codec = Message.codec(0xD9B4BEF9L, 1)
-      val ping = Ping(BigInt(1234))
-      val bytes = hex"f9beb4d970696e67000000000000000040000000433ba813d2040000000000".toBitVector
-      codec.decode(bytes) shouldBe
-        -\/("cannot acquire 64 bits from a vector that contains 56 bits")
+      val ping = Ping.generate
+      val bitVector: BitVector = codec.encode(ping).toOption.get
+      val truncatedVector = bitVector.dropRight(1)
+      codec.decode(truncatedVector) shouldBe Attempt.Failure(scodec.Err("payload is less than specified length."))
     }
 
-    "fail to decode message with too-long payload" in {
+    "decode message with remaining bits" in {
       val codec = Message.codec(0xD9B4BEF9L, 1)
-      val ping = Ping(BigInt(1234))
-      val bytes = hex"f9beb4d970696e67000000000000000050000000433ba813d20400000000000000".toBitVector
-      codec.decode(bytes) shouldBe
-        -\/("payload length did not match.")
+      val ping = Ping.generate
+      val bitVector: BitVector = codec.encode(ping).toOption.get
+      val paddedVector = bitVector ++ BitVector.high(32)
+
+      val Attempt.Successful(DecodeResult(actual, rest)) = codec.decode(paddedVector)
+      actual shouldBe ping
+      rest shouldBe BitVector.high(32)
     }
-    * 
-    */
 
   }
 }
