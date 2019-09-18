@@ -85,5 +85,34 @@ class MessageSpec extends CodecSuite {
       rest shouldBe BitVector.high(32)
     }
 
+    "decode multiple messages from single byte vector" in {
+      val codec = Message.codec(Network.Mainnet, 1)
+
+      val msgs = for (i <- 1 to 5)
+        yield codec.encode(Ping.generate).toOption.get
+
+      val bitVector = msgs.reduce(_ ++ _)
+
+      def decodeCombined(bitVector: BitVector): List[Message] = {
+        def decodeCombinedHelper(bitVector: BitVector, acc: List[Message]): List[Message] = {
+          if (bitVector.isEmpty)
+            acc
+          else {
+            codec.decode(bitVector) match {
+              case Successful(DecodeResult(msg, remainder)) =>
+                decodeCombinedHelper(remainder, msg :: acc)
+              case _ =>
+                acc
+            }
+          }
+        }
+        decodeCombinedHelper(bitVector, List())
+      }
+
+      val decodedMsgs = decodeCombined(bitVector)
+
+      decodedMsgs.length shouldBe 5
+    }
+
   }
 }
