@@ -14,7 +14,7 @@ class GetHeadersSpec extends CodecSuite {
   "GetHeaders codec" should {
     "roundtrip" in {
       roundtrip(GetHeaders.codec(1), getheaders)
-      roundtrip(Message.codec(Network.Testnet, 1), getheaders)
+      roundtrip(Message.codec(Network.TestnetParams, 1), getheaders)
     }
 
     "decode" in {

@@ -84,7 +84,7 @@ object Message {
     Codec[Message](encode _, decode _)
   }
 
-  def codec(network: Network.NetworkConfig, version: Int = CURRENT_VERSION): Codec[Message] =
+  def codec(network: Network.NetworkParams, version: Int = CURRENT_VERSION): Codec[Message] =
     codec(network.magic, version)
 }
 

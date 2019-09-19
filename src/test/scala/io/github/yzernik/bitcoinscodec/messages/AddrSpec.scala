@@ -25,8 +25,8 @@ ED 52 39 9B
   "Addr codec" should {
     "roundtrip" in {
       roundtrip(Addr.codec(1), addr)
-      roundtrip(Message.codec(Network.Testnet, 1), addr)
-      roundtrip(Message.codec(Network.Mainnet, 1), addr)
+      roundtrip(Message.codec(Network.TestnetParams, 1), addr)
+      roundtrip(Message.codec(Network.MainnetParams, 1), addr)
     }
 
     "decode" in {

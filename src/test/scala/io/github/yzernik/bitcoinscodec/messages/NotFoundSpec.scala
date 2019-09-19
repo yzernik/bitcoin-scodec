@@ -11,7 +11,7 @@ class NotFoundSpec extends CodecSuite {
   "NotFound codec" should {
     "roundtrip" in {
       roundtrip(NotFound.codec(1), notfound)
-      roundtrip(Message.codec(Network.Testnet, 1), notfound)
+      roundtrip(Message.codec(Network.TestnetParams, 1), notfound)
     }
 
   }

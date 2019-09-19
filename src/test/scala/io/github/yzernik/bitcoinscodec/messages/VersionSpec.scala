@@ -53,8 +53,8 @@ class VersionSpec extends CodecSuite {
       roundtrip(Version.codec(1), version.copy(version = 70001, relay = false))
       roundtrip(Version.codec(1), version.copy(version = 70001, relay = true))
       roundtrip(Version.codec(1), version.copy(nonce = Util.generateNonce64))
-      roundtrip(Message.codec(Network.Testnet, 1), version)
-      roundtrip(Message.codec(Network.Mainnet, 1), version)
+      roundtrip(Message.codec(Network.TestnetParams, 1), version)
+      roundtrip(Message.codec(Network.MainnetParams, 1), version)
     }
 
     "decode" in {

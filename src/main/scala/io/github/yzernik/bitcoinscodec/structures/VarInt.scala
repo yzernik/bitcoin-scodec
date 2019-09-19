@@ -10,6 +10,8 @@ object VarInt {
 
   import scodec.codecs._
 
+  def apply(): Codec[Long] = varIntCodec
+
   implicit val varIntCodec = Codec[Long](
     (n: Long) =>
       n match {

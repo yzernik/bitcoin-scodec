@@ -29,7 +29,7 @@ create a message codec
 ```
 scala> import io.github.yzernik.bitcoinscodec.structures.{Message, Network}
 
-scala> val codec = Message.codec(Network.Mainnet) // on the main network
+scala> val codec = Message.codec(Network.MainnetParams) // on the main network
 ```
 
 encode a ping message

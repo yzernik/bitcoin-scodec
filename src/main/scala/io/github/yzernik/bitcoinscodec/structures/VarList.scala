@@ -11,7 +11,7 @@ object VarList {
     varList(codec)
 
   def varList[A](codec: Codec[A]): Codec[List[A]] = {
-    val countCodec = VarInt.varIntCodec.xmap(_.toInt, (i: Int) => i.toLong)
+    val countCodec = VarInt().xmap(_.toInt, (i: Int) => i.toLong)
     listOfN(countCodec, codec)
   }
 }
