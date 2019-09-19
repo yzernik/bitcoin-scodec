@@ -12,7 +12,7 @@ class InvSpec extends CodecSuite {
   "Inv codec" should {
     "roundtrip" in {
       roundtrip(Inv.codec(1), inv)
-      roundtrip(Message.codec(Network.Testnet, 1), inv)
+      roundtrip(Message.codec(Network.TestnetParams, 1), inv)
     }
 
   }

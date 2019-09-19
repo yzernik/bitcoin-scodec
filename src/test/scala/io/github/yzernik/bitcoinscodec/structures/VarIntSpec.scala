@@ -6,7 +6,7 @@ class VarIntSpec extends CodecSuite {
 
   "VarInt codec" should {
 
-    implicit val countCodec = VarInt.varIntCodec
+    implicit val countCodec = VarInt()
 
     "roundtrip" in {
       roundtrip(0L)
