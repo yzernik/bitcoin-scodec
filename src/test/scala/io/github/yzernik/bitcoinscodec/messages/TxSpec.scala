@@ -94,6 +94,7 @@ CD 1C BE A6 E7 45 8A 7A  BA D5 12 A9 D9 EA 1A FB
       tx.isInstanceOf[Tx] shouldBe true
       val txId = tx.hash
       txId shouldBe genesisTxId
+      tx.isLocked shouldBe false
     }
 
   }
