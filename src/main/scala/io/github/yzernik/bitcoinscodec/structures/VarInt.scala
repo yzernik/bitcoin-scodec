@@ -39,7 +39,7 @@ object VarInt {
           byte.value match {
             case 0xff =>
               Codec[UInt64].decode(byte.remainder)
-                .map { case ret => ret.map(n => UInt64(n.value).toLong)}
+                .map { case ret => ret.map(_.toLong)}
             case 0xfe =>
               uint32L.decode(byte.remainder)
             case 0xfd =>
