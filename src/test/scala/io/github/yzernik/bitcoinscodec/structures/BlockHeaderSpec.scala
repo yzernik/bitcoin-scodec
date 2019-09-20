@@ -6,7 +6,7 @@ import scodec.bits._
 
 class BlockHeaderSpec extends CodecSuite {
 
-  val blockheader = BlockHeader(
+  val genesisBlockheader = BlockHeader(
     1L,
     Hash(hex"0000000000000000000000000000000000000000000000000000000000000000"),
     Hash(hex"4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"),
@@ -22,9 +22,11 @@ class BlockHeaderSpec extends CodecSuite {
     486604799L,
     Util.generateNonce32)
 
+  val genesisBlockHash = Hash(hex"000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f")
+
   "BlockHeader codec" should {
     "roundtrip" in {
-      roundtrip(blockheader)
+      roundtrip(genesisBlockheader)
       roundtrip(blockheader2)
     }
 
@@ -37,8 +39,15 @@ class BlockHeaderSpec extends CodecSuite {
     		  FFFF001D
     		  1DAC2B7C        
         """.toBitVector
-      shouldDecodeFullyTo(BlockHeader.codec, bytes, blockheader)
+      shouldDecodeFullyTo(BlockHeader.codec, bytes, genesisBlockheader)
     }
+
+
+    "hash" in {
+      genesisBlockheader.hash shouldBe genesisBlockHash
+    }
+
+
 
   }
 }
