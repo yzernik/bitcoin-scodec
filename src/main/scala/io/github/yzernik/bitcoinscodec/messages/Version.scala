@@ -15,7 +15,7 @@ case class Version(
   start_height: Int,
   relay: Boolean) extends Message {
   type E = Version
-  def companion = Version
+  override def companion = Version
 }
 
 object Version extends MessageCompanion[Version] {

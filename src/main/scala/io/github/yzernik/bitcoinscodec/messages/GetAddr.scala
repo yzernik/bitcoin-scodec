@@ -6,7 +6,7 @@ import scodec.codecs.provide
 
 case class GetAddr() extends Message {
   type E = GetAddr
-  def companion = GetAddr
+  override def companion = GetAddr
 }
 
 object GetAddr extends MessageCompanion[GetAddr] {

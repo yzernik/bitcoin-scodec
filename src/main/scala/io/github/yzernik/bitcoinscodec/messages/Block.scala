@@ -8,9 +8,9 @@ case class Block(
   block_header: BlockHeader,
   txs: List[Tx]) extends Message with Hashable{
   type E = Block
-  def companion = Block
+  override def companion = Block
 
-  override def hash: Hash =
+  override def hash =
     block_header.hash
 }
 

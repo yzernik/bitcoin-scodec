@@ -5,7 +5,7 @@ import scodec.Codec
 
 case class NotFound(invs: List[InvVect]) extends Message {
   type E = NotFound
-  def companion = NotFound
+  override def companion = NotFound
 }
 
 object NotFound extends MessageCompanion[NotFound] {

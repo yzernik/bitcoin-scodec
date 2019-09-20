@@ -6,7 +6,7 @@ import scodec.codecs.provide
 
 case class Verack() extends Message {
   type E = Verack
-  def companion = Verack
+  override def companion = Verack
 }
 
 object Verack extends MessageCompanion[Verack] {

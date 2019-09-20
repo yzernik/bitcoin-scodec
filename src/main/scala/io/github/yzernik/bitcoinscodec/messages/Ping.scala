@@ -6,7 +6,7 @@ import scodec.Codec
 
 case class Ping(nonce: UInt64) extends Message {
   type E = Ping
-  def companion = Ping
+  override def companion = Ping
 }
 
 object Ping extends MessageCompanion[Ping] {
