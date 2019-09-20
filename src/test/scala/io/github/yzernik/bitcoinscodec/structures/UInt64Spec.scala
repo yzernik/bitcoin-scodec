@@ -1,7 +1,7 @@
 package io.github.yzernik.bitcoinscodec.structures
 
 import io.github.yzernik.bitcoinscodec.CodecSuite
-import scodec.bits.ByteVector
+import scodec.bits.{ByteVector, _}
 
 class UInt64Spec extends CodecSuite {
 
@@ -24,6 +24,14 @@ class UInt64Spec extends CodecSuite {
       shouldPrint(UInt64(1234))
       shouldPrint(UInt64(Long.MaxValue))
       shouldPrint(UInt64(ByteVector.fill(8)(0x42)))
+    }
+
+    "fail to convert to long" in {
+      val n = UInt64(hex"deadbeefdeadbeef")
+
+      assertThrows[ArithmeticException] {
+        n.toLong
+      }
     }
 
   }

@@ -45,6 +45,8 @@ object UInt64 {
   def bigIntToLong(n: BigInt): Long = {
     if (n > Long.MaxValue)
       throw new ArithmeticException(s"BigInt ${n} cannot be converted to a Long.")
+    else if (n < 0)
+      throw new ArithmeticException(s"BigInt ${n} cannot be converted to a Long.")
     val smallestBit = (n & 1).toLong
     ((n >> 1).toLong << 1) | smallestBit
   }
