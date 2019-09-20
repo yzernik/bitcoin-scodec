@@ -36,6 +36,9 @@ object UInt64 {
 
   def byteVectorToLong(byteVector: ByteVector): Long = {
     val bigInt = BigInt(byteVector.toArray)
+    if (bigInt < 0 || bigInt > Long.MaxValue)
+      throw new ArithmeticException(s"ByteVector ${byteVector} with" +
+        s" value BigInt ${bigInt} cannot be converted to a Long.")
     bigIntToLong(bigInt)
   }
 
@@ -43,8 +46,6 @@ object UInt64 {
     (BigInt(unsignedLong >>> 1) << 1) + (unsignedLong & 1)
 
   def bigIntToLong(n: BigInt): Long = {
-    if (n > Long.MaxValue)
-      throw new ArithmeticException(s"BigInt ${n} cannot be converted to a Long.")
     val smallestBit = (n & 1).toLong
     ((n >> 1).toLong << 1) | smallestBit
   }
