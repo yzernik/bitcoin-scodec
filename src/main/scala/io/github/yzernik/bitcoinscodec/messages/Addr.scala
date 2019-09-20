@@ -9,7 +9,7 @@ case class Addr(addrs: List[(Long, NetworkAddress)]) extends Message {
   def companion = Addr
 }
 
-case object Addr extends MessageCompanion[Addr] {
+object Addr extends MessageCompanion[Addr] {
   val timeAddr = {
     ("time" | uint32L) ::
       ("net_addr" | Codec[NetworkAddress])
