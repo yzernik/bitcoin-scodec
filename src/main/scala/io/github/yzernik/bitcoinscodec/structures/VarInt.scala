@@ -30,8 +30,7 @@ object VarInt {
         case i =>
           for {
             a <- uint8L.encode(0xff)
-            vector = UInt64.longToByteVector(i)
-            b <- Codec[UInt64].encode(UInt64(vector))
+            b <- Codec[UInt64].encode(UInt64(i))
           } yield a ++ b
       },
     (buf: BitVector) => {
@@ -40,16 +39,12 @@ object VarInt {
           byte.value match {
             case 0xff =>
               Codec[UInt64].decode(byte.remainder)
-                .map { case b =>
-                  b.map(bytes =>
-                    UInt64.byteVectorToLong(bytes.value)
-                  )
-                }
+                .map { case ret => ret.map(n => UInt64(n.value).toLong)}
             case 0xfe =>
               uint32L.decode(byte.remainder)
             case 0xfd =>
               uint16L.decode(byte.remainder)
-                .map { case b => b.map(_.toLong) }
+                .map { case ret => ret.map(_.toLong) }
             case _ =>
               Successful(scodec.DecodeResult(byte.value.toLong, byte.remainder))
           }

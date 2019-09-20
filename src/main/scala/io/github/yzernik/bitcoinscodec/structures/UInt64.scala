@@ -10,6 +10,8 @@ import scala.math.BigInt.{int2bigInt, long2bigInt}
 case class UInt64(value: ByteVector) {
   require(value.size == 8)
 
+  def toLong = UInt64.byteVectorToLong(value)
+
   override def toString = s"UInt64(0x${value.toHex})"
 }
 
@@ -18,12 +20,6 @@ object UInt64 {
   def apply(value: Long): UInt64 = {
     require(value >= 0)
     val bytes = longToByteVector(value)
-    UInt64(bytes)
-  }
-
-  def apply(value: BigInt): UInt64 = {
-    require(value >= 0)
-    val bytes = bigIntToByteVector(value)
     UInt64(bytes)
   }
 
@@ -47,6 +43,8 @@ object UInt64 {
     (BigInt(unsignedLong >>> 1) << 1) + (unsignedLong & 1)
 
   def bigIntToLong(n: BigInt): Long = {
+    if (n > Long.MaxValue)
+      throw new ArithmeticException(s"BigInt ${n} cannot be converted to a Long.")
     val smallestBit = (n & 1).toLong
     ((n >> 1).toLong << 1) | smallestBit
   }
