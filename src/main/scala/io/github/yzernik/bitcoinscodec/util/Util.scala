@@ -18,8 +18,7 @@ object Util {
   }
 
   def hash(data: ByteVector): Hash = {
-    val bytes = data.toArray
-    val hash = hashBytes(bytes)
+    val hash = hashBytes(data.toArray)
     Hash(ByteVector(hash).reverse)
   }
 
