@@ -9,7 +9,7 @@ case class Reject(
   ccode: Reject.CCode,
   reason: String) extends Message {
   type E = Reject
-  def companion = Reject
+  override def companion = Reject
 }
 
 object Reject extends MessageCompanion[Reject] {

@@ -6,7 +6,7 @@ import scodec.codecs._
 
 case class Addr(addrs: List[(Long, NetworkAddress)]) extends Message {
   type E = Addr
-  def companion = Addr
+  override def companion = Addr
 }
 
 object Addr extends MessageCompanion[Addr] {

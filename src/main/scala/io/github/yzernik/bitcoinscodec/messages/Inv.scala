@@ -5,7 +5,7 @@ import scodec.Codec
 
 case class Inv(invs: List[InvVect]) extends Message {
   type E = Inv
-  def companion = Inv
+  override def companion = Inv
 }
 
 object Inv extends MessageCompanion[Inv] {

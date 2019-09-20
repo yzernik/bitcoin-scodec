@@ -17,13 +17,13 @@ case class Tx(
   require(lock_time >= 0)
 
   type E = Tx
-  def companion = Tx
+  override def companion = Tx
 
   def bytes =
     Tx.codec(0).encode(this)
       .toOption.get.toByteArray
 
-  override def hash: Hash =
+  override def hash =
     Util.hash(bytes)
 
   def isLocked: Boolean =

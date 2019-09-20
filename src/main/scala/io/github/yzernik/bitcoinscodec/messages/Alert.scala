@@ -19,7 +19,7 @@ case class Alert(
   status_bar: String,
   reserved: String) extends Message {
   type E = Alert
-  def companion = Alert
+  override def companion = Alert
 }
 
 object Alert extends MessageCompanion[Alert] {

@@ -7,7 +7,7 @@ case class Headers(invs: List[Block]) extends Message {
   require(invs.forall(_.txs.isEmpty))
 
   type E = Headers
-  def companion = Headers
+  override def companion = Headers
 }
 
 object Headers extends MessageCompanion[Headers] {

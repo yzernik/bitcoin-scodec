@@ -5,7 +5,7 @@ import scodec.Codec
 
 case class GetData(invs: List[InvVect]) extends Message {
   type E = GetData
-  def companion = GetData
+  override def companion = GetData
 }
 
 object GetData extends MessageCompanion[GetData] {

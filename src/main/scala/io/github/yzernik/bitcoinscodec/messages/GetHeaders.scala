@@ -9,7 +9,7 @@ case class GetHeaders(
   block_locator_hashes: List[Hash],
   hash_stop: Hash = Hash.NULL) extends Message {
   type E = GetHeaders
-  def companion = GetHeaders
+  override def companion = GetHeaders
 }
 
 object GetHeaders extends MessageCompanion[GetHeaders] {

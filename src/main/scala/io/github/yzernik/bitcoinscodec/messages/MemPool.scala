@@ -6,7 +6,7 @@ import scodec.codecs.provide
 
 case class MemPool() extends Message {
   type E = MemPool
-  def companion = MemPool
+  override def companion = MemPool
 }
 
 object MemPool extends MessageCompanion[MemPool] {
