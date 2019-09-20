@@ -21,7 +21,7 @@ case class Tx(
 
   def bytes =
     Tx.codec(0).encode(this)
-      .toOption.get.toByteArray
+      .toOption.get.toByteVector
 
   override def hash =
     Util.hash(bytes)

@@ -14,7 +14,7 @@ case class BlockHeader(
 
   def bytes =
     BlockHeader.codec.encode(this)
-      .toOption.get.toByteArray
+      .toOption.get.toByteVector
 
   override def hash: Hash =
     Util.hash(bytes)

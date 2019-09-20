@@ -1,7 +1,7 @@
 package io.github.yzernik.bitcoinscodec.util
 
 import java.nio.{ByteBuffer, ByteOrder}
-import java.security.MessageDigest
+import java.security.{MessageDigest, SecureRandom}
 
 import io.github.yzernik.bitcoinscodec.structures.{Hash, UInt64}
 import scodec.bits.{BitVector, ByteVector}
@@ -17,12 +17,13 @@ object Util {
     byteBuffer.getLong()
   }
 
-  def hash(bytes: Array[Byte]): Hash = {
+  def hash(data: ByteVector): Hash = {
+    val bytes = data.toArray
     val hash = hashBytes(bytes)
     Hash(ByteVector(hash).reverse)
   }
 
-  def hashBytes(bytes: Array[Byte]): Array[Byte] = {
+  private def hashBytes(bytes: Array[Byte]): Array[Byte] = {
     val messageDigest = MessageDigest.getInstance("SHA-256")
     val hash1 = messageDigest.digest(bytes)
     val hash2 = messageDigest.digest(hash1)
@@ -39,7 +40,10 @@ object Util {
     UInt64.codec.decode(BitVector(bytes)).toOption.get.value
   }
 
-  private def randomBytes(length: Int): Array[Byte] =
-    Array.fill(length)((scala.util.Random.nextInt(256) - 128).toByte)
+  private def randomBytes(length: Int): Array[Byte] = {
+    val bytes = new Array[Byte](length)
+    SecureRandom.getInstanceStrong.nextBytes(bytes)
+    bytes
+  }
 
 }
