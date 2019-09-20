@@ -21,7 +21,7 @@ object InvVect {
 
   implicit val codec: Codec[InvVect] = {
     ("inv_type" | Codec[InvType]) ::
-      ("addr_from" | Codec[Hash])
+      ("hash" | Codec[Hash])
   }.as[InvVect]
 
 }
