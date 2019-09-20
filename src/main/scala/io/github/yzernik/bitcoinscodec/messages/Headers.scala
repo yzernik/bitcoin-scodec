@@ -3,8 +3,8 @@ package io.github.yzernik.bitcoinscodec.messages
 import io.github.yzernik.bitcoinscodec.structures.{Message, MessageCompanion, VarList}
 import scodec.Codec
 
-case class Headers(invs: List[Block]) extends Message {
-  require(invs.forall(_.txs.isEmpty))
+case class Headers(headers: List[Block]) extends Message {
+  require(headers.forall(_.txs.isEmpty))
 
   type E = Headers
   override def companion = Headers
