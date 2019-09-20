@@ -26,6 +26,18 @@ CD 1C BE A6 E7 45 8A 7A  BA D5 12 A9 D9 EA 1A FB
 8B 4E CC 52 88 AC 00 00  00 00                   
 """
 
+  val genesisTxBytes =
+    hex"""010000000100000000000000000000000000000000000000000000000
+         00000000000000000ffffffff4d04ffff001d0104455468652054696d
+         65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e
+         206272696e6b206f66207365636f6e64206261696c6f757420666f72
+         2062616e6b73ffffffff0100f2052a01000000434104678afdb0fe55
+         48271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6
+         bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf1
+         1d5fac00000000"""
+
+  val genesisTxId = Hash(hex"4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b")
+
   "Tx codec" should {
 
     "roundtrip" in {
@@ -75,6 +87,13 @@ CD 1C BE A6 E7 45 8A 7A  BA D5 12 A9 D9 EA 1A FB
       val tx = Tx(version, flag, txins, txouts, txwitnesses, locktime)
 
       shouldDecodeFullyTo(Tx.codec(1), bytes.toBitVector, tx)
+    }
+
+    "decode genesis tx" in {
+      val tx = Tx.codec(1).decode(genesisTxBytes.toBitVector).toOption.get.value
+      tx.isInstanceOf[Tx] shouldBe true
+      val txId = tx.hash
+      txId shouldBe genesisTxId
     }
 
   }
